@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Anschreiben – {{ person.name }}{% endblock %}
+
+{% block content %}
+<div style="max-width:700px;">
+  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+    <a href="javascript:history.back()" class="btn btn-secondary btn-sm">← Zurück</a>
+    <h1 style="font-size:1.4rem;">Anschreiben für {{ person.name }}</h1>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap;">
+      <span class="badge badge-gray">{{ person.title }}</span>
+      {% if person.company %}<span class="badge badge-blue">{{ person.company }}</span>{% endif %}
+      {% if person.location %}<span class="badge badge-gray">{{ person.location }}</span>{% endif %}
+    </div>
+    {% if person.description %}
+    <p style="font-size:.85rem;color:#666;margin-top:.5rem;">{{ person.description }}</p>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem;">
+      <h2>Vorlage: {{ template_key.replace('_', ' ').title() }}</h2>
+      <div style="display:flex;gap:.5rem;">
+        <form method="POST" action="/outreach" style="display:flex;gap:.4rem;align-items:center;">
+          <input type="hidden" name="person_json" value='{{ person | tojson }}'>
+          <input type="hidden" name="keyword" value="{{ keyword }}">
+          <select name="template_key" style="font-size:.85rem;padding:.3rem .5rem;border-radius:5px;border:1px solid #d1d5db;">
+            {% for tpl in outreach_templates %}
+            <option value="{{ tpl }}" {% if tpl == template_key %}selected{% endif %}>
+              {{ tpl.replace('_', ' ').title() }}
+            </option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="btn btn-secondary btn-sm">Wechseln</button>
+        </form>
+      </div>
+    </div>
+
+    <textarea id="outreach-text" style="width:100%;min-height:220px;font-family:inherit;font-size:.92rem;line-height:1.65;border:1px solid #d1d5db;border-radius:6px;padding:.75rem;resize:vertical;">{{ outreach_text }}</textarea>
+
+    <div style="display:flex;gap:.75rem;margin-top:1rem;flex-wrap:wrap;">
+      <button onclick="copyText()" class="btn btn-primary">Text kopieren</button>
+      {% if person.linkedin_url %}
+      <a href="{{ person.linkedin_url }}" target="_blank" class="btn btn-secondary">LinkedIn Profil öffnen</a>
+      {% endif %}
+    </div>
+
+    <div class="alert alert-info" style="margin-top:1.5rem;">
+      <strong>Strategie-Tipp:</strong> Personalisiere den Text mit einem konkreten Bezug auf aktuelle
+      Projekte oder Statements der Person (z.B. aus LinkedIn-Posts). Das erhöht die Antwortrate deutlich.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Outreach-Strategien</h2>
+    <ol style="padding-left:1.3rem;line-height:2;color:#444;">
+      <li>Erst auf LinkedIn <strong>folgen</strong> und 1-2 Posts liken/kommentieren (Sichtbarkeit)</li>
+      <li>Dann <strong>vernetzen</strong> – kurze persönliche Notiz hinzufügen</li>
+      <li>Nach Vernetzung die <strong>Direktnachricht</strong> senden (höhere Öffnungsrate)</li>
+      <li>Falls keine Reaktion: nach 1 Woche ein <strong>Follow-up</strong> mit konkretem Mehrwert</li>
+      <li>Alternativ: via <strong>E-Mail</strong> wenn vorhanden (Apollo.io-Daten)</li>
+    </ol>
+  </div>
+</div>
+
+<script>
+function copyText() {
+  const el = document.getElementById("outreach-text");
+  el.select();
+  navigator.clipboard.writeText(el.value).then(() => {
+    const btn = event.target;
+    btn.textContent = "Kopiert!";
+    setTimeout(() => btn.textContent = "Text kopieren", 2000);
+  });
+}
+</script>
+{% endblock %}
