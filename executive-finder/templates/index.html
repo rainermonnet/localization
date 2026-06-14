@@ -14,12 +14,14 @@
       Zur Suche
     </a>
   {% else %}
-    <a href="/auth/login" class="btn btn-primary" style="font-size:1rem;padding:.75rem 2rem;background:#0077b5;">
-      Mit LinkedIn anmelden
+    <a href="/guest" class="btn btn-primary" style="font-size:1rem;padding:.75rem 2rem;">
+      Direkt starten (ohne Login)
     </a>
-    <p style="margin-top:1rem;font-size:.85rem;color:#666;">
-      OAuth 2.0 – wir speichern keine Passwörter.
-    </p>
+    <div style="margin-top:1rem;font-size:.85rem;color:#888;">
+      oder &nbsp;
+      <a href="/auth/login" style="color:#0077b5;">mit LinkedIn anmelden</a>
+      &nbsp;(optional – benötigt LinkedIn Developer App)
+    </div>
   {% endif %}
 
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;text-align:left;">

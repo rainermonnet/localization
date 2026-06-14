@@ -64,6 +64,13 @@ async def logout(request: Request):
     return RedirectResponse("/")
 
 
+@app.get("/guest")
+async def guest_login(request: Request):
+    """Direkt als Gast einsteigen – kein LinkedIn-Account erforderlich."""
+    request.session["profile"] = {"name": "Gast", "guest": True}
+    return RedirectResponse("/dashboard")
+
+
 @app.get("/dashboard", response_class=HTMLResponse)
 async def dashboard(request: Request):
     profile = request.session.get("profile")
