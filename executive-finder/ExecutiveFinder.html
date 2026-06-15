@@ -7,8 +7,13 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #1a1a2e; min-height: 100vh; }
-  nav { background: #0077b5; padding: 0 2rem; display: flex; align-items: center; height: 52px; }
+  nav { background: #0077b5; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 52px; }
   nav .brand { color: #fff; font-weight: 700; font-size: 1.1rem; }
+  nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+  nav .nav-right a { color: rgba(255,255,255,.85); font-size: .88rem; cursor: pointer; text-decoration: none; }
+  nav .nav-right a:hover { color: #fff; }
+  .key-badge { background: rgba(255,255,255,.2); color: #fff; font-size: .75rem; padding: .2rem .55rem; border-radius: 10px; }
+  #settings-panel { display: none; position: fixed; top: 52px; right: 1.5rem; width: 380px; background: #fff; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,.15); padding: 1.5rem; z-index: 200; }
   .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
   .card { background: #fff; border-radius: 10px; box-shadow: 0 1px 6px rgba(0,0,0,.1); padding: 1.75rem; margin-bottom: 1.5rem; }
   h1 { font-size: 1.6rem; margin-bottom: .5rem; }
@@ -49,7 +54,24 @@
 
 <nav>
   <span class="brand">Executive Finder</span>
+  <div class="nav-right">
+    <span id="key-status"></span>
+    <a onclick="toggleSettings()">&#9881; API-Key</a>
+  </div>
 </nav>
+
+<div id="settings-panel">
+  <h2 style="margin-bottom:.75rem;">Apollo.io API-Key</h2>
+  <p style="font-size:.85rem;color:#555;margin-bottom:1rem;">Der Key wird nur lokal in deinem Browser gespeichert – nie übertragen.</p>
+  <label>API-Key</label>
+  <input type="password" id="apollo-key-input" placeholder="Deinen Apollo.io Key einfügen">
+  <div style="display:flex;gap:.75rem;">
+    <button class="btn btn-primary btn-sm" onclick="saveKey()">Speichern</button>
+    <button class="btn btn-secondary btn-sm" onclick="clearKey()">Löschen</button>
+    <button class="btn btn-secondary btn-sm" onclick="toggleSettings()">Schliessen</button>
+  </div>
+  <div id="key-msg" style="margin-top:.75rem;font-size:.83rem;"></div>
+</div>
 
 <!-- START SCREEN -->
 <div id="screen-start" class="container">
@@ -140,6 +162,89 @@
 </div>
 
 <script>
+// ---- SETTINGS ----
+function toggleSettings() {
+  const p = document.getElementById('settings-panel');
+  p.style.display = p.style.display === 'none' || p.style.display === '' ? 'block' : 'none';
+  if (p.style.display === 'block') {
+    const saved = localStorage.getItem('apollo_key') || '';
+    document.getElementById('apollo-key-input').value = saved;
+  }
+}
+function saveKey() {
+  const val = document.getElementById('apollo-key-input').value.trim();
+  if (!val) { document.getElementById('key-msg').innerHTML = '<span style="color:red;">Bitte Key eingeben.</span>'; return; }
+  localStorage.setItem('apollo_key', val);
+  updateKeyStatus();
+  document.getElementById('key-msg').innerHTML = '<span style="color:green;">Gespeichert! Nächste Suche nutzt echte Apollo-Daten.</span>';
+}
+function clearKey() {
+  localStorage.removeItem('apollo_key');
+  document.getElementById('apollo-key-input').value = '';
+  updateKeyStatus();
+  document.getElementById('key-msg').innerHTML = '<span style="color:#888;">Key gelöscht – Demo-Modus aktiv.</span>';
+}
+function updateKeyStatus() {
+  const k = localStorage.getItem('apollo_key');
+  document.getElementById('key-status').innerHTML = k
+    ? '<span class="key-badge">&#10003; Apollo aktiv</span>'
+    : '';
+}
+
+// ---- APOLLO API ----
+async function fetchApollo(keywords, titles, location) {
+  const apiKey = localStorage.getItem('apollo_key');
+  if (!apiKey) return null;
+
+  const payload = {
+    api_key: apiKey,
+    per_page: 25,
+    page: 1,
+    person_seniorities: ['c_suite', 'vp', 'director', 'owner', 'founder'],
+    q_keywords: keywords.join(' '),
+  };
+  if (titles && titles.length) payload.person_titles = titles;
+  if (location) payload.person_locations = [location];
+
+  try {
+    const resp = await fetch('https://api.apollo.io/v1/mixed_people/search', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' },
+      body: JSON.stringify(payload),
+    });
+    if (!resp.ok) throw new Error('API Fehler: ' + resp.status);
+    const data = await resp.json();
+    return (data.people || []).map(p => {
+      const org = p.organization || {};
+      const score = calcApolloScore(p, keywords);
+      return {
+        name: p.name || '',
+        title: p.title || '',
+        company: org.name || '',
+        location: [p.city, p.country].filter(Boolean).join(', '),
+        desc: [org.industry ? 'Branche: ' + org.industry : '', org.short_description || ''].filter(Boolean).join(' | '),
+        score,
+        computedScore: score,
+        tags: [org.industry || '', p.seniority || ''].filter(Boolean),
+        li: p.linkedin_url || '',
+        email: p.email || '',
+      };
+    }).sort((a, b) => b.score - a.score);
+  } catch (e) {
+    console.warn('Apollo API Fehler:', e.message);
+    return null;
+  }
+}
+
+function calcApolloScore(p, keywords) {
+  let score = 5.0;
+  const text = [p.title || '', (p.organization || {}).industry || '', (p.organization || {}).short_description || ''].join(' ').toLowerCase();
+  keywords.forEach(kw => { if (text.includes(kw.toLowerCase())) score += 0.8; });
+  if (p.seniority === 'c_suite') score += 2.0;
+  else if (['vp', 'owner', 'founder'].includes(p.seniority)) score += 1.5;
+  return Math.min(score, 10);
+}
+
 // ---- NAVIGATION ----
 function showStart() {
   document.getElementById('screen-start').style.display = '';
@@ -178,54 +283,74 @@ const DEMO_PEOPLE = [
 let currentPerson = null;
 let currentKeywords = [];
 
-function doSearch() {
+async function doSearch() {
   const raw = document.getElementById('keywords').value.trim();
   if (!raw) { alert('Bitte mindestens ein Schlüsselwort eingeben.'); return; }
 
   currentKeywords = raw.split(/[\n,]+/).map(k => k.trim()).filter(Boolean);
-  const titleFilter = document.getElementById('titles').value.toLowerCase();
-  const locationFilter = document.getElementById('location').value.toLowerCase();
+  const titleRaw = document.getElementById('titles').value.trim();
+  const titles = titleRaw ? titleRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+  const locationFilter = document.getElementById('location').value.trim();
 
-  // Score & filter
-  let results = DEMO_PEOPLE.map(p => {
-    let score = p.score;
-    const text = (p.desc + ' ' + p.tags.join(' ') + ' ' + p.title).toLowerCase();
-    currentKeywords.forEach(kw => { if (text.includes(kw.toLowerCase())) score += 0.5; });
-    return { ...p, computedScore: Math.min(score, 10) };
-  });
+  // Show loading
+  document.getElementById('results-count').textContent = 'Suche läuft...';
+  showResults();
+  document.getElementById('results-grid').innerHTML = '<p style="color:#888;">&#8987; Bitte warten...</p>';
 
-  if (titleFilter) results = results.filter(p => p.title.toLowerCase().includes(titleFilter) || titleFilter.split(',').some(t => p.title.toLowerCase().includes(t.trim())));
-  if (locationFilter) results = results.filter(p => p.location.toLowerCase().includes(locationFilter));
+  // Try Apollo.io first
+  let results = null;
+  let sourceLabel = '';
+  if (localStorage.getItem('apollo_key')) {
+    results = await fetchApollo(currentKeywords, titles, locationFilter || null);
+    if (results && results.length > 0) {
+      sourceLabel = ' (Apollo.io)';
+    } else if (results !== null) {
+      sourceLabel = ' (Apollo.io – keine Treffer, Demo-Ergänzung)';
+      results = null;
+    } else {
+      sourceLabel = ' (Apollo.io Fehler – Demo-Daten)';
+    }
+  }
 
-  results.sort((a, b) => b.computedScore - a.computedScore);
+  // Fallback: demo data
+  if (!results) {
+    results = DEMO_PEOPLE.map(p => {
+      let score = p.score;
+      const text = (p.desc + ' ' + p.tags.join(' ') + ' ' + p.title).toLowerCase();
+      currentKeywords.forEach(kw => { if (text.includes(kw.toLowerCase())) score += 0.5; });
+      return { ...p, computedScore: Math.min(score, 10) };
+    });
+    if (titles.length) results = results.filter(p => titles.some(t => p.title.toLowerCase().includes(t.toLowerCase())));
+    if (locationFilter) results = results.filter(p => p.location.toLowerCase().includes(locationFilter.toLowerCase()));
+    results.sort((a, b) => b.computedScore - a.computedScore);
+    if (!sourceLabel) sourceLabel = ' (Demo-Daten)';
+  }
 
   // Render
-  document.getElementById('results-count').textContent = results.length + ' Führungskräfte gefunden';
+  document.getElementById('results-count').textContent = results.length + ' Führungskräfte gefunden' + sourceLabel;
   document.getElementById('keywords-display').innerHTML = 'Keywords: ' + currentKeywords.map(k => `<span class="badge badge-blue">${k}</span>`).join(' ');
 
-  const grid = document.getElementById('results-grid');
-  grid.innerHTML = results.length === 0
+  window._results = results;
+  document.getElementById('results-grid').innerHTML = results.length === 0
     ? '<p style="color:#888;">Keine Ergebnisse. Passe den Filter an.</p>'
     : results.map((p, i) => `
       <div class="result-card">
         <div class="name">${p.name}</div>
-        <div class="meta"><strong>${p.title}</strong> · ${p.company}</div>
-        <div class="meta" style="color:#888;">&#128205; ${p.location}</div>
-        <div class="desc">${p.desc}</div>
-        <div style="font-size:.78rem;display:flex;justify-content:space-between;margin-bottom:.2rem;"><span>Relevanz</span><span>${p.computedScore.toFixed(1)}/10</span></div>
+        <div class="meta"><strong>${p.title}</strong>${p.company ? ' · ' + p.company : ''}</div>
+        ${p.location ? `<div class="meta" style="color:#888;">&#128205; ${p.location}</div>` : ''}
+        ${p.desc ? `<div class="desc">${p.desc}</div>` : ''}
+        <div style="font-size:.78rem;display:flex;justify-content:space-between;margin-bottom:.2rem;margin-top:.5rem;"><span>Relevanz</span><span>${p.computedScore.toFixed(1)}/10</span></div>
         <div class="score-bar-wrap"><div class="score-bar" style="width:${p.computedScore * 10}%;"></div></div>
         <div style="margin-top:.75rem;">
-          ${p.tags.map(t => `<span class="badge badge-gray">${t}</span>`).join('')}
+          ${(p.tags || []).filter(Boolean).map(t => `<span class="badge badge-gray">${t}</span>`).join('')}
+          ${p.email ? `<span class="badge badge-green">&#9993; ${p.email}</span>` : ''}
         </div>
         <div style="margin-top:.85rem;">
-          <button class="btn btn-primary btn-sm" onclick="openOutreach(${i}, ${JSON.stringify(results).indexOf(JSON.stringify(p)) === -1 ? i : results.indexOf(p)})">Anschreiben generieren</button>
+          <button class="btn btn-primary btn-sm" onclick="openOutreach(${i})">Anschreiben generieren</button>
+          ${p.li ? `<a href="${p.li}" target="_blank" class="btn btn-secondary btn-sm" style="margin-left:.5rem;">LinkedIn</a>` : ''}
         </div>
       </div>
     `).join('');
-
-  // Store results for outreach
-  window._results = results;
-  showResults();
 }
 
 // ---- OUTREACH ----
@@ -306,6 +431,9 @@ function copyOutreach() {
 function openLinkedIn() {
   if (currentPerson && currentPerson.li) window.open(currentPerson.li, '_blank');
 }
+
+// Init
+updateKeyStatus();
 </script>
 </body>
 </html>
