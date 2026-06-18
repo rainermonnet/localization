@@ -191,47 +191,30 @@ function updateKeyStatus() {
     : '';
 }
 
-// ---- APOLLO API ----
+// ---- APOLLO API (via local proxy to avoid CORS) ----
 async function fetchApollo(keywords, titles, location) {
   const apiKey = localStorage.getItem('apollo_key');
   if (!apiKey) return null;
 
   const payload = {
-    api_key: apiKey,
-    per_page: 25,
-    page: 1,
-    person_seniorities: ['c_suite', 'vp', 'director', 'owner', 'founder'],
-    q_keywords: keywords.join(' '),
+    apollo_key: apiKey,
+    keywords,
+    titles: titles && titles.length ? titles : null,
+    location: location || null,
   };
-  if (titles && titles.length) payload.person_titles = titles;
-  if (location) payload.person_locations = [location];
 
   try {
-    const resp = await fetch('https://api.apollo.io/v1/mixed_people/search', {
+    // Try local Python proxy first (no CORS issue)
+    const resp = await fetch('http://localhost:8000/api/search', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) throw new Error('API Fehler: ' + resp.status);
+    if (!resp.ok) throw new Error('Proxy Fehler: ' + resp.status);
     const data = await resp.json();
-    return (data.people || []).map(p => {
-      const org = p.organization || {};
-      const score = calcApolloScore(p, keywords);
-      return {
-        name: p.name || '',
-        title: p.title || '',
-        company: org.name || '',
-        location: [p.city, p.country].filter(Boolean).join(', '),
-        desc: [org.industry ? 'Branche: ' + org.industry : '', org.short_description || ''].filter(Boolean).join(' | '),
-        score,
-        computedScore: score,
-        tags: [org.industry || '', p.seniority || ''].filter(Boolean),
-        li: p.linkedin_url || '',
-        email: p.email || '',
-      };
-    }).sort((a, b) => b.score - a.score);
+    return (data.results || []).map(p => ({ ...p, computedScore: p.relevance_score || p.score || 5 }));
   } catch (e) {
-    console.warn('Apollo API Fehler:', e.message);
+    console.warn('Apollo Proxy Fehler:', e.message);
     return null;
   }
 }

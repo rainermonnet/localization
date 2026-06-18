@@ -5,8 +5,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from fastapi import FastAPI, Request, Form, HTTPException
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse, FileResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
 from app.auth.linkedin import get_authorization_url, generate_state, exchange_code_for_token, get_linkedin_profile
@@ -17,11 +18,40 @@ from app.filters.executive import parse_keywords, merge_and_deduplicate, generat
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 app = FastAPI(title="Executive Finder")
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 app.add_middleware(
     SessionMiddleware,
     secret_key=os.environ.get("SECRET_KEY", "dev-secret-change-me"),
 )
 templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+
+
+@app.get("/", response_class=HTMLResponse)
+async def index(request: Request):
+    # Serve the standalone HTML app directly
+    html_path = os.path.join(BASE_DIR, "ExecutiveFinder.html")
+    if os.path.exists(html_path):
+        return FileResponse(html_path)
+    profile = request.session.get("profile")
+    return templates.TemplateResponse("index.html", {"request": request, "profile": profile})
+
+
+@app.post("/api/search")
+async def api_search(request: Request):
+    """Proxy endpoint – solves CORS by making server-side Apollo.io calls."""
+    body = await request.json()
+    keywords = body.get("keywords", [])
+    titles = body.get("titles") or None
+    location = body.get("location") or None
+    apollo_key = body.get("apollo_key", "")
+
+    # Temporarily set the API key from the request
+    if apollo_key:
+        os.environ["APOLLO_API_KEY"] = apollo_key
+
+    results = await apollo_search(keywords, titles, location, limit=25)
+    return JSONResponse({"results": results, "count": len(results)})
+
 
 
 @app.get("/", response_class=HTMLResponse)
