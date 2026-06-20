@@ -7,6 +7,48 @@ BASE_URL = "https://api.apollo.io/v1"
 SENIORITY_LEVELS = ["c_suite", "vp", "director", "manager", "owner", "founder"]
 
 
+async def raw_apollo_request(
+    api_key: str,
+    keywords: list[str],
+    titles: Optional[list[str]] = None,
+    location: Optional[str] = None,
+    limit: int = 25,
+) -> tuple[int, list[dict], str]:
+    """Returns (http_status, results, error_message)."""
+    payload: dict = {
+        "api_key": api_key,
+        "per_page": limit,
+        "page": 1,
+        "person_seniorities": SENIORITY_LEVELS,
+        "q_keywords": " ".join(keywords),
+    }
+    if titles:
+        payload["person_titles"] = titles
+    if location:
+        payload["person_locations"] = [location]
+
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                f"{BASE_URL}/mixed_people/search",
+                json=payload,
+                headers={"Content-Type": "application/json", "Cache-Control": "no-cache"},
+                timeout=15.0,
+            )
+        if response.status_code != 200:
+            body = response.text[:300]
+            return response.status_code, [], f"Apollo HTTP {response.status_code}: {body}"
+
+        data = response.json()
+        results = _parse_people(data.get("people", []), keywords)
+        return 200, results, ""
+
+    except httpx.TimeoutException:
+        return 504, [], "Apollo.io Timeout – bitte erneut versuchen"
+    except Exception as e:
+        return 500, [], f"Verbindungsfehler: {str(e)}"
+
+
 async def search_executives(
     keywords: list[str],
     titles: Optional[list[str]] = None,
@@ -16,36 +58,13 @@ async def search_executives(
     api_key = os.environ.get("APOLLO_API_KEY", "")
     if not api_key:
         return _mock_results(keywords, titles)
+    _, results, _ = await raw_apollo_request(api_key, keywords, titles, location, limit)
+    return results or _mock_results(keywords, titles)
 
-    payload: dict = {
-        "api_key": api_key,
-        "per_page": limit,
-        "page": 1,
-        "person_seniorities": SENIORITY_LEVELS,
-        "q_keywords": " ".join(keywords),
-    }
 
-    if titles:
-        payload["person_titles"] = titles
-
-    if location:
-        payload["person_locations"] = [location]
-
-    async with httpx.AsyncClient() as client:
-        response = await client.post(
-            f"{BASE_URL}/mixed_people/search",
-            json=payload,
-            headers={
-                "Content-Type": "application/json",
-                "Cache-Control": "no-cache",
-            },
-            timeout=15.0,
-        )
-        response.raise_for_status()
-        data = response.json()
-
+def _parse_people(people: list, keywords: list[str]) -> list[dict]:
     results = []
-    for person in data.get("people", []):
+    for person in people:
         org = person.get("organization", {}) or {}
         results.append({
             "name": person.get("name", ""),
@@ -53,12 +72,11 @@ async def search_executives(
             "company": org.get("name", ""),
             "description": _build_description(person, org),
             "linkedin_url": person.get("linkedin_url", ""),
-            "location": person.get("city", "") + (f", {person.get('country', '')}" if person.get("country") else ""),
+            "location": ", ".join(filter(None, [person.get("city", ""), person.get("country", "")])),
             "email": person.get("email", ""),
             "source": "Apollo.io",
             "relevance_score": _score_relevance(person, keywords),
         })
-
     results.sort(key=lambda x: x["relevance_score"], reverse=True)
     return results
 

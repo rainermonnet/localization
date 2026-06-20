@@ -210,11 +210,18 @@ async function fetchApollo(keywords, titles, location) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    if (!resp.ok) throw new Error('Proxy Fehler: ' + resp.status);
     const data = await resp.json();
+    if (!resp.ok) {
+      const msg = data.error || ('HTTP ' + resp.status);
+      throw new Error(msg);
+    }
+    if ((data.results || []).length === 0) {
+      throw new Error('Apollo: 0 Treffer – Keywords oder Filter anpassen');
+    }
     return (data.results || []).map(p => ({ ...p, computedScore: p.relevance_score || p.score || 5 }));
   } catch (e) {
-    console.warn('Apollo Proxy Fehler:', e.message);
+    window._apolloError = e.message;
+    console.warn('Apollo Fehler:', e.message);
     return null;
   }
 }
@@ -291,7 +298,7 @@ async function doSearch() {
       sourceLabel = ' (Apollo.io – keine Treffer, Demo-Ergänzung)';
       results = null;
     } else {
-      sourceLabel = ' (Apollo.io Fehler – Demo-Daten)';
+      sourceLabel = ' ⚠ Apollo-Fehler: ' + (window._apolloError || 'unbekannt');
     }
   }
 
