@@ -24,7 +24,7 @@ nav .nav-right { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap
 
 .container { max-width: 1150px; margin: 0 auto; padding: 1.5rem; }
 
-.stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
 .stat-card { background: #fff; border-radius: 8px; padding: 1rem 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
 .stat-num { font-size: 1.8rem; font-weight: 700; line-height: 1; }
 .stat-label { font-size: .78rem; color: #6b7280; margin-top: .25rem; }
@@ -141,6 +141,10 @@ textarea { resize: vertical; min-height: 70px; }
     <div class="stat-card">
       <div class="stat-num" id="stat-antwort" style="color:#16a34a;">0</div>
       <div class="stat-label">Antwort</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-email" style="color:#059669;">0</div>
+      <div class="stat-label">Mit E-Mail</div>
     </div>
   </div>
 
@@ -272,6 +276,7 @@ textarea { resize: vertical; min-height: 70px; }
     <button class="btn btn-white btn-sm" onclick="closeOutreach()">&#10005;</button>
   </div>
   <div class="outreach-body">
+    <div id="op-email-section" style="margin-bottom:1rem;"></div>
     <label>Vorlage</label>
     <select id="op-template" onchange="buildOutreach()" style="margin-bottom:.75rem;">
       <option value="collaboration">Zusammenarbeit vorschlagen</option>
@@ -465,12 +470,14 @@ function processCSV(text) {
     return;
   }
 
+  const emailCount = execs.filter(r => r.email).length;
   preview.className = 'import-preview';
   preview.innerHTML = `
     <strong>&#10003; ${execs.length} Führungskräfte gefunden</strong> aus ${csvRows.length} Verbindungen<br>
-    ${newOnes.length} neu (${execs.length - newOnes.length} bereits importiert)<br><br>
+    ${newOnes.length} neu (${execs.length - newOnes.length} bereits importiert) &nbsp;·&nbsp;
+    <span style="color:#059669;font-weight:600;">&#10003; ${emailCount} mit E-Mail-Adresse</span><br><br>
     <strong>Top 5 nach Relevanz:</strong><br>
-    ${execs.slice(0,5).map(r => `&bull; <strong>${r.firstname} ${r.lastname}</strong> – ${r.title} @ ${r.company} (Score: ${r.score})`).join('<br>')}
+    ${execs.slice(0,5).map(r => `&bull; <strong>${r.firstname} ${r.lastname}</strong> – ${r.title} @ ${r.company} (Score: ${r.score})${r.email ? ' ✉' : ''}`).join('<br>')}
     ${execs.length > 5 ? `<br><em>... und ${execs.length - 5} weitere</em>` : ''}
   `;
   document.getElementById('import-btn').style.display = newOnes.length > 0 ? '' : 'none';
@@ -512,6 +519,7 @@ function updateStats() {
   document.getElementById('stat-kontaktiert').textContent = contacts.filter(c => c.status === 'Kontaktiert').length;
   document.getElementById('stat-vernetzt').textContent = contacts.filter(c => c.status === 'Vernetzt').length;
   document.getElementById('stat-antwort').textContent = contacts.filter(c => c.status === 'Antwort erhalten').length;
+  document.getElementById('stat-email').textContent = contacts.filter(c => c.email).length;
 }
 
 // ---- FILTER ----
@@ -554,6 +562,7 @@ function renderTable() {
       <td>
         <div class="person-name">${c.firstname} ${c.lastname}</div>
         <div class="person-title">${c.title}</div>
+        ${c.email ? `<div style="font-size:.72rem;margin-top:.15rem;"><a href="mailto:${c.email}" style="color:#059669;text-decoration:none;">✉ ${c.email}</a></div>` : ''}
       </td>
       <td style="font-size:.85rem;">${c.company || '–'}</td>
       <td>
@@ -637,6 +646,19 @@ function openOutreach(id) {
   document.getElementById('op-meta').textContent=outreachContact.title+' · '+outreachContact.company;
   document.getElementById('op-keyword').value=outreachContact.keyword||'';
   document.getElementById('op-li-btn').style.display=outreachContact.linkedin?'':'none';
+  const hunterQ = encodeURIComponent(outreachContact.firstname+' '+outreachContact.lastname);
+  const emailSec = document.getElementById('op-email-section');
+  if (outreachContact.email) {
+    emailSec.innerHTML = `<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:6px;padding:.6rem .9rem;font-size:.85rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap;">
+      <span>✉ <a href="mailto:${outreachContact.email}" style="color:#059669;font-weight:600;">${outreachContact.email}</a></span>
+      <button class="btn btn-sm" style="background:#d1fae5;color:#065f46;" onclick="navigator.clipboard.writeText('${outreachContact.email}')">Kopieren</button>
+    </div>`;
+  } else {
+    emailSec.innerHTML = `<div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:.6rem .9rem;font-size:.83rem;color:#78350f;">
+      Keine E-Mail in LinkedIn-Daten — <a href="https://hunter.io/email-finder" target="_blank" style="color:#0077b5;font-weight:600;">Hunter.io öffnen →</a>
+      <span style="opacity:.7;font-size:.78rem;display:block;margin-top:.2rem;">Suche: ${outreachContact.firstname} ${outreachContact.lastname} · ${outreachContact.company}</span>
+    </div>`;
+  }
   buildOutreach();
   document.getElementById('outreach-overlay').classList.add('open');
   document.getElementById('outreach-panel').classList.add('open');
