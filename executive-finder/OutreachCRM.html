@@ -116,6 +116,7 @@ textarea { resize: vertical; min-height: 70px; }
     <button class="btn btn-white btn-sm" onclick="openImport()">&#8679; LinkedIn CSV importieren</button>
     <button class="btn btn-white btn-sm" onclick="exportCSV()">&#8615; Export</button>
     <button class="btn btn-white btn-sm" onclick="openAdd()">+ Manuell hinzufügen</button>
+    <button class="btn btn-white btn-sm" onclick="setNewsletterUrl()" title="Newsletter-Anmeldelink festlegen">&#9881; Newsletter-Link</button>
   </div>
 </nav>
 
@@ -282,12 +283,14 @@ textarea { resize: vertical; min-height: 70px; }
       <option value="collaboration">Zusammenarbeit vorschlagen</option>
       <option value="insight">Perspektive anfragen</option>
       <option value="value">Mehrwert anbieten</option>
+      <option value="newsletter">Newsletter-Einladung (E-Mail)</option>
     </select>
     <label>Keyword im Anschreiben</label>
     <input type="text" id="op-keyword" oninput="buildOutreach()" style="margin-bottom:.75rem;">
     <label>Anschreiben</label>
     <textarea id="outreach-textarea"></textarea>
     <div style="display:flex;gap:.75rem;margin-top:1rem;flex-wrap:wrap;">
+      <button class="btn btn-green" id="op-mail-btn" onclick="sendEmail()" style="display:none;">✉ Per E-Mail senden</button>
       <button class="btn btn-primary" onclick="copyOutreach()">Text kopieren</button>
       <button class="btn btn-gray" id="op-li-btn" onclick="openLinkedIn()" style="display:none;">LinkedIn öffnen</button>
       <button class="btn btn-green btn-sm" onclick="markKontaktiert()">Als "Kontaktiert" markieren</button>
@@ -308,11 +311,27 @@ textarea { resize: vertical; min-height: 70px; }
 <script>
 // ---- DATA ----
 const STORAGE_KEY = 'executive_crm_v2';
+const NEWSLETTER_KEY = 'monnet_newsletter_url';
+const SENDER_KEY = 'monnet_sender_name';
 let contacts = [];
 let editingId = null;
 let currentFilter = 'alle';
 let outreachContact = null;
 let pendingImport = [];
+
+function getNewsletterUrl() { return localStorage.getItem(NEWSLETTER_KEY) || 'https://monnet.com/newsletter'; }
+function getSenderName() { return localStorage.getItem(SENDER_KEY) || ''; }
+function setNewsletterUrl() {
+  const cur = getNewsletterUrl();
+  const url = prompt('Anmeldelink zu deinem Newsletter (Double-Opt-In-Seite auf monnet.com):', cur);
+  if (url !== null && url.trim()) {
+    localStorage.setItem(NEWSLETTER_KEY, url.trim());
+    const name = prompt('Dein Name (erscheint als Absender-Unterschrift in den E-Mails):', getSenderName());
+    if (name !== null) localStorage.setItem(SENDER_KEY, name.trim());
+    alert('✓ Gespeichert.\n\nNewsletter-Link: ' + url.trim());
+    if (outreachContact) buildOutreach();
+  }
+}
 
 function load() {
   try { contacts = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { contacts = []; }
@@ -646,6 +665,7 @@ function openOutreach(id) {
   document.getElementById('op-meta').textContent=outreachContact.title+' · '+outreachContact.company;
   document.getElementById('op-keyword').value=outreachContact.keyword||'';
   document.getElementById('op-li-btn').style.display=outreachContact.linkedin?'':'none';
+  document.getElementById('op-mail-btn').style.display=outreachContact.email?'':'none';
   const hunterQ = encodeURIComponent(outreachContact.firstname+' '+outreachContact.lastname);
   const emailSec = document.getElementById('op-email-section');
   if (outreachContact.email) {
@@ -670,10 +690,14 @@ function buildOutreach() {
   const kw=document.getElementById('op-keyword').value||outreachContact.keyword||'Ihrem Fachgebiet';
   const name=outreachContact.firstname+' '+outreachContact.lastname;
   const co=outreachContact.company;
+  const nlUrl=getNewsletterUrl();
+  const sender=getSenderName();
+  const signature=sender ? `\n\nMit freundlichen Grüßen\n${sender}` : `\n\nMit freundlichen Grüßen`;
   const texts={
-    collaboration:`Betreff: Möglichkeit zur Zusammenarbeit im Bereich ${kw}\n\nSehr geehrte/r ${name},\n\nich bin auf Ihr Profil gestoßen und beeindruckt von Ihrer Arbeit bei ${co} im Bereich ${kw}.\n\nAls jemand, der ebenfalls intensiv in diesem Feld tätig ist, sehe ich großes Potenzial für eine strategische Zusammenarbeit, die beiden Seiten konkreten Mehrwert bieten könnte.\n\nWären Sie offen für ein kurzes Gespräch (15–20 Min.) um auszuloten, ob es Synergien gibt?\n\nMit freundlichen Grüßen`,
-    insight:`Betreff: Ihre Perspektive zu ${kw} – kurze Frage\n\nSehr geehrte/r ${name},\n\nIhre Führungsarbeit bei ${co} im Bereich ${kw} ist bemerkenswert.\n\nIch beschäftige mich intensiv mit diesem Thema und würde Ihre Einschätzung zu aktuellen Entwicklungen sehr schätzen. Hätten Sie 10 Minuten für einen kurzen Austausch?\n\nMit freundlichen Grüßen`,
-    value:`Betreff: Konkreter Mehrwert für ${co} im Bereich ${kw}\n\nSehr geehrte/r ${name},\n\nich habe Ihre Strategie bei ${co} aufmerksam verfolgt und glaube, dass ich Ihnen im Bereich ${kw} konkreten Mehrwert bieten kann.\n\nMein Ansatz hat in vergleichbaren Situationen bereits messbare Ergebnisse erzielt. Gerne teile ich Details in einem kurzen Call.\n\nMit freundlichen Grüßen`
+    collaboration:`Betreff: Möglichkeit zur Zusammenarbeit im Bereich ${kw}\n\nSehr geehrte/r ${name},\n\nich bin auf Ihr Profil gestoßen und beeindruckt von Ihrer Arbeit bei ${co} im Bereich ${kw}.\n\nAls jemand, der ebenfalls intensiv in diesem Feld tätig ist, sehe ich großes Potenzial für eine strategische Zusammenarbeit, die beiden Seiten konkreten Mehrwert bieten könnte.\n\nWären Sie offen für ein kurzes Gespräch (15–20 Min.) um auszuloten, ob es Synergien gibt?${signature}`,
+    insight:`Betreff: Ihre Perspektive zu ${kw} – kurze Frage\n\nSehr geehrte/r ${name},\n\nIhre Führungsarbeit bei ${co} im Bereich ${kw} ist bemerkenswert.\n\nIch beschäftige mich intensiv mit diesem Thema und würde Ihre Einschätzung zu aktuellen Entwicklungen sehr schätzen. Hätten Sie 10 Minuten für einen kurzen Austausch?${signature}`,
+    value:`Betreff: Konkreter Mehrwert für ${co} im Bereich ${kw}\n\nSehr geehrte/r ${name},\n\nich habe Ihre Strategie bei ${co} aufmerksam verfolgt und glaube, dass ich Ihnen im Bereich ${kw} konkreten Mehrwert bieten kann.\n\nMein Ansatz hat in vergleichbaren Situationen bereits messbare Ergebnisse erzielt. Gerne teile ich Details in einem kurzen Call.${signature}`,
+    newsletter:`Betreff: Persönliche Einladung – Impulse zu ${kw}\n\nSehr geehrte/r ${name},\n\nwir sind auf LinkedIn vernetzt und ich schätze Ihre Arbeit bei ${co}. Ich teile regelmäßig fundierte Impulse und Analysen rund um ${kw} – kompakt und praxisnah.\n\nFalls das für Sie interessant ist, würde ich mich freuen, Sie unter meinen Leserinnen und Lesern zu begrüßen. Die Anmeldung erfolgt selbstverständlich freiwillig und mit einem Klick – hier können Sie sich selbst eintragen:\n\n${nlUrl}\n\nKein Interesse? Dann ignorieren Sie diese Nachricht einfach – Sie werden von mir nicht ungefragt in einen Verteiler aufgenommen.${signature}`
   };
   document.getElementById('outreach-textarea').value=texts[tpl]||texts.collaboration;
 }
@@ -684,6 +708,20 @@ function copyOutreach(){
   setTimeout(()=>btn.innerHTML='Text kopieren',2000);
 }
 function openLinkedIn(){if(outreachContact&&outreachContact.linkedin)window.open(outreachContact.linkedin,'_blank');}
+function sendEmail(){
+  if(!outreachContact||!outreachContact.email){alert('Für diesen Kontakt ist keine E-Mail-Adresse hinterlegt.');return;}
+  const full=document.getElementById('outreach-textarea').value;
+  let subject='', body=full;
+  const m=full.match(/^Betreff:\s*(.+)\n\n?([\s\S]*)$/);
+  if(m){subject=m[1].trim();body=m[2];}
+  const href='mailto:'+encodeURIComponent(outreachContact.email)
+    +'?subject='+encodeURIComponent(subject)
+    +'&body='+encodeURIComponent(body);
+  window.location.href=href;
+  // Nach dem Öffnen automatisch als kontaktiert markieren
+  const c=contacts.find(x=>x.id===outreachContact.id);
+  if(c&&c.status==='Offen'){c.status='Kontaktiert';save();renderTable();}
+}
 function markKontaktiert(){
   if(!outreachContact) return;
   const c=contacts.find(x=>x.id===outreachContact.id);
