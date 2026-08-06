@@ -19,7 +19,7 @@ h1{font-size:1.6rem;margin-bottom:.3rem}
 .email-row a{color:#059669;text-decoration:none;font-weight:600}
 .email-row a.li{color:#0077b5}
 .subj{font-size:.85rem;margin-bottom:.5rem;color:#374151}
-textarea{width:100%;min-height:210px;border:1.5px solid #d1d5db;border-radius:8px;padding:.75rem;font-family:inherit;font-size:.88rem;line-height:1.6;resize:vertical}
+textarea{width:100%;min-height:230px;border:1.5px solid #d1d5db;border-radius:8px;padding:.75rem;font-family:inherit;font-size:.88rem;line-height:1.6;resize:vertical}
 textarea:focus{outline:none;border-color:#0077b5}
 .actions{display:flex;gap:.6rem;margin-top:.75rem;flex-wrap:wrap}
 button{border:none;border-radius:7px;padding:.55rem 1.1rem;font-weight:600;font-size:.85rem;cursor:pointer}
@@ -28,26 +28,37 @@ button{border:none;border-radius:7px;padding:.55rem 1.1rem;font-weight:600;font-
 .note{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:1rem 1.25rem;font-size:.85rem;color:#78350f;line-height:1.6;margin-bottom:1.5rem}
 </style></head><body><div class="wrap">
 <h1>Deine Top 30 – fertige persönliche Anschreiben</h1>
-<p class="intro">Sortiert nach Nähe zu deinem Feld: <strong>Unternehmensberater · SAP · Wertebilanz · Coaching · Autor</strong>.
-Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail öffnen &amp; senden“</strong> klicken – dein Mailprogramm öffnet sich mit fertigem Betreff und Text.</p>
-<div class="note"><strong>DSGVO-Hinweis:</strong> Das sind persönliche 1:1-Nachrichten an bestehende Kontakte – kein Massenversand. Genau so ist es rechtlich sauber. Bitte nicht als Sammel-Mail (CC/BCC) verschicken.</div>
+<p class="intro">Gerankt nach Nähe zu deinem Profil: <strong>Unternehmensberater SAP · Strategische Entwicklung · Value Balance Leadership · Autor · Executive Coaching „Out of Leadership“</strong>.
+Jede Mail nutzt deine Begriffe und verlinkt auf monnet.biz/out-of-leadership. Text bei Bedarf anpassen, dann <strong>„E-Mail öffnen &amp; senden“</strong> klicken.</p>
+<div class="note"><strong>DSGVO-Hinweis:</strong> Persönliche 1:1-Nachrichten an bestehende Kontakte – kein Massenversand, kein CC/BCC. So bleibt es rechtlich sauber.</div>
 
     <div class="card">
       <div class="rank">1</div>
       <div class="head">
         <div>
-          <div class="name">Andreas Sommer</div>
-          <div class="pos">Board Impact Advisor &amp; Founder · essential | now</div>
-          <div class="tags">Beratung, Werte/Purpose · Score 12</div>
+          <div class="name">Prof. Dr. Leif Erik Wollenweber</div>
+          <div class="pos">Strategy Coaching &amp; Consulting | Mastering the Digital Future with Clarity, AI, and Leadership · LEW Consult</div>
+          <div class="tags">Strategie, Coaching, Beratung, Leadership</div>
         </div>
-        <div class="score">12</div>
+        <div class="score">15</div>
       </div>
-      <div class="email-row"><a href="mailto:andreas.sommer@essential-now.com">✉ andreas.sommer@essential-now.com</a>
-        <a class="li" href="https://www.linkedin.com/in/the-board-impact-advisor" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body1">Hallo Andreas Sommer,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei essential | now finde ich stark – das ist genau die Schnittstelle, an der auch ich mit meiner „Wertebilanz“ ansetze: Werte für Führung und Organisation messbar und gestaltbar machen.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:erik@leiferikwollenweber.de">✉ erik@leiferikwollenweber.de</a>
+        <a class="li" href="https://www.linkedin.com/in/lewpro" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Coaching, Leadership &amp; ein kurzer Austausch</div>
+      <textarea id="body1">Hallo Leif Erik Wollenweber,
+
+wir sind hier auf LinkedIn vernetzt – und deine Verbindung von Strategie und Coaching bei LEW Consult spricht mich sehr an – ich arbeite an derselben Schnittstelle: strategische Entwicklung, verbunden mit „Value Balance Leadership“ und meinem Executive-Coaching-Programm „Out of Leadership“.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(1, 'andreas.sommer@essential-now.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(1, 'erik@leiferikwollenweber.de', "Coaching, Leadership & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(1)">Text kopieren</button>
       </div>
     </div>
@@ -55,18 +66,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">2</div>
       <div class="head">
         <div>
-          <div class="name">Joachim Domes</div>
-          <div class="pos">Geschäftsführer · Joachim Domes / Beratung-Training-Coaching (BTC)</div>
-          <div class="tags">Beratung, Coaching · Score 11</div>
+          <div class="name">Paul Stead</div>
+          <div class="pos">Fractional Programme Director | Advising Boards on Digital Strategy and SAP Strategy · Freelance</div>
+          <div class="tags">SAP, Strategie, Beratung</div>
         </div>
-        <div class="score">11</div>
+        <div class="score">15</div>
       </div>
-      <div class="email-row"><a href="mailto:info@joachim-domes.de">✉ info@joachim-domes.de</a>
-        <a class="li" href="https://www.linkedin.com/in/joachim-domes" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body2">Hallo Joachim Domes,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für Entwicklung – ich verbinde Coaching mit meiner „Wertebilanz“, um Führungskräften Werte als konkretes Steuerungsinstrument an die Hand zu geben.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:pkstead@gmail.com">✉ pkstead@gmail.com</a>
+        <a class="li" href="https://www.linkedin.com/in/paulkstead" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> SAP, Strategie &amp; Value Balance Leadership – kurzer Austausch?</div>
+      <textarea id="body2">Hallo Paul Stead,
+
+wir sind hier auf LinkedIn vernetzt – und aus dem SAP-Umfeld kennen wir beide die Frage, wie strategische Entwicklung und Technologie erst dann tragen, wenn Führung und Werte mitziehen. Genau daran arbeite ich als Unternehmensberater mit meinem Ansatz „Value Balance Leadership“ und dem Executive-Coaching-Programm „Out of Leadership“.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(2, 'info@joachim-domes.de', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(2, 'pkstead@gmail.com', "SAP, Strategie & Value Balance Leadership \u2013 kurzer Austausch?")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(2)">Text kopieren</button>
       </div>
     </div>
@@ -76,16 +98,27 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
         <div>
           <div class="name">Herbert Salzmann</div>
           <div class="pos">Selbständiger Berater für Organisationsentwicklung und Führungskultur. · Herbert W. Salzmann</div>
-          <div class="tags">Beratung, Werte/Purpose, Führung/Transformation · Score 11</div>
+          <div class="tags">Values/Balance, Beratung, Leadership</div>
         </div>
-        <div class="score">11</div>
+        <div class="score">12</div>
       </div>
       <div class="email-row"><a href="mailto:office@herbertsalzmann.com">✉ office@herbertsalzmann.com</a>
         <a class="li" href="https://www.linkedin.com/in/herbert-salzmann-4353a431" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body3">Hallo Herbert Salzmann,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei Herbert W. Salzmann finde ich stark – das ist genau die Schnittstelle, an der auch ich mit meiner „Wertebilanz“ ansetze: Werte für Führung und Organisation messbar und gestaltbar machen.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body3">Hallo Herbert Salzmann,
+
+wir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei Herbert W. Salzmann finde ich stark – genau an dieser Schnittstelle setze ich mit „Value Balance Leadership“ an und begleite Führungskräfte im Executive-Coaching-Programm „Out of Leadership“.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(3, 'office@herbertsalzmann.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(3, 'office@herbertsalzmann.com', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(3)">Text kopieren</button>
       </div>
     </div>
@@ -93,18 +126,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">4</div>
       <div class="head">
         <div>
-          <div class="name">Imelda Breitenmoser</div>
-          <div class="pos">CEO &amp; Inhaberin: Resilienz, People &amp; Culture, Mindful Leadership, Transformation · BREITENMOSER Human Relations GmbH</div>
-          <div class="tags">Werte/Purpose, Führung/Transformation, HR/People · Score 11</div>
+          <div class="name">Andreas Sommer</div>
+          <div class="pos">Board Impact Advisor &amp; Founder · essential | now</div>
+          <div class="tags">Values/Balance, Beratung</div>
         </div>
-        <div class="score">11</div>
+        <div class="score">12</div>
       </div>
-      <div class="email-row"><a href="mailto:ib@breitenmoser-hr.ch">✉ ib@breitenmoser-hr.ch</a>
-        <a class="li" href="https://www.linkedin.com/in/imelda-breitenmoser" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body4">Hallo Imelda Breitenmoser,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und was du bei BREITENMOSER Human Relations GmbH in Sachen Werte und Haltung bewegst, deckt sich sehr mit meinem Ansatz: Mit der „Wertebilanz“ mache ich Unternehmenswerte für Führungskräfte messbar und wirksam.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:andreas.sommer@essential-now.com">✉ andreas.sommer@essential-now.com</a>
+        <a class="li" href="https://www.linkedin.com/in/the-board-impact-advisor" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body4">Hallo Andreas Sommer,
+
+wir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei essential | now finde ich stark – genau an dieser Schnittstelle setze ich mit „Value Balance Leadership“ an und begleite Führungskräfte im Executive-Coaching-Programm „Out of Leadership“.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(4, 'ib@breitenmoser-hr.ch', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(4, 'andreas.sommer@essential-now.com', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(4)">Text kopieren</button>
       </div>
     </div>
@@ -112,18 +156,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">5</div>
       <div class="head">
         <div>
-          <div class="name">Paul Stead</div>
-          <div class="pos">Fractional Programme Director | Advising Boards on Digital Strategy and SAP Strategy · Freelance</div>
-          <div class="tags">SAP-Umfeld, Beratung · Score 11</div>
+          <div class="name">Imelda Breitenmoser</div>
+          <div class="pos">CEO &amp; Inhaberin: Resilienz, People &amp; Culture, Mindful Leadership, Transformation · BREITENMOSER Human Relations GmbH</div>
+          <div class="tags">Values/Balance, Leadership, HR/People</div>
         </div>
-        <div class="score">11</div>
+        <div class="score">12</div>
       </div>
-      <div class="email-row"><a href="mailto:pkstead@gmail.com">✉ pkstead@gmail.com</a>
-        <a class="li" href="https://www.linkedin.com/in/paulkstead" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> SAP, Werte &amp; ein kurzer Austausch</div>
-      <textarea id="body5">Hallo Paul Stead,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und aus dem SAP-Kosmos kennen wir vermutlich beide die Frage, wie sich technologische Exzellenz und gelebte Werte im Unternehmen verbinden lassen. Genau an dieser Schnittstelle arbeite ich mit meiner „Wertebilanz“.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:ib@breitenmoser-hr.ch">✉ ib@breitenmoser-hr.ch</a>
+        <a class="li" href="https://www.linkedin.com/in/imelda-breitenmoser" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body5">Hallo Imelda Breitenmoser,
+
+wir sind hier auf LinkedIn vernetzt – und was du bei BREITENMOSER Human Relations GmbH in Sachen Werte, Kultur und Haltung bewegst, deckt sich sehr mit meinem Ansatz „Value Balance Leadership“: Werte und Balance als konkretes Führungsinstrument.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(5, 'pkstead@gmail.com', 'SAP, Werte &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(5, 'ib@breitenmoser-hr.ch', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(5)">Text kopieren</button>
       </div>
     </div>
@@ -131,18 +186,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">6</div>
       <div class="head">
         <div>
-          <div class="name">Uwe Birkel</div>
-          <div class="pos">Leiter Bildungsinnovationen und Mastercoach · Social Impact gGmbH</div>
-          <div class="tags">Coaching, Werte/Purpose · Score 10</div>
+          <div class="name">Franz Kury</div>
+          <div class="pos">Managing Director · Digital Value Partner Advisory</div>
+          <div class="tags">Values/Balance, Beratung</div>
         </div>
-        <div class="score">10</div>
+        <div class="score">12</div>
       </div>
-      <div class="email-row"><a href="mailto:birkel@socialimpact.eu">✉ birkel@socialimpact.eu</a>
-        <a class="li" href="https://www.linkedin.com/in/uwe-birkel-814b8b" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body6">Hallo Uwe Birkel,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei Social Impact gGmbH finde ich stark – das ist genau die Schnittstelle, an der auch ich mit meiner „Wertebilanz“ ansetze: Werte für Führung und Organisation messbar und gestaltbar machen.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:franzlkury@gmail.com">✉ franzlkury@gmail.com</a>
+        <a class="li" href="https://www.linkedin.com/in/franzkury" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body6">Hallo Franz Kury,
+
+wir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei Digital Value Partner Advisory finde ich stark – genau an dieser Schnittstelle setze ich mit „Value Balance Leadership“ an und begleite Führungskräfte im Executive-Coaching-Programm „Out of Leadership“.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(6, 'birkel@socialimpact.eu', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(6, 'franzlkury@gmail.com', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(6)">Text kopieren</button>
       </div>
     </div>
@@ -150,18 +216,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">7</div>
       <div class="head">
         <div>
-          <div class="name">Jonas Geissler</div>
-          <div class="pos">Zeitexperte für Zeitkultur, Führung &amp; Transformation | Keynote-Speaker · Jonas Geissler</div>
-          <div class="tags">Werte/Purpose, Autor/Speaker, Führung/Transformation · Score 10</div>
+          <div class="name">Joachim Domes</div>
+          <div class="pos">Geschäftsführer · Joachim Domes / Beratung-Training-Coaching (BTC)</div>
+          <div class="tags">Coaching, Beratung</div>
         </div>
-        <div class="score">10</div>
+        <div class="score">11</div>
       </div>
-      <div class="email-row"><a href="mailto:info@jonasgeissler.de">✉ info@jonasgeissler.de</a>
-        <a class="li" href="https://www.linkedin.com/in/jonasgeissler" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body7">Hallo Jonas Geissler,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und was du bei Jonas Geissler in Sachen Werte und Haltung bewegst, deckt sich sehr mit meinem Ansatz: Mit der „Wertebilanz“ mache ich Unternehmenswerte für Führungskräfte messbar und wirksam.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:info@joachim-domes.de">✉ info@joachim-domes.de</a>
+        <a class="li" href="https://www.linkedin.com/in/joachim-domes" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Coaching, Leadership &amp; ein kurzer Austausch</div>
+      <textarea id="body7">Hallo Joachim Domes,
+
+wir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für echte Entwicklung – ich verbinde Executive Coaching („Out of Leadership“) mit strategischer Beratung und „Value Balance Leadership“, um Führungskräften Werte als Steuerungsinstrument an die Hand zu geben.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(7, 'info@jonasgeissler.de', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(7, 'info@joachim-domes.de', "Coaching, Leadership & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(7)">Text kopieren</button>
       </div>
     </div>
@@ -169,18 +246,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">8</div>
       <div class="head">
         <div>
-          <div class="name">Prof. Dr. Leif Erik Wollenweber</div>
-          <div class="pos">Strategy Coaching &amp; Consulting | Mastering the Digital Future with Clarity, AI, and Leadership · LEW Consult</div>
-          <div class="tags">Beratung, Coaching, Führung/Transformation · Score 10</div>
+          <div class="name">Jonas Geissler</div>
+          <div class="pos">Zeitexperte für Zeitkultur, Führung &amp; Transformation | Keynote-Speaker · Jonas Geissler</div>
+          <div class="tags">Values/Balance, Leadership, Autor/Speaker</div>
         </div>
-        <div class="score">10</div>
+        <div class="score">11</div>
       </div>
-      <div class="email-row"><a href="mailto:erik@leiferikwollenweber.de">✉ erik@leiferikwollenweber.de</a>
-        <a class="li" href="https://www.linkedin.com/in/lewpro" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body8">Hallo Dr. Leif Erik Wollenweber,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für Entwicklung – ich verbinde Coaching mit meiner „Wertebilanz“, um Führungskräften Werte als konkretes Steuerungsinstrument an die Hand zu geben.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:info@jonasgeissler.de">✉ info@jonasgeissler.de</a>
+        <a class="li" href="https://www.linkedin.com/in/jonasgeissler" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Von Autor zu Autor – Werte, Führung &amp; ein Austausch</div>
+      <textarea id="body8">Hallo Jonas Geissler,
+
+wir sind hier auf LinkedIn vernetzt – und was du bei Jonas Geissler in Sachen Werte, Kultur und Haltung bewegst, deckt sich sehr mit meinem Ansatz „Value Balance Leadership“: Werte und Balance als konkretes Führungsinstrument.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(8, 'erik@leiferikwollenweber.de', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(8, 'info@jonasgeissler.de', "Von Autor zu Autor \u2013 Werte, F\u00fchrung & ein Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(8)">Text kopieren</button>
       </div>
     </div>
@@ -188,18 +276,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">9</div>
       <div class="head">
         <div>
-          <div class="name">Fabian Stark</div>
-          <div class="pos">Filter medium Consultant for Industry/Leisure/Aquaculture/Aquaristics · PureFlow Filtersysteme GmbH</div>
-          <div class="tags">Beratung, Werte/Purpose · Score 9</div>
+          <div class="name">Robert Roithmayr</div>
+          <div class="pos">Founder / CTO · Strategyfinder Consulting Software GmbH</div>
+          <div class="tags">Strategie, Beratung</div>
         </div>
-        <div class="score">9</div>
+        <div class="score">11</div>
       </div>
-      <div class="email-row"><a href="mailto:fabian.stark@pureflow-filter.com">✉ fabian.stark@pureflow-filter.com</a>
-        <a class="li" href="https://www.linkedin.com/in/fabian-stark-let-us-do-the-clean-up-opexsavings-up-to-75-percent" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body9">Hallo Fabian Stark,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei PureFlow Filtersysteme GmbH finde ich stark – das ist genau die Schnittstelle, an der auch ich mit meiner „Wertebilanz“ ansetze: Werte für Führung und Organisation messbar und gestaltbar machen.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:mail@formfinder.at">✉ mail@formfinder.at</a>
+        <a class="li" href="https://www.linkedin.com/in/robert-roithmayr-a88b1111" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body9">Hallo Robert Roithmayr,
+
+wir sind hier auf LinkedIn vernetzt – und strategische Entwicklung ist auch mein Kernfeld – ich verbinde sie mit „Value Balance Leadership“, also der Frage, wie Werte und Balance Führung wirksam machen. Bei deiner Arbeit rund um Strategyfinder Consulting Software GmbH sehe ich da klare Berührungspunkte.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(9, 'fabian.stark@pureflow-filter.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(9, 'mail@formfinder.at', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(9)">Text kopieren</button>
       </div>
     </div>
@@ -207,18 +306,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">10</div>
       <div class="head">
         <div>
-          <div class="name">Ralf Dr. Zeiner</div>
-          <div class="pos">Inhaber · FUTURE FIT! LEADERSHIP + HUMAN CAPITAL ADVISORY</div>
-          <div class="tags">Beratung, Führung/Transformation · Score 9</div>
+          <div class="name">Uwe Birkel</div>
+          <div class="pos">Leiter Bildungsinnovationen und Mastercoach · Social Impact gGmbH</div>
+          <div class="tags">Values/Balance, Coaching</div>
         </div>
-        <div class="score">9</div>
+        <div class="score">10</div>
       </div>
-      <div class="email-row"><a href="mailto:dr.zeiner@t-online.de">✉ dr.zeiner@t-online.de</a>
-        <a class="li" href="https://www.linkedin.com/in/ralf-dr-zeiner-66a2941" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body10">Hallo Ralf Dr. Zeiner,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und Transformation gelingt selten allein über Prozesse – meist entscheiden Werte. Genau dafür habe ich die „Wertebilanz“ entwickelt, und bei deiner Arbeit rund um FUTURE FIT! LEADERSHIP + HUMAN CAPITAL ADVISORY sehe ich klare Berührungspunkte.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:birkel@socialimpact.eu">✉ birkel@socialimpact.eu</a>
+        <a class="li" href="https://www.linkedin.com/in/uwe-birkel-814b8b" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Coaching, Leadership &amp; ein kurzer Austausch</div>
+      <textarea id="body10">Hallo Uwe Birkel,
+
+wir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei Social Impact gGmbH finde ich stark – genau an dieser Schnittstelle setze ich mit „Value Balance Leadership“ an und begleite Führungskräfte im Executive-Coaching-Programm „Out of Leadership“.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(10, 'dr.zeiner@t-online.de', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(10, 'birkel@socialimpact.eu', "Coaching, Leadership & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(10)">Text kopieren</button>
       </div>
     </div>
@@ -226,18 +336,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">11</div>
       <div class="head">
         <div>
-          <div class="name">Brigitte Zentgraf</div>
-          <div class="pos">Organizational Transformation Partner | Helpful when it gets human · Zentgraf Coaching</div>
-          <div class="tags">Coaching, Führung/Transformation · Score 8</div>
+          <div class="name">Ralf Dr. Zeiner</div>
+          <div class="pos">Inhaber · FUTURE FIT! LEADERSHIP + HUMAN CAPITAL ADVISORY</div>
+          <div class="tags">Beratung, Leadership</div>
         </div>
-        <div class="score">8</div>
+        <div class="score">10</div>
       </div>
-      <div class="email-row"><a href="mailto:b.zentgraf@gmx.com">✉ b.zentgraf@gmx.com</a>
-        <a class="li" href="https://www.linkedin.com/in/brigitte-zentgraf-7a65313" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body11">Hallo Brigitte Zentgraf,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für Entwicklung – ich verbinde Coaching mit meiner „Wertebilanz“, um Führungskräften Werte als konkretes Steuerungsinstrument an die Hand zu geben.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:dr.zeiner@t-online.de">✉ dr.zeiner@t-online.de</a>
+        <a class="li" href="https://www.linkedin.com/in/ralf-dr-zeiner-66a2941" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body11">Hallo Ralf Dr. Zeiner,
+
+wir sind hier auf LinkedIn vernetzt – und Transformation entscheidet sich selten an Prozessen, sondern an Führung und Werten. Genau dafür habe ich „Value Balance Leadership“ entwickelt – und bei deiner Arbeit rund um FUTURE FIT! LEADERSHIP + HUMAN CAPITAL ADVISORY sehe ich klare Berührungspunkte.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(11, 'b.zentgraf@gmx.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(11, 'dr.zeiner@t-online.de', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(11)">Text kopieren</button>
       </div>
     </div>
@@ -245,18 +366,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">12</div>
       <div class="head">
         <div>
-          <div class="name">Graham Marr</div>
-          <div class="pos">Chief Executive Officer Bloomberg Talent &amp; Advisory · Bloomberg Talent &amp; Advisory</div>
-          <div class="tags">Beratung, HR/People · Score 8</div>
+          <div class="name">Fabian Stark</div>
+          <div class="pos">Filter medium Consultant for Industry/Leisure/Aquaculture/Aquaristics · PureFlow Filtersysteme GmbH</div>
+          <div class="tags">Values/Balance, Beratung</div>
         </div>
-        <div class="score">8</div>
+        <div class="score">9</div>
       </div>
-      <div class="email-row"><a href="mailto:grahammarr88@gmail.com">✉ grahammarr88@gmail.com</a>
-        <a class="li" href="https://www.linkedin.com/in/marrgraham" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body12">Hallo Graham Marr,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Rolle bei Bloomberg Talent &amp; Advisory und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:fabian.stark@pureflow-filter.com">✉ fabian.stark@pureflow-filter.com</a>
+        <a class="li" href="https://www.linkedin.com/in/fabian-stark-let-us-do-the-clean-up-opexsavings-up-to-75-percent" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body12">Hallo Fabian Stark,
+
+wir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei PureFlow Filtersysteme GmbH finde ich stark – genau an dieser Schnittstelle setze ich mit „Value Balance Leadership“ an und begleite Führungskräfte im Executive-Coaching-Programm „Out of Leadership“.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(12, 'grahammarr88@gmail.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(12, 'fabian.stark@pureflow-filter.com', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(12)">Text kopieren</button>
       </div>
     </div>
@@ -264,18 +396,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">13</div>
       <div class="head">
         <div>
-          <div class="name">Prof. Dr. habil. Lisa Fröhlich</div>
-          <div class="pos">Gründerin / Inhaberin · ispira Think Tank für Nachhaltige Lieferketten</div>
-          <div class="tags">Werte/Purpose · Score 8</div>
+          <div class="name">Brigitte Zentgraf</div>
+          <div class="pos">Organizational Transformation Partner | Helpful when it gets human · Zentgraf Coaching</div>
+          <div class="tags">Coaching, Leadership</div>
         </div>
-        <div class="score">8</div>
+        <div class="score">9</div>
       </div>
-      <div class="email-row"><a href="mailto:froehlichlisa@googlemail.com">✉ froehlichlisa@googlemail.com</a>
-        <a class="li" href="https://www.linkedin.com/in/lisafrohlich" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body13">Hallo Dr. habil. Lisa Fröhlich,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und was du bei ispira Think Tank für Nachhaltige Lieferketten in Sachen Werte und Haltung bewegst, deckt sich sehr mit meinem Ansatz: Mit der „Wertebilanz“ mache ich Unternehmenswerte für Führungskräfte messbar und wirksam.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:b.zentgraf@gmx.com">✉ b.zentgraf@gmx.com</a>
+        <a class="li" href="https://www.linkedin.com/in/brigitte-zentgraf-7a65313" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Coaching, Leadership &amp; ein kurzer Austausch</div>
+      <textarea id="body13">Hallo Brigitte Zentgraf,
+
+wir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für echte Entwicklung – ich verbinde Executive Coaching („Out of Leadership“) mit strategischer Beratung und „Value Balance Leadership“, um Führungskräften Werte als Steuerungsinstrument an die Hand zu geben.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(13, 'froehlichlisa@googlemail.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(13, 'b.zentgraf@gmx.com', "Coaching, Leadership & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(13)">Text kopieren</button>
       </div>
     </div>
@@ -283,18 +426,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">14</div>
       <div class="head">
         <div>
-          <div class="name">Kai Zimmermann</div>
-          <div class="pos">Autor · Buch  &quot;Nachhaltigkeit, die sich lohnt&quot;</div>
-          <div class="tags">Werte/Purpose, Autor/Speaker · Score 8</div>
+          <div class="name">Dipl.-Kfm. Bernhard H. Steenmann</div>
+          <div class="pos">Management Consulting • Business Services &amp; Solutions • Interim Positions · vean • valuenet • powered by veanIntelligence</div>
+          <div class="tags">Values/Balance, Beratung</div>
         </div>
-        <div class="score">8</div>
+        <div class="score">9</div>
       </div>
-      <div class="email-row"><a href="mailto:k.zimmermann@zenaga.de">✉ k.zimmermann@zenaga.de</a>
-        <a class="li" href="https://www.linkedin.com/in/kai-zimmermann-51a717112" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body14">Hallo Kai Zimmermann,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und was du bei Buch  &quot;Nachhaltigkeit, die sich lohnt&quot; in Sachen Werte und Haltung bewegst, deckt sich sehr mit meinem Ansatz: Mit der „Wertebilanz“ mache ich Unternehmenswerte für Führungskräfte messbar und wirksam.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:bernd.steenmann@web.de">✉ bernd.steenmann@web.de</a>
+        <a class="li" href="https://www.linkedin.com/in/valuenetworking" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body14">Hallo Bernhard H. Steenmann,
+
+wir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei vean • valuenet • powered by veanIntelligence finde ich stark – genau an dieser Schnittstelle setze ich mit „Value Balance Leadership“ an und begleite Führungskräfte im Executive-Coaching-Programm „Out of Leadership“.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(14, 'k.zimmermann@zenaga.de', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(14, 'bernd.steenmann@web.de', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(14)">Text kopieren</button>
       </div>
     </div>
@@ -302,18 +456,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">15</div>
       <div class="head">
         <div>
-          <div class="name">Anton Bonnländer</div>
-          <div class="pos">Geschäftsführer · BBuT - nachhaltige Zukunft verbessern</div>
-          <div class="tags">Werte/Purpose · Score 8</div>
+          <div class="name">Graham Marr</div>
+          <div class="pos">Chief Executive Officer Bloomberg Talent &amp; Advisory · Bloomberg Talent &amp; Advisory</div>
+          <div class="tags">Beratung, HR/People</div>
         </div>
         <div class="score">8</div>
       </div>
-      <div class="email-row"><a href="mailto:bonnzztop@gmail.com">✉ bonnzztop@gmail.com</a>
-        <a class="li" href="https://www.linkedin.com/in/anton-bonnl%C3%A4nder-05b449113" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body15">Hallo Anton Bonnländer,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und was du bei BBuT - nachhaltige Zukunft verbessern in Sachen Werte und Haltung bewegst, deckt sich sehr mit meinem Ansatz: Mit der „Wertebilanz“ mache ich Unternehmenswerte für Führungskräfte messbar und wirksam.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:grahammarr88@gmail.com">✉ grahammarr88@gmail.com</a>
+        <a class="li" href="https://www.linkedin.com/in/marrgraham" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body15">Hallo Graham Marr,
+
+wir sind hier auf LinkedIn vernetzt – und deine Rolle bei Bloomberg Talent &amp; Advisory und mein Feld – strategische Entwicklung, „Value Balance Leadership“ und Executive Coaching („Out of Leadership“) – berühren sich aus meiner Sicht stark.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(15, 'bonnzztop@gmail.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(15, 'grahammarr88@gmail.com', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(15)">Text kopieren</button>
       </div>
     </div>
@@ -321,18 +486,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">16</div>
       <div class="head">
         <div>
-          <div class="name">Martin Nieswandt</div>
-          <div class="pos">Geschäftsführer · VenGa e.V. - Verein zur Förderung ethisch-nachhaltiger Geldanlagen</div>
-          <div class="tags">Werte/Purpose · Score 8</div>
+          <div class="name">Prof. Dr. habil. Lisa Fröhlich</div>
+          <div class="pos">Gründerin / Inhaberin · ispira Think Tank für Nachhaltige Lieferketten</div>
+          <div class="tags">Values/Balance</div>
         </div>
         <div class="score">8</div>
       </div>
-      <div class="email-row"><a href="mailto:mn@venga-ev.org">✉ mn@venga-ev.org</a>
-        <a class="li" href="https://www.linkedin.com/in/martinnieswandt" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body16">Hallo Martin Nieswandt,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und was du bei VenGa e.V. - Verein zur Förderung ethisch-nachhaltiger Geldanlagen in Sachen Werte und Haltung bewegst, deckt sich sehr mit meinem Ansatz: Mit der „Wertebilanz“ mache ich Unternehmenswerte für Führungskräfte messbar und wirksam.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:froehlichlisa@googlemail.com">✉ froehlichlisa@googlemail.com</a>
+        <a class="li" href="https://www.linkedin.com/in/lisafrohlich" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body16">Hallo Lisa Fröhlich,
+
+wir sind hier auf LinkedIn vernetzt – und was du bei ispira Think Tank für Nachhaltige Lieferketten in Sachen Werte, Kultur und Haltung bewegst, deckt sich sehr mit meinem Ansatz „Value Balance Leadership“: Werte und Balance als konkretes Führungsinstrument.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(16, 'mn@venga-ev.org', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(16, 'froehlichlisa@googlemail.com', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(16)">Text kopieren</button>
       </div>
     </div>
@@ -340,18 +516,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">17</div>
       <div class="head">
         <div>
-          <div class="name">Dr. Markus Ebner</div>
-          <div class="pos">Speaker | Coach | Trainer · ebner-team</div>
-          <div class="tags">Coaching, Autor/Speaker · Score 7</div>
+          <div class="name">Shawn Reynolds</div>
+          <div class="pos">Executive Strategy Consultant · Faculty</div>
+          <div class="tags">Strategie, Beratung</div>
         </div>
-        <div class="score">7</div>
+        <div class="score">8</div>
       </div>
-      <div class="email-row"><a href="mailto:ebner@ebner-team.com">✉ ebner@ebner-team.com</a>
-        <a class="li" href="https://www.linkedin.com/in/markusebner" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body17">Hallo Markus Ebner,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für Entwicklung – ich verbinde Coaching mit meiner „Wertebilanz“, um Führungskräften Werte als konkretes Steuerungsinstrument an die Hand zu geben.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:sreynolds.513@gmail.com">✉ sreynolds.513@gmail.com</a>
+        <a class="li" href="https://www.linkedin.com/in/shawn-reynolds" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body17">Hallo Shawn Reynolds,
+
+wir sind hier auf LinkedIn vernetzt – und strategische Entwicklung ist auch mein Kernfeld – ich verbinde sie mit „Value Balance Leadership“, also der Frage, wie Werte und Balance Führung wirksam machen. Bei deiner Arbeit rund um Faculty sehe ich da klare Berührungspunkte.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(17, 'ebner@ebner-team.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(17, 'sreynolds.513@gmail.com', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(17)">Text kopieren</button>
       </div>
     </div>
@@ -359,18 +546,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">18</div>
       <div class="head">
         <div>
-          <div class="name">Prof. Dr. Claudia Hilker</div>
-          <div class="pos">Hilker Consulting – Gründerin &amp; Geschäftsführerin · Hilker Consulting</div>
-          <div class="tags">Beratung · Score 7</div>
+          <div class="name">Kai Zimmermann</div>
+          <div class="pos">Autor · Buch  &quot;Nachhaltigkeit, die sich lohnt&quot;</div>
+          <div class="tags">Values/Balance, Autor/Speaker</div>
         </div>
-        <div class="score">7</div>
+        <div class="score">8</div>
       </div>
-      <div class="email-row"><a href="mailto:info@hilker-consulting.de">✉ info@hilker-consulting.de</a>
-        <a class="li" href="https://www.linkedin.com/in/claudia-hilker-ai-ki" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body18">Hallo Dr. Claudia Hilker,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Rolle bei Hilker Consulting und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:k.zimmermann@zenaga.de">✉ k.zimmermann@zenaga.de</a>
+        <a class="li" href="https://www.linkedin.com/in/kai-zimmermann-51a717112" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Von Autor zu Autor – Werte, Führung &amp; ein Austausch</div>
+      <textarea id="body18">Hallo Kai Zimmermann,
+
+wir sind hier auf LinkedIn vernetzt – und was du bei Buch  &quot;Nachhaltigkeit, die sich lohnt&quot; in Sachen Werte, Kultur und Haltung bewegst, deckt sich sehr mit meinem Ansatz „Value Balance Leadership“: Werte und Balance als konkretes Führungsinstrument.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(18, 'info@hilker-consulting.de', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(18, 'k.zimmermann@zenaga.de', "Von Autor zu Autor \u2013 Werte, F\u00fchrung & ein Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(18)">Text kopieren</button>
       </div>
     </div>
@@ -378,18 +576,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">19</div>
       <div class="head">
         <div>
-          <div class="name">Markus Coenen</div>
-          <div class="pos">AutorenCoach &amp; Experte für Buchmarketing · Markus Coenen - Wirkung im Yes-Modus</div>
-          <div class="tags">Coaching, Autor/Speaker · Score 7</div>
+          <div class="name">Anton Bonnländer</div>
+          <div class="pos">Geschäftsführer · BBuT - nachhaltige Zukunft verbessern</div>
+          <div class="tags">Values/Balance</div>
         </div>
-        <div class="score">7</div>
+        <div class="score">8</div>
       </div>
-      <div class="email-row"><a href="mailto:mc@markus-coenen.de">✉ mc@markus-coenen.de</a>
-        <a class="li" href="https://www.linkedin.com/in/markuscoenen" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body19">Hallo Markus Coenen,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für Entwicklung – ich verbinde Coaching mit meiner „Wertebilanz“, um Führungskräften Werte als konkretes Steuerungsinstrument an die Hand zu geben.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:bonnzztop@gmail.com">✉ bonnzztop@gmail.com</a>
+        <a class="li" href="https://www.linkedin.com/in/anton-bonnl%C3%A4nder-05b449113" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body19">Hallo Anton Bonnländer,
+
+wir sind hier auf LinkedIn vernetzt – und was du bei BBuT - nachhaltige Zukunft verbessern in Sachen Werte, Kultur und Haltung bewegst, deckt sich sehr mit meinem Ansatz „Value Balance Leadership“: Werte und Balance als konkretes Führungsinstrument.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(19, 'mc@markus-coenen.de', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(19, 'bonnzztop@gmail.com', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(19)">Text kopieren</button>
       </div>
     </div>
@@ -397,18 +606,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">20</div>
       <div class="head">
         <div>
-          <div class="name">Dr. Wolfgang Astecker, MIM</div>
-          <div class="pos">Managing Director · Dr. Wolfgang Astecker Consulting St. Gallen</div>
-          <div class="tags">Beratung · Score 7</div>
+          <div class="name">Martin Nieswandt</div>
+          <div class="pos">Geschäftsführer · VenGa e.V. - Verein zur Förderung ethisch-nachhaltiger Geldanlagen</div>
+          <div class="tags">Values/Balance</div>
         </div>
-        <div class="score">7</div>
+        <div class="score">8</div>
       </div>
-      <div class="email-row"><a href="mailto:info@wolfgangastecker.com">✉ info@wolfgangastecker.com</a>
-        <a class="li" href="https://www.linkedin.com/in/dr-wolfgang-astecker-mim-0870a6bb" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body20">Hallo Wolfgang Astecker, MIM,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Rolle bei Dr. Wolfgang Astecker Consulting St. Gallen und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:mn@venga-ev.org">✉ mn@venga-ev.org</a>
+        <a class="li" href="https://www.linkedin.com/in/martinnieswandt" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body20">Hallo Martin Nieswandt,
+
+wir sind hier auf LinkedIn vernetzt – und was du bei VenGa e.V. - Verein zur Förderung ethisch-nachhaltiger Geldanlagen in Sachen Werte, Kultur und Haltung bewegst, deckt sich sehr mit meinem Ansatz „Value Balance Leadership“: Werte und Balance als konkretes Führungsinstrument.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(20, 'info@wolfgangastecker.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(20, 'mn@venga-ev.org', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(20)">Text kopieren</button>
       </div>
     </div>
@@ -416,18 +636,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">21</div>
       <div class="head">
         <div>
-          <div class="name">Gian P. Zini</div>
-          <div class="pos">Co-Founder &amp; Chief Executive Officer · C&amp;Z GLOBAL Advisors</div>
-          <div class="tags">Beratung · Score 7</div>
+          <div class="name">Jo Gabriel</div>
+          <div class="pos">Dipl. Pädagogin | Konzeptionelle Beraterin | Ästhetische Transformation | Systemische Reife · Freiberuflich</div>
+          <div class="tags">Beratung, Leadership</div>
         </div>
         <div class="score">7</div>
       </div>
-      <div class="email-row"><a href="mailto:gianp.zini@cz-globaladvisors.com">✉ gianp.zini@cz-globaladvisors.com</a>
-        <a class="li" href="https://www.linkedin.com/in/gian-p-zini-a736061a5" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body21">Hallo Gian P. Zini,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Rolle bei C&amp;Z GLOBAL Advisors und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:willkommen@jo-gabriel.com">✉ willkommen@jo-gabriel.com</a>
+        <a class="li" href="https://www.linkedin.com/in/jo-gabriel" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body21">Hallo Jo Gabriel,
+
+wir sind hier auf LinkedIn vernetzt – und Transformation entscheidet sich selten an Prozessen, sondern an Führung und Werten. Genau dafür habe ich „Value Balance Leadership“ entwickelt – und bei deiner Arbeit rund um Freiberuflich sehe ich klare Berührungspunkte.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(21, 'gianp.zini@cz-globaladvisors.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(21, 'willkommen@jo-gabriel.com', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(21)">Text kopieren</button>
       </div>
     </div>
@@ -435,18 +666,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">22</div>
       <div class="head">
         <div>
-          <div class="name">Michèle Bachmann</div>
-          <div class="pos">Geschäftsführerin · Michèle Bachmann Coaching</div>
-          <div class="tags">Coaching · Score 7</div>
+          <div class="name">Dr. Markus Ebner</div>
+          <div class="pos">Speaker | Coach | Trainer · ebner-team</div>
+          <div class="tags">Coaching, Autor/Speaker</div>
         </div>
         <div class="score">7</div>
       </div>
-      <div class="email-row"><a href="mailto:info@michelebachmann.coach">✉ info@michelebachmann.coach</a>
-        <a class="li" href="https://www.linkedin.com/in/michelebachmanncoaching" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body22">Hallo Michèle Bachmann,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für Entwicklung – ich verbinde Coaching mit meiner „Wertebilanz“, um Führungskräften Werte als konkretes Steuerungsinstrument an die Hand zu geben.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:ebner@ebner-team.com">✉ ebner@ebner-team.com</a>
+        <a class="li" href="https://www.linkedin.com/in/markusebner" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Coaching, Leadership &amp; ein kurzer Austausch</div>
+      <textarea id="body22">Hallo Markus Ebner,
+
+wir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für echte Entwicklung – ich verbinde Executive Coaching („Out of Leadership“) mit strategischer Beratung und „Value Balance Leadership“, um Führungskräften Werte als Steuerungsinstrument an die Hand zu geben.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(22, 'info@michelebachmann.coach', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(22, 'ebner@ebner-team.com', "Coaching, Leadership & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(22)">Text kopieren</button>
       </div>
     </div>
@@ -454,18 +696,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">23</div>
       <div class="head">
         <div>
-          <div class="name">Rainer Kapellen</div>
-          <div class="pos">Geschäftsführer · Rainer Kapellen Consulting</div>
-          <div class="tags">Beratung · Score 7</div>
+          <div class="name">Prof. Dr. Claudia Hilker</div>
+          <div class="pos">Hilker Consulting – Gründerin &amp; Geschäftsführerin · Hilker Consulting</div>
+          <div class="tags">Beratung</div>
         </div>
         <div class="score">7</div>
       </div>
-      <div class="email-row"><a href="mailto:info@rainer-kapellen.de">✉ info@rainer-kapellen.de</a>
-        <a class="li" href="https://www.linkedin.com/in/rainer-kapellen-06b090147" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body23">Hallo Rainer Kapellen,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Rolle bei Rainer Kapellen Consulting und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:info@hilker-consulting.de">✉ info@hilker-consulting.de</a>
+        <a class="li" href="https://www.linkedin.com/in/claudia-hilker-ai-ki" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body23">Hallo Claudia Hilker,
+
+wir sind hier auf LinkedIn vernetzt – und deine Rolle bei Hilker Consulting und mein Feld – strategische Entwicklung, „Value Balance Leadership“ und Executive Coaching („Out of Leadership“) – berühren sich aus meiner Sicht stark.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(23, 'info@rainer-kapellen.de', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(23, 'info@hilker-consulting.de', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(23)">Text kopieren</button>
       </div>
     </div>
@@ -473,18 +726,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">24</div>
       <div class="head">
         <div>
-          <div class="name">Prof. h.c. Dr. Sergey Serebranski</div>
-          <div class="pos">CEO · JANSER CONSULT GmbH</div>
-          <div class="tags">Beratung · Score 7</div>
+          <div class="name">Markus Coenen</div>
+          <div class="pos">AutorenCoach &amp; Experte für Buchmarketing · Markus Coenen - Wirkung im Yes-Modus</div>
+          <div class="tags">Coaching, Autor/Speaker</div>
         </div>
         <div class="score">7</div>
       </div>
-      <div class="email-row"><a href="mailto:s.serebran@gmail.com">✉ s.serebran@gmail.com</a>
-        <a class="li" href="https://www.linkedin.com/in/prof-h-c-dr-sergey-serebranski-429a4652" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body24">Hallo h.c. Dr. Sergey Serebranski,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Rolle bei JANSER CONSULT GmbH und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:mc@markus-coenen.de">✉ mc@markus-coenen.de</a>
+        <a class="li" href="https://www.linkedin.com/in/markuscoenen" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Coaching, Leadership &amp; ein kurzer Austausch</div>
+      <textarea id="body24">Hallo Markus Coenen,
+
+wir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für echte Entwicklung – ich verbinde Executive Coaching („Out of Leadership“) mit strategischer Beratung und „Value Balance Leadership“, um Führungskräften Werte als Steuerungsinstrument an die Hand zu geben.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(24, 's.serebran@gmail.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(24, 'mc@markus-coenen.de', "Coaching, Leadership & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(24)">Text kopieren</button>
       </div>
     </div>
@@ -492,18 +756,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">25</div>
       <div class="head">
         <div>
-          <div class="name">Alfred Diebold</div>
-          <div class="pos">Advisor, Author, Filmmaker · UNRCCA, UNESCO, GIZ, Trescher Verlag, World Bank</div>
-          <div class="tags">Beratung, Autor/Speaker · Score 7</div>
+          <div class="name">Dr. Wolfgang Astecker, MIM</div>
+          <div class="pos">Managing Director · Dr. Wolfgang Astecker Consulting St. Gallen</div>
+          <div class="tags">Beratung</div>
         </div>
         <div class="score">7</div>
       </div>
-      <div class="email-row"><a href="mailto:alfred.diebold@gmx.net">✉ alfred.diebold@gmx.net</a>
-        <a class="li" href="https://www.linkedin.com/in/alfred-diebold-b6217a72" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body25">Hallo Alfred Diebold,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und als Autor:in bewegst du Menschen mit Worten – ich schreibe und berate zur „Wertebilanz“, also dazu, wie Werte in Organisationen messbar Wirkung entfalten. Da sehe ich viele Anknüpfungspunkte.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:info@wolfgangastecker.com">✉ info@wolfgangastecker.com</a>
+        <a class="li" href="https://www.linkedin.com/in/dr-wolfgang-astecker-mim-0870a6bb" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body25">Hallo Wolfgang Astecker, MIM,
+
+wir sind hier auf LinkedIn vernetzt – und deine Rolle bei Dr. Wolfgang Astecker Consulting St. Gallen und mein Feld – strategische Entwicklung, „Value Balance Leadership“ und Executive Coaching („Out of Leadership“) – berühren sich aus meiner Sicht stark.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(25, 'alfred.diebold@gmx.net', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(25, 'info@wolfgangastecker.com', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(25)">Text kopieren</button>
       </div>
     </div>
@@ -511,18 +786,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">26</div>
       <div class="head">
         <div>
-          <div class="name">Dr. med. Marcus Riedel</div>
-          <div class="pos">Inhaber · Dr. Riedel Consulting</div>
-          <div class="tags">Beratung · Score 7</div>
+          <div class="name">Gian P. Zini</div>
+          <div class="pos">Co-Founder &amp; Chief Executive Officer · C&amp;Z GLOBAL Advisors</div>
+          <div class="tags">Beratung</div>
         </div>
         <div class="score">7</div>
       </div>
-      <div class="email-row"><a href="mailto:dr.marcusriedel@me.com">✉ dr.marcusriedel@me.com</a>
-        <a class="li" href="https://www.linkedin.com/in/dr-med-marcus-riedel-84249012b" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body26">Hallo med. Marcus Riedel,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Rolle bei Dr. Riedel Consulting und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:gianp.zini@cz-globaladvisors.com">✉ gianp.zini@cz-globaladvisors.com</a>
+        <a class="li" href="https://www.linkedin.com/in/gian-p-zini-a736061a5" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body26">Hallo Gian P. Zini,
+
+wir sind hier auf LinkedIn vernetzt – und deine Rolle bei C&amp;Z GLOBAL Advisors und mein Feld – strategische Entwicklung, „Value Balance Leadership“ und Executive Coaching („Out of Leadership“) – berühren sich aus meiner Sicht stark.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(26, 'dr.marcusriedel@me.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(26, 'gianp.zini@cz-globaladvisors.com', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(26)">Text kopieren</button>
       </div>
     </div>
@@ -530,18 +816,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">27</div>
       <div class="head">
         <div>
-          <div class="name">Gordon Muehl</div>
-          <div class="pos">Founder/ Managing Director · MuehlCyberConsulting</div>
-          <div class="tags">Beratung · Score 7</div>
+          <div class="name">Michèle Bachmann</div>
+          <div class="pos">Geschäftsführerin · Michèle Bachmann Coaching</div>
+          <div class="tags">Coaching</div>
         </div>
         <div class="score">7</div>
       </div>
-      <div class="email-row"><a href="mailto:gordon@muehlcyberconsulting.com">✉ gordon@muehlcyberconsulting.com</a>
-        <a class="li" href="https://www.linkedin.com/in/gordonmuehl" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body27">Hallo Gordon Muehl,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Rolle bei MuehlCyberConsulting und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:info@michelebachmann.coach">✉ info@michelebachmann.coach</a>
+        <a class="li" href="https://www.linkedin.com/in/michelebachmanncoaching" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Coaching, Leadership &amp; ein kurzer Austausch</div>
+      <textarea id="body27">Hallo Michèle Bachmann,
+
+wir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für echte Entwicklung – ich verbinde Executive Coaching („Out of Leadership“) mit strategischer Beratung und „Value Balance Leadership“, um Führungskräften Werte als Steuerungsinstrument an die Hand zu geben.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(27, 'gordon@muehlcyberconsulting.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(27, 'info@michelebachmann.coach', "Coaching, Leadership & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(27)">Text kopieren</button>
       </div>
     </div>
@@ -549,18 +846,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">28</div>
       <div class="head">
         <div>
-          <div class="name">Peter Forster</div>
-          <div class="pos">Geschäftsführender Gesellschafter · consult4re GmbH</div>
-          <div class="tags">Beratung · Score 7</div>
+          <div class="name">Rainer Kapellen</div>
+          <div class="pos">Geschäftsführer · Rainer Kapellen Consulting</div>
+          <div class="tags">Beratung</div>
         </div>
         <div class="score">7</div>
       </div>
-      <div class="email-row"><a href="mailto:peter.forster@gmx.info">✉ peter.forster@gmx.info</a>
-        <a class="li" href="https://www.linkedin.com/in/peter-forster-9115b0102" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body28">Hallo Peter Forster,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Rolle bei consult4re GmbH und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:info@rainer-kapellen.de">✉ info@rainer-kapellen.de</a>
+        <a class="li" href="https://www.linkedin.com/in/rainer-kapellen-06b090147" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body28">Hallo Rainer Kapellen,
+
+wir sind hier auf LinkedIn vernetzt – und deine Rolle bei Rainer Kapellen Consulting und mein Feld – strategische Entwicklung, „Value Balance Leadership“ und Executive Coaching („Out of Leadership“) – berühren sich aus meiner Sicht stark.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(28, 'peter.forster@gmx.info', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(28, 'info@rainer-kapellen.de', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(28)">Text kopieren</button>
       </div>
     </div>
@@ -568,18 +876,29 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">29</div>
       <div class="head">
         <div>
-          <div class="name">Jürgen Ruff</div>
-          <div class="pos">Potenzialgestalter, CEO · Potenzialgestalter - juergen.ruff.consulting</div>
-          <div class="tags">Beratung · Score 7</div>
+          <div class="name">Prof. h.c. Dr. Sergey Serebranski</div>
+          <div class="pos">CEO · JANSER CONSULT GmbH</div>
+          <div class="tags">Beratung</div>
         </div>
         <div class="score">7</div>
       </div>
-      <div class="email-row"><a href="mailto:info@juergenruff.com">✉ info@juergenruff.com</a>
-        <a class="li" href="https://www.linkedin.com/in/juergenruff" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body29">Hallo Jürgen Ruff,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Rolle bei Potenzialgestalter - juergen.ruff.consulting und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:s.serebran@gmail.com">✉ s.serebran@gmail.com</a>
+        <a class="li" href="https://www.linkedin.com/in/prof-h-c-dr-sergey-serebranski-429a4652" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Strategie, Werte &amp; ein kurzer Austausch</div>
+      <textarea id="body29">Hallo Sergey Serebranski,
+
+wir sind hier auf LinkedIn vernetzt – und deine Rolle bei JANSER CONSULT GmbH und mein Feld – strategische Entwicklung, „Value Balance Leadership“ und Executive Coaching („Out of Leadership“) – berühren sich aus meiner Sicht stark.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(29, 'info@juergenruff.com', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(29, 's.serebran@gmail.com', "Strategie, Werte & ein kurzer Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(29)">Text kopieren</button>
       </div>
     </div>
@@ -587,24 +906,34 @@ Jede Mail ist personalisiert. Text bei Bedarf anpassen, dann <strong>„E-Mail �
       <div class="rank">30</div>
       <div class="head">
         <div>
-          <div class="name">Michael Ulverich</div>
-          <div class="pos">Managing Director · Michael Ulverich Consulting GmbH</div>
-          <div class="tags">Beratung · Score 7</div>
+          <div class="name">Alfred Diebold</div>
+          <div class="pos">Advisor, Author, Filmmaker · UNRCCA, UNESCO, GIZ, Trescher Verlag, World Bank</div>
+          <div class="tags">Beratung, Autor/Speaker</div>
         </div>
         <div class="score">7</div>
       </div>
-      <div class="email-row"><a href="mailto:michael.ulverich@web.de">✉ michael.ulverich@web.de</a>
-        <a class="li" href="https://www.linkedin.com/in/michael-ulverich-84341480" target="_blank">LinkedIn</a></div>
-      <div class="subj"><strong>Betreff:</strong> Werte, Wirkung &amp; ein kurzer Austausch</div>
-      <textarea id="body30">Hallo Michael Ulverich,&#10;&#10;wir sind hier auf LinkedIn vernetzt – und deine Rolle bei Michael Ulverich Consulting GmbH und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.&#10;&#10;Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?&#10;&#10;Über deine Rückmeldung freue ich mich.&#10;&#10;Herzliche Grüße&#10;Rainer Monnet</textarea>
+      <div class="email-row"><a href="mailto:alfred.diebold@gmx.net">✉ alfred.diebold@gmx.net</a>
+        <a class="li" href="https://www.linkedin.com/in/alfred-diebold-b6217a72" target="_blank">LinkedIn</a></div>
+      <div class="subj"><strong>Betreff:</strong> Von Autor zu Autor – Werte, Führung &amp; ein Austausch</div>
+      <textarea id="body30">Hallo Alfred Diebold,
+
+wir sind hier auf LinkedIn vernetzt – und als Autor:in bewegst du Menschen mit Ideen – ich schreibe und arbeite als Unternehmensberater zu „Value Balance Leadership“ und begleite Führungskräfte mit „Out of Leadership“. Da sehe ich viele Anknüpfungspunkte, auch von Autor zu Autor.
+
+Ich bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?
+
+Über deine Rückmeldung freue ich mich.
+
+Herzliche Grüße
+Rainer Monnet
+Unternehmensberater · Value Balance Leadership · Executive Coaching
+https://monnet.biz/out-of-leadership/</textarea>
       <div class="actions">
-        <button class="send" onclick="sendMail(30, 'michael.ulverich@web.de', 'Werte, Wirkung &amp; ein kurzer Austausch')">✉ E-Mail öffnen &amp; senden</button>
+        <button class="send" onclick="sendMail(30, 'alfred.diebold@gmx.net', "Von Autor zu Autor \u2013 Werte, F\u00fchrung & ein Austausch")">✉ E-Mail öffnen &amp; senden</button>
         <button class="copy" onclick="copyBody(30)">Text kopieren</button>
       </div>
     </div>
 </div>
 <script>
-const bodies = {"1": "Hallo Andreas Sommer,\n\nwir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei essential | now finde ich stark – das ist genau die Schnittstelle, an der auch ich mit meiner „Wertebilanz“ ansetze: Werte für Führung und Organisation messbar und gestaltbar machen.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "2": "Hallo Joachim Domes,\n\nwir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für Entwicklung – ich verbinde Coaching mit meiner „Wertebilanz“, um Führungskräften Werte als konkretes Steuerungsinstrument an die Hand zu geben.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "3": "Hallo Herbert Salzmann,\n\nwir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei Herbert W. Salzmann finde ich stark – das ist genau die Schnittstelle, an der auch ich mit meiner „Wertebilanz“ ansetze: Werte für Führung und Organisation messbar und gestaltbar machen.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "4": "Hallo Imelda Breitenmoser,\n\nwir sind hier auf LinkedIn vernetzt – und was du bei BREITENMOSER Human Relations GmbH in Sachen Werte und Haltung bewegst, deckt sich sehr mit meinem Ansatz: Mit der „Wertebilanz“ mache ich Unternehmenswerte für Führungskräfte messbar und wirksam.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "5": "Hallo Paul Stead,\n\nwir sind hier auf LinkedIn vernetzt – und aus dem SAP-Kosmos kennen wir vermutlich beide die Frage, wie sich technologische Exzellenz und gelebte Werte im Unternehmen verbinden lassen. Genau an dieser Schnittstelle arbeite ich mit meiner „Wertebilanz“.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "6": "Hallo Uwe Birkel,\n\nwir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei Social Impact gGmbH finde ich stark – das ist genau die Schnittstelle, an der auch ich mit meiner „Wertebilanz“ ansetze: Werte für Führung und Organisation messbar und gestaltbar machen.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "7": "Hallo Jonas Geissler,\n\nwir sind hier auf LinkedIn vernetzt – und was du bei Jonas Geissler in Sachen Werte und Haltung bewegst, deckt sich sehr mit meinem Ansatz: Mit der „Wertebilanz“ mache ich Unternehmenswerte für Führungskräfte messbar und wirksam.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "8": "Hallo Dr. Leif Erik Wollenweber,\n\nwir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für Entwicklung – ich verbinde Coaching mit meiner „Wertebilanz“, um Führungskräften Werte als konkretes Steuerungsinstrument an die Hand zu geben.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "9": "Hallo Fabian Stark,\n\nwir sind hier auf LinkedIn vernetzt – und deine Arbeit rund um Werte und Wirkung bei PureFlow Filtersysteme GmbH finde ich stark – das ist genau die Schnittstelle, an der auch ich mit meiner „Wertebilanz“ ansetze: Werte für Führung und Organisation messbar und gestaltbar machen.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "10": "Hallo Ralf Dr. Zeiner,\n\nwir sind hier auf LinkedIn vernetzt – und Transformation gelingt selten allein über Prozesse – meist entscheiden Werte. Genau dafür habe ich die „Wertebilanz“ entwickelt, und bei deiner Arbeit rund um FUTURE FIT! LEADERSHIP + HUMAN CAPITAL ADVISORY sehe ich klare Berührungspunkte.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "11": "Hallo Brigitte Zentgraf,\n\nwir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für Entwicklung – ich verbinde Coaching mit meiner „Wertebilanz“, um Führungskräften Werte als konkretes Steuerungsinstrument an die Hand zu geben.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "12": "Hallo Graham Marr,\n\nwir sind hier auf LinkedIn vernetzt – und deine Rolle bei Bloomberg Talent & Advisory und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "13": "Hallo Dr. habil. Lisa Fröhlich,\n\nwir sind hier auf LinkedIn vernetzt – und was du bei ispira Think Tank für Nachhaltige Lieferketten in Sachen Werte und Haltung bewegst, deckt sich sehr mit meinem Ansatz: Mit der „Wertebilanz“ mache ich Unternehmenswerte für Führungskräfte messbar und wirksam.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "14": "Hallo Kai Zimmermann,\n\nwir sind hier auf LinkedIn vernetzt – und was du bei Buch  \"Nachhaltigkeit, die sich lohnt\" in Sachen Werte und Haltung bewegst, deckt sich sehr mit meinem Ansatz: Mit der „Wertebilanz“ mache ich Unternehmenswerte für Führungskräfte messbar und wirksam.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "15": "Hallo Anton Bonnländer,\n\nwir sind hier auf LinkedIn vernetzt – und was du bei BBuT - nachhaltige Zukunft verbessern in Sachen Werte und Haltung bewegst, deckt sich sehr mit meinem Ansatz: Mit der „Wertebilanz“ mache ich Unternehmenswerte für Führungskräfte messbar und wirksam.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "16": "Hallo Martin Nieswandt,\n\nwir sind hier auf LinkedIn vernetzt – und was du bei VenGa e.V. - Verein zur Förderung ethisch-nachhaltiger Geldanlagen in Sachen Werte und Haltung bewegst, deckt sich sehr mit meinem Ansatz: Mit der „Wertebilanz“ mache ich Unternehmenswerte für Führungskräfte messbar und wirksam.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "17": "Hallo Markus Ebner,\n\nwir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für Entwicklung – ich verbinde Coaching mit meiner „Wertebilanz“, um Führungskräften Werte als konkretes Steuerungsinstrument an die Hand zu geben.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "18": "Hallo Dr. Claudia Hilker,\n\nwir sind hier auf LinkedIn vernetzt – und deine Rolle bei Hilker Consulting und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "19": "Hallo Markus Coenen,\n\nwir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für Entwicklung – ich verbinde Coaching mit meiner „Wertebilanz“, um Führungskräften Werte als konkretes Steuerungsinstrument an die Hand zu geben.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "20": "Hallo Wolfgang Astecker, MIM,\n\nwir sind hier auf LinkedIn vernetzt – und deine Rolle bei Dr. Wolfgang Astecker Consulting St. Gallen und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "21": "Hallo Gian P. Zini,\n\nwir sind hier auf LinkedIn vernetzt – und deine Rolle bei C&Z GLOBAL Advisors und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "22": "Hallo Michèle Bachmann,\n\nwir sind hier auf LinkedIn vernetzt – und als Coach kennst du die Hebel für Entwicklung – ich verbinde Coaching mit meiner „Wertebilanz“, um Führungskräften Werte als konkretes Steuerungsinstrument an die Hand zu geben.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "23": "Hallo Rainer Kapellen,\n\nwir sind hier auf LinkedIn vernetzt – und deine Rolle bei Rainer Kapellen Consulting und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "24": "Hallo h.c. Dr. Sergey Serebranski,\n\nwir sind hier auf LinkedIn vernetzt – und deine Rolle bei JANSER CONSULT GmbH und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "25": "Hallo Alfred Diebold,\n\nwir sind hier auf LinkedIn vernetzt – und als Autor:in bewegst du Menschen mit Worten – ich schreibe und berate zur „Wertebilanz“, also dazu, wie Werte in Organisationen messbar Wirkung entfalten. Da sehe ich viele Anknüpfungspunkte.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "26": "Hallo med. Marcus Riedel,\n\nwir sind hier auf LinkedIn vernetzt – und deine Rolle bei Dr. Riedel Consulting und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "27": "Hallo Gordon Muehl,\n\nwir sind hier auf LinkedIn vernetzt – und deine Rolle bei MuehlCyberConsulting und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "28": "Hallo Peter Forster,\n\nwir sind hier auf LinkedIn vernetzt – und deine Rolle bei consult4re GmbH und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "29": "Hallo Jürgen Ruff,\n\nwir sind hier auf LinkedIn vernetzt – und deine Rolle bei Potenzialgestalter - juergen.ruff.consulting und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet", "30": "Hallo Michael Ulverich,\n\nwir sind hier auf LinkedIn vernetzt – und deine Rolle bei Michael Ulverich Consulting GmbH und mein Feld als Unternehmensberater rund um die „Wertebilanz“ – Werte messbar und führbar machen – berühren sich aus meiner Sicht stark.\n\nIch bin überzeugt: Zwischen deiner Arbeit und meinem Ansatz gibt es Anknüpfungspunkte, von denen wir beide profitieren könnten. Hättest du in den nächsten Wochen 20 Minuten für einen kurzen, unverbindlichen Austausch – digital oder telefonisch?\n\nÜber deine Rückmeldung freue ich mich.\n\nHerzliche Grüße\nRainer Monnet"};
 function sendMail(i, email, subject){
   const body = document.getElementById('body'+i).value;
   window.location.href = 'mailto:'+encodeURIComponent(email)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
