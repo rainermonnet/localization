@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Finder</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f6f9; color: #1a1a2e; min-height: 100vh; }
+  nav { background: #0077b5; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 52px; }
+  nav .brand { color: #fff; font-weight: 700; font-size: 1.1rem; }
+  nav .nav-right { display: flex; align-items: center; gap: 1rem; }
+  nav .nav-right a { color: rgba(255,255,255,.85); font-size: .88rem; cursor: pointer; text-decoration: none; }
+  nav .nav-right a:hover { color: #fff; }
+  .key-badge { background: rgba(255,255,255,.2); color: #fff; font-size: .75rem; padding: .2rem .55rem; border-radius: 10px; }
+  #settings-panel { display: none; position: fixed; top: 52px; right: 1.5rem; width: 380px; background: #fff; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,.15); padding: 1.5rem; z-index: 200; }
+  .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .card { background: #fff; border-radius: 10px; box-shadow: 0 1px 6px rgba(0,0,0,.1); padding: 1.75rem; margin-bottom: 1.5rem; }
+  h1 { font-size: 1.6rem; margin-bottom: .5rem; }
+  h2 { font-size: 1.2rem; margin-bottom: 1rem; }
+  label { display: block; font-size: .88rem; font-weight: 600; margin-bottom: .35rem; color: #333; }
+  input, textarea, select { width: 100%; padding: .55rem .75rem; border: 1.5px solid #d1d5db; border-radius: 6px; font-size: .9rem; margin-bottom: 1rem; font-family: inherit; }
+  input:focus, textarea:focus { outline: none; border-color: #0077b5; box-shadow: 0 0 0 3px rgba(0,119,181,.15); }
+  .btn { display: inline-block; padding: .55rem 1.3rem; border-radius: 6px; font-size: .9rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; transition: opacity .15s; }
+  .btn:hover { opacity: .85; }
+  .btn-primary { background: #0077b5; color: #fff; }
+  .btn-secondary { background: #e8f0fe; color: #1a1a2e; }
+  .btn-sm { padding: .35rem .85rem; font-size: .82rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; }
+  .result-card { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.1); padding: 1.25rem; }
+  .name { font-size: 1.05rem; font-weight: 700; margin-bottom: .3rem; }
+  .meta { font-size: .85rem; color: #555; margin-bottom: .25rem; }
+  .desc { font-size: .82rem; color: #666; line-height: 1.55; margin-bottom: .75rem; }
+  .badge { display: inline-block; padding: .2rem .55rem; border-radius: 4px; font-size: .75rem; font-weight: 600; margin-right: .3rem; }
+  .badge-blue { background: #dbeafe; color: #1e40af; }
+  .badge-green { background: #dcfce7; color: #166534; }
+  .badge-gray { background: #f3f4f6; color: #374151; }
+  .score-bar-wrap { background: #f3f4f6; border-radius: 4px; height: 6px; margin-top: .5rem; }
+  .score-bar { background: #0077b5; border-radius: 4px; height: 6px; }
+  #results { display: none; }
+  #outreach-panel { display: none; position: fixed; top: 0; right: 0; width: 480px; height: 100vh; background: #fff; box-shadow: -4px 0 20px rgba(0,0,0,.15); padding: 2rem; overflow-y: auto; z-index: 100; }
+  #outreach-panel h2 { margin-bottom: 1rem; }
+  #outreach-text { width: 100%; min-height: 200px; padding: .75rem; border: 1.5px solid #d1d5db; border-radius: 6px; font-family: inherit; font-size: .9rem; line-height: 1.65; resize: vertical; margin-bottom: 1rem; }
+  .strategy-list { background: #eff6ff; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1rem; }
+  .strategy-list li { font-size: .85rem; color: #1e40af; line-height: 2; }
+  .hero { text-align: center; padding: 3rem 0 1.5rem; }
+  .hero h1 { font-size: 2rem; }
+  .hero p { color: #555; font-size: 1.05rem; margin: .75rem 0 2rem; }
+  .feature-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; margin-top: 2rem; text-align: left; }
+  @media (max-width: 600px) { .feature-grid { grid-template-columns: 1fr; } #outreach-panel { width: 100%; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">Executive Finder</span>
+  <div class="nav-right">
+    <span id="key-status"></span>
+    <a onclick="toggleSettings()">&#9881; API-Key</a>
+  </div>
+</nav>
+
+<div id="settings-panel">
+  <h2 style="margin-bottom:.75rem;">Apollo.io API-Key</h2>
+  <p style="font-size:.85rem;color:#555;margin-bottom:1rem;">Der Key wird nur lokal in deinem Browser gespeichert – nie übertragen.</p>
+  <label>API-Key</label>
+  <input type="password" id="apollo-key-input" placeholder="Deinen Apollo.io Key einfügen">
+  <div style="display:flex;gap:.75rem;">
+    <button class="btn btn-primary btn-sm" onclick="saveKey()">Speichern</button>
+    <button class="btn btn-secondary btn-sm" onclick="clearKey()">Löschen</button>
+    <button class="btn btn-secondary btn-sm" onclick="toggleSettings()">Schliessen</button>
+  </div>
+  <div id="key-msg" style="margin-top:.75rem;font-size:.83rem;"></div>
+</div>
+
+<!-- START SCREEN -->
+<div id="screen-start" class="container">
+  <div class="hero">
+    <h1>Führungskräfte gezielt finden</h1>
+    <p>Filtere CEOs, CTOs und andere Führungskräfte nach Nähe zu deinem Kompetenzfeld<br>und generiere passende Outreach-Nachrichten.</p>
+    <button class="btn btn-primary" style="font-size:1rem;padding:.75rem 2.5rem;" onclick="showSearch()">Jetzt starten</button>
+    <div class="feature-grid">
+      <div class="card" style="padding:1.2rem;">
+        <div style="font-size:1.5rem;margin-bottom:.4rem;">&#128269;</div>
+        <strong>Gezielte Suche</strong>
+        <p style="font-size:.83rem;color:#666;margin-top:.3rem;">Keywords + Titelfilter kombinieren</p>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <div style="font-size:1.5rem;margin-bottom:.4rem;">&#128202;</div>
+        <strong>Relevanz-Ranking</strong>
+        <p style="font-size:.83rem;color:#666;margin-top:.3rem;">Automatische Bewertung nach Kompetenzüberschneidung</p>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <div style="font-size:1.5rem;margin-bottom:.4rem;">&#9993;</div>
+        <strong>Outreach-Templates</strong>
+        <p style="font-size:.83rem;color:#666;margin-top:.3rem;">3 fertige Anschreiben-Vorlagen</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH SCREEN -->
+<div id="screen-search" class="container" style="display:none;">
+  <div class="card">
+    <h2>Kompetenzfeld & Filter</h2>
+    <label>Schlüsselwörter (kommagetrennt oder je eine Zeile) *</label>
+    <textarea id="keywords" rows="4" placeholder="z.B.&#10;digitale Transformation&#10;KI / Machine Learning&#10;Change Management&#10;Nachhaltigkeit"></textarea>
+    <label>Gewünschte Titel (optional, kommagetrennt)</label>
+    <input type="text" id="titles" placeholder="leer = alle: CEO, CTO, Founder, Managing Director ...">
+    <label>Region (optional)</label>
+    <input type="text" id="location" placeholder="z.B. Deutschland, DACH, München">
+    <button class="btn btn-primary" onclick="doSearch()">Suche starten</button>
+    <button class="btn btn-secondary" style="margin-left:.75rem;" onclick="showStart()">Zurück</button>
+  </div>
+</div>
+
+<!-- RESULTS SCREEN -->
+<div id="screen-results" class="container" style="display:none;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.5rem;">
+    <h1 id="results-count"></h1>
+    <button class="btn btn-secondary btn-sm" onclick="showSearch()">Neue Suche</button>
+  </div>
+  <p id="keywords-display" style="margin-bottom:1.5rem;color:#555;"></p>
+  <div id="results-grid" class="grid"></div>
+</div>
+
+<!-- OUTREACH PANEL -->
+<div id="outreach-panel">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;">
+    <h2 id="outreach-person-name">Anschreiben</h2>
+    <button class="btn btn-secondary btn-sm" onclick="closeOutreach()">Schliessen</button>
+  </div>
+  <div id="outreach-person-info" style="margin-bottom:1.25rem;"></div>
+
+  <label>Vorlage</label>
+  <select id="template-select" onchange="regenerateOutreach()" style="margin-bottom:1rem;">
+    <option value="collaboration">Zusammenarbeit vorschlagen</option>
+    <option value="insight">Perspektive anfragen</option>
+    <option value="value">Mehrwert anbieten</option>
+  </select>
+
+  <label>Hauptkeyword für Anschreiben</label>
+  <input type="text" id="outreach-keyword" placeholder="z.B. digitale Transformation" oninput="regenerateOutreach()" style="margin-bottom:1rem;">
+
+  <textarea id="outreach-text"></textarea>
+
+  <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
+    <button class="btn btn-primary" onclick="copyOutreach()">Text kopieren</button>
+    <button id="li-btn" class="btn btn-secondary" style="display:none;" onclick="openLinkedIn()">LinkedIn Profil</button>
+  </div>
+
+  <div class="strategy-list" style="margin-top:1.5rem;">
+    <strong style="font-size:.88rem;color:#1e40af;">Outreach-Strategie:</strong>
+    <ol style="padding-left:1.2rem;margin-top:.5rem;">
+      <li>Erst folgen + 1-2 Posts liken (Sichtbarkeit aufbauen)</li>
+      <li>Dann vernetzen mit kurzer persönlicher Notiz</li>
+      <li>Nach Vernetzung die Direktnachricht senden</li>
+      <li>Falls keine Reaktion: nach 1 Woche Follow-up</li>
+      <li>Persönlichen Bezug hinzufügen (aktueller Post, Projekt)</li>
+    </ol>
+  </div>
+</div>
+
+<script>
+// ---- SETTINGS ----
+function toggleSettings() {
+  const p = document.getElementById('settings-panel');
+  p.style.display = p.style.display === 'none' || p.style.display === '' ? 'block' : 'none';
+  if (p.style.display === 'block') {
+    const saved = localStorage.getItem('apollo_key') || '';
+    document.getElementById('apollo-key-input').value = saved;
+  }
+}
+function saveKey() {
+  const val = document.getElementById('apollo-key-input').value.trim();
+  if (!val) { document.getElementById('key-msg').innerHTML = '<span style="color:red;">Bitte Key eingeben.</span>'; return; }
+  localStorage.setItem('apollo_key', val);
+  updateKeyStatus();
+  document.getElementById('key-msg').innerHTML = '<span style="color:green;">Gespeichert! Nächste Suche nutzt echte Apollo-Daten.</span>';
+}
+function clearKey() {
+  localStorage.removeItem('apollo_key');
+  document.getElementById('apollo-key-input').value = '';
+  updateKeyStatus();
+  document.getElementById('key-msg').innerHTML = '<span style="color:#888;">Key gelöscht – Demo-Modus aktiv.</span>';
+}
+function updateKeyStatus() {
+  const k = localStorage.getItem('apollo_key');
+  document.getElementById('key-status').innerHTML = k
+    ? '<span class="key-badge">&#10003; Apollo aktiv</span>'
+    : '';
+}
+
+// ---- APOLLO API (via local proxy to avoid CORS) ----
+async function fetchApollo(keywords, titles, location) {
+  const apiKey = localStorage.getItem('apollo_key');
+  if (!apiKey) return null;
+
+  const payload = {
+    apollo_key: apiKey,
+    keywords,
+    titles: titles && titles.length ? titles : null,
+    location: location || null,
+  };
+
+  try {
+    // Try local Python proxy first (no CORS issue)
+    const resp = await fetch('http://localhost:8000/api/search', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await resp.json();
+    if (!resp.ok) {
+      const msg = data.error || ('HTTP ' + resp.status);
+      throw new Error(msg);
+    }
+    if ((data.results || []).length === 0) {
+      throw new Error('Apollo: 0 Treffer – Keywords oder Filter anpassen');
+    }
+    return (data.results || []).map(p => ({ ...p, computedScore: p.relevance_score || p.score || 5 }));
+  } catch (e) {
+    window._apolloError = e.message;
+    console.warn('Apollo Fehler:', e.message);
+    return null;
+  }
+}
+
+function calcApolloScore(p, keywords) {
+  let score = 5.0;
+  const text = [p.title || '', (p.organization || {}).industry || '', (p.organization || {}).short_description || ''].join(' ').toLowerCase();
+  keywords.forEach(kw => { if (text.includes(kw.toLowerCase())) score += 0.8; });
+  if (p.seniority === 'c_suite') score += 2.0;
+  else if (['vp', 'owner', 'founder'].includes(p.seniority)) score += 1.5;
+  return Math.min(score, 10);
+}
+
+// ---- NAVIGATION ----
+function showStart() {
+  document.getElementById('screen-start').style.display = '';
+  document.getElementById('screen-search').style.display = 'none';
+  document.getElementById('screen-results').style.display = 'none';
+  closeOutreach();
+}
+function showSearch() {
+  document.getElementById('screen-start').style.display = 'none';
+  document.getElementById('screen-search').style.display = '';
+  document.getElementById('screen-results').style.display = 'none';
+  closeOutreach();
+}
+function showResults() {
+  document.getElementById('screen-start').style.display = 'none';
+  document.getElementById('screen-search').style.display = 'none';
+  document.getElementById('screen-results').style.display = '';
+}
+
+// ---- DEMO DATA ENGINE ----
+const DEMO_PEOPLE = [
+  { name: "Dr. Anna Müller", title: "CEO", company: "TechVentures GmbH", location: "München", desc: "Digitale Transformation, KI-Strategie, Scale-up Erfahrung aus 3 Exits.", score: 9.2, tags: ["KI","Transformation"], li: "" },
+  { name: "Thomas Bergmann", title: "CEO & Co-Founder", company: "FutureTech Solutions", location: "Frankfurt", desc: "Schwerpunkt Produktinnovation und nachhaltige Geschäftsmodelle. Board-Mitglied bei 2 NGOs.", score: 8.8, tags: ["Innovation","Nachhaltigkeit"], li: "" },
+  { name: "Dr. Julia Hoffmann", title: "Chief Strategy Officer", company: "Growth Partners GmbH", location: "Berlin", desc: "15 Jahre Strategieberatung (McKinsey). Spezialisierung auf Change Management und Post-Merger-Integration.", score: 8.5, tags: ["Change","Strategie"], li: "" },
+  { name: "Marcus Weber", title: "Managing Director", company: "Innovation Labs AG", location: "Hamburg", desc: "Serial Entrepreneur, 4 Exits. Fokus auf B2B-SaaS und datengetriebene Geschäftsmodelle.", score: 8.2, tags: ["SaaS","Data"], li: "" },
+  { name: "Sarah Klein", title: "CTO", company: "Digital Dynamics SE", location: "Düsseldorf", desc: "Technologieführerin mit Fokus auf Machine Learning und skalierbare Architektur.", score: 8.0, tags: ["KI","Tech"], li: "" },
+  { name: "Robert Schneider", title: "Managing Director", company: "Scale Ventures AG", location: "Zürich", desc: "Wachstumsexperte für mittelständische Unternehmen in DACH. Speaker auf TEDx 2024.", score: 7.8, tags: ["Wachstum","DACH"], li: "" },
+  { name: "Prof. Dr. Klaus Richter", title: "Founder & Chairman", company: "Impact Innovations GmbH", location: "Stuttgart", desc: "Kombination aus Wissenschaft und unternehmerischer Praxis. Forschungsschwerpunkt ESG.", score: 7.5, tags: ["ESG","Innovation"], li: "" },
+  { name: "Christina Bauer", title: "VP Business Development", company: "NextGen Enterprises", location: "Köln", desc: "Aufbau internationaler Vertriebsstrukturen, Fokus auf strategische Partnerschaften.", score: 7.2, tags: ["Vertrieb","Partnerships"], li: "" },
+  { name: "Michael Lehmann", title: "Co-Founder & COO", company: "Lean Ventures", location: "Wien", desc: "Operational Excellence und Prozessoptimierung in Scale-up-Umgebungen.", score: 7.0, tags: ["Operations","Lean"], li: "" },
+  { name: "Dr. Sophie Werner", title: "CEO", company: "Sustainable Growth AG", location: "München", desc: "Pionierin für nachhaltige Unternehmensführung, Beirätin im Bundesministerium für Wirtschaft.", score: 6.8, tags: ["Nachhaltigkeit","ESG"], li: "" },
+  { name: "Felix Krause", title: "Chief Innovation Officer", company: "Digital First GmbH", location: "Berlin", desc: "Aufbau von Corporate Innovation Labs. Verbindet Startup-Ökosystem mit Konzernstrukturen.", score: 6.5, tags: ["Innovation","Corporate"], li: "" },
+  { name: "Laura Zimmermann", title: "Founder & CEO", company: "PurposeWorks", location: "Hamburg", desc: "Purpose-driven Leadership und New Work. Autorin von 'Führen mit Sinn'.", score: 6.3, tags: ["Leadership","NewWork"], li: "" },
+];
+
+let currentPerson = null;
+let currentKeywords = [];
+
+async function doSearch() {
+  const raw = document.getElementById('keywords').value.trim();
+  if (!raw) { alert('Bitte mindestens ein Schlüsselwort eingeben.'); return; }
+
+  currentKeywords = raw.split(/[\n,]+/).map(k => k.trim()).filter(Boolean);
+  const titleRaw = document.getElementById('titles').value.trim();
+  const titles = titleRaw ? titleRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+  const locationFilter = document.getElementById('location').value.trim();
+
+  // Show loading
+  document.getElementById('results-count').textContent = 'Suche läuft...';
+  showResults();
+  document.getElementById('results-grid').innerHTML = '<p style="color:#888;">&#8987; Bitte warten...</p>';
+
+  // Try Apollo.io first
+  let results = null;
+  let sourceLabel = '';
+  if (localStorage.getItem('apollo_key')) {
+    results = await fetchApollo(currentKeywords, titles, locationFilter || null);
+    if (results && results.length > 0) {
+      sourceLabel = ' (Apollo.io)';
+    } else if (results !== null) {
+      sourceLabel = ' (Apollo.io – keine Treffer, Demo-Ergänzung)';
+      results = null;
+    } else {
+      sourceLabel = ' ⚠ Apollo-Fehler: ' + (window._apolloError || 'unbekannt');
+    }
+  }
+
+  // Fallback: demo data
+  if (!results) {
+    results = DEMO_PEOPLE.map(p => {
+      let score = p.score;
+      const text = (p.desc + ' ' + p.tags.join(' ') + ' ' + p.title).toLowerCase();
+      currentKeywords.forEach(kw => { if (text.includes(kw.toLowerCase())) score += 0.5; });
+      return { ...p, computedScore: Math.min(score, 10) };
+    });
+    if (titles.length) results = results.filter(p => titles.some(t => p.title.toLowerCase().includes(t.toLowerCase())));
+    if (locationFilter) results = results.filter(p => p.location.toLowerCase().includes(locationFilter.toLowerCase()));
+    results.sort((a, b) => b.computedScore - a.computedScore);
+    if (!sourceLabel) sourceLabel = ' (Demo-Daten)';
+  }
+
+  // Render
+  document.getElementById('results-count').textContent = results.length + ' Führungskräfte gefunden' + sourceLabel;
+  document.getElementById('keywords-display').innerHTML = 'Keywords: ' + currentKeywords.map(k => `<span class="badge badge-blue">${k}</span>`).join(' ');
+
+  window._results = results;
+  document.getElementById('results-grid').innerHTML = results.length === 0
+    ? '<p style="color:#888;">Keine Ergebnisse. Passe den Filter an.</p>'
+    : results.map((p, i) => `
+      <div class="result-card">
+        <div class="name">${p.name}</div>
+        <div class="meta"><strong>${p.title}</strong>${p.company ? ' · ' + p.company : ''}</div>
+        ${p.location ? `<div class="meta" style="color:#888;">&#128205; ${p.location}</div>` : ''}
+        ${p.desc ? `<div class="desc">${p.desc}</div>` : ''}
+        <div style="font-size:.78rem;display:flex;justify-content:space-between;margin-bottom:.2rem;margin-top:.5rem;"><span>Relevanz</span><span>${p.computedScore.toFixed(1)}/10</span></div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:${p.computedScore * 10}%;"></div></div>
+        <div style="margin-top:.75rem;">
+          ${(p.tags || []).filter(Boolean).map(t => `<span class="badge badge-gray">${t}</span>`).join('')}
+          ${p.email ? `<span class="badge badge-green">&#9993; ${p.email}</span>` : ''}
+        </div>
+        <div style="margin-top:.85rem;">
+          <button class="btn btn-primary btn-sm" onclick="openOutreach(${i})">Anschreiben generieren</button>
+          ${p.li ? `<a href="${p.li}" target="_blank" class="btn btn-secondary btn-sm" style="margin-left:.5rem;">LinkedIn</a>` : ''}
+        </div>
+      </div>
+    `).join('');
+}
+
+// ---- OUTREACH ----
+function openOutreach(idx) {
+  currentPerson = window._results[idx];
+  document.getElementById('outreach-person-name').textContent = currentPerson.name;
+  document.getElementById('outreach-person-info').innerHTML = `
+    <span class="badge badge-gray">${currentPerson.title}</span>
+    <span class="badge badge-blue">${currentPerson.company}</span>
+    <span class="badge badge-gray">&#128205; ${currentPerson.location}</span>
+  `;
+  document.getElementById('outreach-keyword').value = currentKeywords[0] || '';
+  if (currentPerson.li) {
+    document.getElementById('li-btn').style.display = '';
+  } else {
+    document.getElementById('li-btn').style.display = 'none';
+  }
+  regenerateOutreach();
+  document.getElementById('outreach-panel').style.display = '';
+}
+
+function closeOutreach() {
+  document.getElementById('outreach-panel').style.display = 'none';
+}
+
+function regenerateOutreach() {
+  if (!currentPerson) return;
+  const kw = document.getElementById('outreach-keyword').value || (currentKeywords[0] || 'Ihrem Fachgebiet');
+  const tpl = document.getElementById('template-select').value;
+  document.getElementById('outreach-text').value = buildOutreach(currentPerson, kw, tpl);
+}
+
+function buildOutreach(p, kw, tpl) {
+  const name = p.name;
+  const company = p.company;
+  if (tpl === 'collaboration') return `Betreff: Möglichkeit zur Zusammenarbeit im Bereich ${kw}
+
+Sehr geehrte/r ${name},
+
+ich bin auf Ihr Profil gestoßen und beeindruckt von Ihrer Arbeit bei ${company} im Bereich ${kw}.
+
+Als jemand, der ebenfalls intensiv in diesem Feld tätig ist, sehe ich großes Potenzial für eine strategische Zusammenarbeit, die beiden Seiten erheblichen Mehrwert bieten könnte.
+
+Wären Sie offen für ein kurzes Gespräch (15–20 Min.), um auszuloten, ob es Synergien gibt?
+
+Mit freundlichen Grüßen`;
+  if (tpl === 'insight') return `Betreff: Ihre Perspektive zu ${kw} – kurze Frage
+
+Sehr geehrte/r ${name},
+
+Ihre Führungsarbeit bei ${company} im Bereich ${kw} ist bemerkenswert. Ich beschäftige mich intensiv mit diesem Thema und würde Ihre Einschätzung zu aktuellen Entwicklungen sehr schätzen.
+
+Hätten Sie 10 Minuten für einen kurzen Austausch – per Call oder auch gerne schriftlich?
+
+Mit freundlichen Grüßen`;
+  return `Betreff: Konkreter Mehrwert für ${company} im Bereich ${kw}
+
+Sehr geehrte/r ${name},
+
+ich habe mir Ihre Strategie bei ${company} genauer angesehen und glaube, dass ich Ihnen im Bereich ${kw} konkreten Mehrwert bieten kann.
+
+Mein Ansatz hat in vergleichbaren Situationen bereits messbare Ergebnisse erzielt. Gerne teile ich Details in einem kurzen Call.
+
+Mit freundlichen Grüßen`;
+}
+
+function copyOutreach() {
+  const el = document.getElementById('outreach-text');
+  el.select();
+  navigator.clipboard.writeText(el.value).catch(() => {
+    el.select(); document.execCommand('copy');
+  });
+  const btn = event.target;
+  btn.textContent = 'Kopiert!';
+  setTimeout(() => btn.textContent = 'Text kopieren', 2000);
+}
+
+function openLinkedIn() {
+  if (currentPerson && currentPerson.li) window.open(currentPerson.li, '_blank');
+}
+
+// Init
+updateKeyStatus();
+</script>
+</body>
+</html>

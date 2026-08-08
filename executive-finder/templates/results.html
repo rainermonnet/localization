@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Ergebnisse – Executive Finder{% endblock %}
+
+{% block extra_style %}
+<style>
+  .result-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.2rem; }
+
+  .result-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.1);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+  }
+
+  .result-card .name { font-size: 1.05rem; font-weight: 700; }
+  .result-card .meta { font-size: .85rem; color: #555; }
+  .result-card .desc { font-size: .83rem; color: #666; line-height: 1.5; }
+  .result-card .actions { margin-top: auto; display: flex; gap: .5rem; flex-wrap: wrap; }
+
+  .score-bar-wrap { background: #f3f4f6; border-radius: 4px; height: 6px; }
+  .score-bar { background: #0077b5; border-radius: 4px; height: 6px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.5rem;">
+  <h1>{{ count }} Führungskräfte gefunden</h1>
+  <a href="/dashboard" class="btn btn-secondary btn-sm">Neue Suche</a>
+</div>
+
+<p style="margin-bottom:1.5rem;color:#555;">
+  Keywords: {% for kw in keywords %}<span class="badge badge-blue" style="margin-right:.3rem;">{{ kw }}</span>{% endfor %}
+</p>
+
+{% if results %}
+<div class="result-grid">
+  {% for person in results %}
+  <div class="result-card">
+    <div class="name">{{ person.name }}</div>
+    <div class="meta">
+      <strong>{{ person.title }}</strong>
+      {% if person.company %} · {{ person.company }}{% endif %}
+    </div>
+    {% if person.location %}
+    <div class="meta" style="color:#888;">📍 {{ person.location }}</div>
+    {% endif %}
+    {% if person.description %}
+    <div class="desc">{{ person.description }}</div>
+    {% endif %}
+
+    <div>
+      <div style="display:flex;justify-content:space-between;font-size:.78rem;margin-bottom:.25rem;">
+        <span>Relevanz</span>
+        <span>{{ "%.1f"|format(person.relevance_score) }}</span>
+      </div>
+      <div class="score-bar-wrap">
+        <div class="score-bar" style="width: {{ [person.relevance_score * 15, 100] | min }}%;"></div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;">
+      <span class="badge badge-gray">{{ person.source }}</span>
+      {% if person.linkedin_url %}
+      <a href="{{ person.linkedin_url }}" target="_blank" class="badge badge-blue" style="text-decoration:none;">LinkedIn</a>
+      {% endif %}
+      {% if person.email %}
+      <span class="badge badge-green">{{ person.email }}</span>
+      {% endif %}
+    </div>
+
+    <div class="actions">
+      <form method="POST" action="/outreach" style="display:contents;">
+        <input type="hidden" name="person_json" value='{{ person | tojson }}'>
+        <input type="hidden" name="keyword" value="{{ keywords[0] if keywords else '' }}">
+        <select name="template_key" style="font-size:.8rem;padding:.25rem .4rem;border-radius:5px;border:1px solid #d1d5db;margin-right:.3rem;">
+          {% for tpl in outreach_templates %}
+          <option value="{{ tpl }}">{{ tpl.replace('_', ' ').title() }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary btn-sm">Anschreiben</button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card" style="text-align:center;color:#888;">
+  Keine Ergebnisse gefunden. Versuche andere Keywords oder erweitere den Titelfilter.
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Outreach CRM</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f0f4f8; color: #1a202c; min-height: 100vh; }
+
+nav { background: #0077b5; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; height: 54px; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+nav .brand { color: #fff; font-weight: 700; font-size: 1.1rem; }
+nav .nav-right { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem 1rem; border-radius: 6px; font-size: .85rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; transition: opacity .15s, transform .1s; white-space: nowrap; }
+.btn:hover { opacity: .88; }
+.btn:active { transform: scale(.97); }
+.btn-primary { background: #0077b5; color: #fff; }
+.btn-white { background: rgba(255,255,255,.15); color: #fff; border: 1px solid rgba(255,255,255,.3); }
+.btn-white:hover { background: rgba(255,255,255,.25); opacity: 1; }
+.btn-green { background: #16a34a; color: #fff; }
+.btn-danger { background: #dc2626; color: #fff; }
+.btn-gray { background: #e5e7eb; color: #374151; }
+.btn-sm { padding: .3rem .7rem; font-size: .78rem; }
+
+.container { max-width: 1150px; margin: 0 auto; padding: 1.5rem; }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.stat-card { background: #fff; border-radius: 8px; padding: 1rem 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.stat-num { font-size: 1.8rem; font-weight: 700; line-height: 1; }
+.stat-label { font-size: .78rem; color: #6b7280; margin-top: .25rem; }
+
+.filter-bar { display: flex; gap: .6rem; margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; }
+.filter-chip { padding: .35rem .85rem; border-radius: 20px; font-size: .82rem; font-weight: 600; cursor: pointer; border: 2px solid transparent; transition: all .15s; background: #fff; color: #6b7280; }
+.filter-chip:hover { border-color: #0077b5; color: #0077b5; }
+.filter-chip.active { background: #0077b5; color: #fff; border-color: #0077b5; }
+.search-input { flex: 1; min-width: 200px; padding: .4rem .85rem; border: 1.5px solid #d1d5db; border-radius: 20px; font-size: .85rem; }
+.search-input:focus { outline: none; border-color: #0077b5; }
+
+.contact-table { background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,.08); overflow: hidden; }
+.contact-table table { width: 100%; border-collapse: collapse; }
+.contact-table th { background: #f9fafb; padding: .75rem 1rem; text-align: left; font-size: .75rem; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid #e5e7eb; }
+.contact-table td { padding: .8rem 1rem; border-bottom: 1px solid #f3f4f6; vertical-align: middle; font-size: .87rem; }
+.contact-table tr:last-child td { border-bottom: none; }
+.contact-table tr:hover td { background: #f9fafb; }
+
+.person-name { font-weight: 700; color: #111; }
+.person-title { font-size: .78rem; color: #6b7280; margin-top: .1rem; }
+
+.status-badge { display: inline-block; padding: .25rem .65rem; border-radius: 12px; font-size: .73rem; font-weight: 700; cursor: pointer; user-select: none; }
+.s-offen { background: #fef3c7; color: #92400e; }
+.s-kontaktiert { background: #dbeafe; color: #1e40af; }
+.s-vernetzt { background: #e0e7ff; color: #4338ca; }
+.s-antwort { background: #d1fae5; color: #065f46; }
+.s-abgeschlossen { background: #f3f4f6; color: #374151; }
+
+.score-pill { display: inline-block; padding: .15rem .5rem; border-radius: 10px; font-size: .73rem; font-weight: 700; background: #eff6ff; color: #1d4ed8; }
+
+.empty-state { text-align: center; padding: 4rem 2rem; color: #9ca3af; }
+.empty-state .icon { font-size: 3rem; margin-bottom: 1rem; }
+.empty-state h3 { font-size: 1.1rem; margin-bottom: .5rem; color: #6b7280; }
+
+/* Modal */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 200; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal { background: #fff; border-radius: 12px; width: 600px; max-width: 96vw; max-height: 92vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+.modal-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; }
+.modal-header h2 { font-size: 1.1rem; }
+.modal-body { padding: 1.5rem; }
+.modal-footer { padding: 1rem 1.5rem; border-top: 1px solid #e5e7eb; display: flex; gap: .75rem; justify-content: flex-end; flex-wrap: wrap; }
+label { display: block; font-size: .83rem; font-weight: 600; color: #374151; margin-bottom: .3rem; margin-top: .9rem; }
+label:first-child { margin-top: 0; }
+input[type=text], input[type=url], textarea, select { width: 100%; padding: .5rem .75rem; border: 1.5px solid #d1d5db; border-radius: 6px; font-size: .88rem; font-family: inherit; }
+input:focus, textarea:focus, select:focus { outline: none; border-color: #0077b5; box-shadow: 0 0 0 3px rgba(0,119,181,.12); }
+textarea { resize: vertical; min-height: 70px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+/* Import modal specifics */
+.drop-zone { border: 2px dashed #d1d5db; border-radius: 8px; padding: 2.5rem; text-align: center; cursor: pointer; transition: border-color .2s, background .2s; margin-bottom: .75rem; }
+.drop-zone:hover, .drop-zone.dragover { border-color: #0077b5; background: #eff6ff; }
+.drop-zone input[type=file] { display: none; }
+.drop-zone .icon { font-size: 2rem; margin-bottom: .5rem; }
+.drop-zone p { font-size: .88rem; color: #6b7280; margin-top: .25rem; }
+.import-preview { background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 1rem; margin-top: 1rem; font-size: .88rem; }
+.import-preview.error { background: #fef2f2; border-color: #fca5a5; }
+.hint-box { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; padding: 1rem 1.25rem; font-size: .85rem; color: #78350f; line-height: 1.7; }
+.hint-box strong { display: block; margin-bottom: .35rem; }
+
+/* Outreach panel */
+.outreach-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 200; }
+.outreach-overlay.open { display: block; }
+.outreach-panel { position: fixed; top: 0; right: 0; width: 500px; max-width: 96vw; height: 100vh; background: #fff; box-shadow: -4px 0 24px rgba(0,0,0,.15); z-index: 201; overflow-y: auto; display: none; }
+.outreach-panel.open { display: block; }
+.outreach-header { padding: 1.25rem 1.5rem; background: #0077b5; color: #fff; display: flex; justify-content: space-between; align-items: center; }
+.outreach-body { padding: 1.5rem; }
+.outreach-body label { margin-top: .75rem; }
+.outreach-body label:first-child { margin-top: 0; }
+#outreach-textarea { min-height: 220px; font-size: .9rem; line-height: 1.65; }
+.strategy-box { background: #eff6ff; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1.25rem; }
+.strategy-box h4 { font-size: .85rem; color: #1e40af; margin-bottom: .5rem; }
+.strategy-box ol { padding-left: 1.2rem; }
+.strategy-box li { font-size: .82rem; color: #1e40af; line-height: 1.9; }
+
+@media (max-width: 700px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .form-row { grid-template-columns: 1fr; }
+  .outreach-panel { width: 100%; }
+  nav .nav-right { gap: .4rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">Executive Outreach CRM</span>
+  <div class="nav-right">
+    <button class="btn btn-white btn-sm" onclick="openImport()">&#8679; LinkedIn CSV importieren</button>
+    <button class="btn btn-white btn-sm" onclick="exportCSV()">&#8615; Export</button>
+    <button class="btn btn-white btn-sm" onclick="openAdd()">+ Manuell hinzufügen</button>
+    <button class="btn btn-white btn-sm" onclick="setNewsletterUrl()" title="Newsletter-Anmeldelink festlegen">&#9881; Newsletter-Link</button>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-num" id="stat-total" style="color:#0077b5;">0</div>
+      <div class="stat-label">Gesamt</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-offen" style="color:#d97706;">0</div>
+      <div class="stat-label">Offen</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-kontaktiert" style="color:#2563eb;">0</div>
+      <div class="stat-label">Kontaktiert</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-vernetzt" style="color:#7c3aed;">0</div>
+      <div class="stat-label">Vernetzt</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-antwort" style="color:#16a34a;">0</div>
+      <div class="stat-label">Antwort</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="stat-email" style="color:#059669;">0</div>
+      <div class="stat-label">Mit E-Mail</div>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <input type="text" class="search-input" id="search-input" placeholder="&#128269; Name, Unternehmen, Titel..." oninput="renderTable()">
+    <span class="filter-chip active" data-status="alle" onclick="setFilter(this)">Alle</span>
+    <span class="filter-chip" data-status="Offen" onclick="setFilter(this)">Offen</span>
+    <span class="filter-chip" data-status="Kontaktiert" onclick="setFilter(this)">Kontaktiert</span>
+    <span class="filter-chip" data-status="Vernetzt" onclick="setFilter(this)">Vernetzt</span>
+    <span class="filter-chip" data-status="Antwort erhalten" onclick="setFilter(this)">Antwort</span>
+    <span class="filter-chip" data-status="Abgeschlossen" onclick="setFilter(this)">Abgeschlossen</span>
+  </div>
+
+  <div class="contact-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Person</th>
+          <th>Unternehmen</th>
+          <th>Status</th>
+          <th>Relevanz</th>
+          <th>Notiz</th>
+          <th>Aktionen</th>
+        </tr>
+      </thead>
+      <tbody id="contacts-tbody"></tbody>
+    </table>
+    <div id="empty-state" class="empty-state">
+      <div class="icon">&#128101;</div>
+      <h3>Noch keine Kontakte</h3>
+      <p style="font-size:.88rem;margin-bottom:1.25rem;">Importiere deine LinkedIn-Verbindungen als CSV – die App filtert automatisch alle Führungskräfte heraus.</p>
+      <button class="btn btn-primary" onclick="openImport()">&#8679; LinkedIn CSV importieren</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT MODAL -->
+<div class="modal-overlay" id="import-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>LinkedIn CSV importieren</h2>
+      <button class="btn btn-gray btn-sm" onclick="closeImport()">&#10005;</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="hint-box">
+        <strong>So exportierst du deine LinkedIn-Verbindungen:</strong>
+        1. LinkedIn öffnen → Mein Netzwerk → Verbindungen<br>
+        2. Oben rechts: "Verbindungen verwalten" → "Daten exportieren"<br>
+        3. Oder: Einstellungen → Datenschutz → Kopie deiner Daten → "Verbindungen" ankreuzen → Archiv anfordern<br>
+        4. Nach ~10 Min. erhältst du eine E-Mail mit dem Download-Link<br>
+        5. ZIP entpacken → Datei <strong>Connections.csv</strong> hier hochladen
+      </div>
+
+      <label style="margin-top:1.25rem;">Mein Kompetenzfeld (Keywords für Relevanz-Score)</label>
+      <input type="text" id="import-keywords" placeholder="z.B. digitale Transformation, KI, Nachhaltigkeit, Leadership">
+
+      <label>Nur diese Titel importieren (leer = alle Führungskräfte)</label>
+      <input type="text" id="import-title-filter" value="CEO,CTO,CFO,COO,CMO,CPO,Founder,Co-Founder,Geschäftsführer,Managing Director,Inhaber,President,Direktor,Head of,VP,Vice President">
+
+      <label style="margin-top:1.25rem;">Connections.csv hochladen</label>
+      <div class="drop-zone" id="drop-zone" onclick="document.getElementById('csv-file').click()" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)">
+        <input type="file" id="csv-file" accept=".csv" onchange="handleFile(this.files[0])">
+        <div class="icon">&#128196;</div>
+        <strong>Datei hierher ziehen oder klicken</strong>
+        <p>Connections.csv von LinkedIn</p>
+      </div>
+      <div id="import-preview" style="display:none;"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gray" onclick="closeImport()">Abbrechen</button>
+      <button class="btn btn-primary" id="import-btn" onclick="doImport()" style="display:none;">Importieren</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD/EDIT MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Kontakt hinzufügen</h2>
+      <button class="btn btn-gray btn-sm" onclick="closeModal()">&#10005;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div>
+          <label>Vorname *</label>
+          <input type="text" id="f-firstname" placeholder="Anna">
+        </div>
+        <div>
+          <label>Nachname *</label>
+          <input type="text" id="f-lastname" placeholder="Müller">
+        </div>
+      </div>
+      <label>Titel / Position *</label>
+      <input type="text" id="f-title" placeholder="CEO, CTO, Managing Director ...">
+      <label>Unternehmen *</label>
+      <input type="text" id="f-company" placeholder="Unternehmensname">
+      <label>LinkedIn-URL</label>
+      <input type="url" id="f-linkedin" placeholder="https://linkedin.com/in/...">
+      <label>Kompetenz-Keyword (für Anschreiben)</label>
+      <input type="text" id="f-keyword" placeholder="z.B. digitale Transformation">
+      <label>Status</label>
+      <select id="f-status">
+        <option value="Offen">Offen</option>
+        <option value="Kontaktiert">Kontaktiert</option>
+        <option value="Vernetzt">Vernetzt</option>
+        <option value="Antwort erhalten">Antwort erhalten</option>
+        <option value="Abgeschlossen">Abgeschlossen</option>
+      </select>
+      <label>Notiz</label>
+      <textarea id="f-notes" placeholder="Kontext, Gemeinsamkeiten, wann kontaktiert..."></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-gray" onclick="closeModal()">Abbrechen</button>
+      <button class="btn btn-primary" onclick="saveContact()">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<!-- OUTREACH PANEL -->
+<div class="outreach-overlay" id="outreach-overlay" onclick="closeOutreach()"></div>
+<div class="outreach-panel" id="outreach-panel">
+  <div class="outreach-header">
+    <div>
+      <div style="font-weight:700;font-size:1rem;" id="op-name"></div>
+      <div style="font-size:.82rem;opacity:.85;" id="op-meta"></div>
+    </div>
+    <button class="btn btn-white btn-sm" onclick="closeOutreach()">&#10005;</button>
+  </div>
+  <div class="outreach-body">
+    <div id="op-email-section" style="margin-bottom:1rem;"></div>
+    <label>Vorlage</label>
+    <select id="op-template" onchange="buildOutreach()" style="margin-bottom:.75rem;">
+      <option value="collaboration">Zusammenarbeit vorschlagen</option>
+      <option value="insight">Perspektive anfragen</option>
+      <option value="value">Mehrwert anbieten</option>
+      <option value="newsletter">Newsletter-Einladung (E-Mail)</option>
+    </select>
+    <label>Keyword im Anschreiben</label>
+    <input type="text" id="op-keyword" oninput="buildOutreach()" style="margin-bottom:.75rem;">
+    <label>Anschreiben</label>
+    <textarea id="outreach-textarea"></textarea>
+    <div style="display:flex;gap:.75rem;margin-top:1rem;flex-wrap:wrap;">
+      <button class="btn btn-green" id="op-mail-btn" onclick="sendEmail()" style="display:none;">✉ Per E-Mail senden</button>
+      <button class="btn btn-primary" onclick="copyOutreach()">Text kopieren</button>
+      <button class="btn btn-gray" id="op-li-btn" onclick="openLinkedIn()" style="display:none;">LinkedIn öffnen</button>
+      <button class="btn btn-green btn-sm" onclick="markKontaktiert()">Als "Kontaktiert" markieren</button>
+    </div>
+    <div class="strategy-box">
+      <h4>Strategie-Tipps</h4>
+      <ol>
+        <li>Erst folgen + 1–2 Posts liken (Sichtbarkeit aufbauen)</li>
+        <li>Dann vernetzen mit persönlicher Notiz</li>
+        <li>Nach Vernetzung Direktnachricht senden</li>
+        <li>Nach 1 Woche ohne Reaktion: kurzes Follow-up</li>
+        <li>Persönlichen Bezug einbauen (aktueller Post, Projekt)</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- DATA ----
+const STORAGE_KEY = 'executive_crm_v2';
+const NEWSLETTER_KEY = 'monnet_newsletter_url';
+const SENDER_KEY = 'monnet_sender_name';
+let contacts = [];
+let editingId = null;
+let currentFilter = 'alle';
+let outreachContact = null;
+let pendingImport = [];
+
+function getNewsletterUrl() { return localStorage.getItem(NEWSLETTER_KEY) || 'https://monnet.com/newsletter'; }
+function getSenderName() { return localStorage.getItem(SENDER_KEY) || ''; }
+function setNewsletterUrl() {
+  const cur = getNewsletterUrl();
+  const url = prompt('Anmeldelink zu deinem Newsletter (Double-Opt-In-Seite auf monnet.com):', cur);
+  if (url !== null && url.trim()) {
+    localStorage.setItem(NEWSLETTER_KEY, url.trim());
+    const name = prompt('Dein Name (erscheint als Absender-Unterschrift in den E-Mails):', getSenderName());
+    if (name !== null) localStorage.setItem(SENDER_KEY, name.trim());
+    alert('✓ Gespeichert.\n\nNewsletter-Link: ' + url.trim());
+    if (outreachContact) buildOutreach();
+  }
+}
+
+function load() {
+  try { contacts = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { contacts = []; }
+}
+function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(contacts)); }
+function newId() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+
+// ---- EXECUTIVE TITLE DETECTION ----
+const EXEC_KEYWORDS = [
+  'ceo','cto','cfo','coo','cmo','cpo','ciso','chro','cdo',
+  'chief executive','chief technology','chief financial','chief operating',
+  'chief marketing','chief product','chief data','chief digital',
+  'founder','co-founder','gründer','mitgründer',
+  'managing director','geschäftsführer','geschäftsleitung','inhaber',
+  'president','vice president',' vp ',
+  'general manager','head of','director','direktor',
+  'partner','principal','owner','eigentümer'
+];
+
+function isExecutive(title) {
+  if (!title) return false;
+  const t = title.toLowerCase();
+  return EXEC_KEYWORDS.some(k => t.includes(k));
+}
+
+function scoreRelevance(title, company, keywords) {
+  if (!keywords || !keywords.length) return 0;
+  const text = (title + ' ' + company).toLowerCase();
+  let score = 0;
+  keywords.forEach(kw => { if (text.includes(kw.toLowerCase())) score += 2; });
+  const t = title.toLowerCase();
+  if (t.includes('ceo') || t.includes('founder') || t.includes('geschäftsführer') || t.includes('inhaber')) score += 3;
+  else if (t.includes('cto') || t.includes('coo') || t.includes('cfo') || t.includes('president')) score += 2;
+  else if (t.includes('director') || t.includes('head of') || t.includes('vp')) score += 1;
+  return score;
+}
+
+// ---- CSV PARSING ----
+function parseCSV(text) {
+  const lines = text.split(/\r?\n/);
+  if (lines.length < 2) return [];
+
+  // Find header row (LinkedIn sometimes has info rows before headers)
+  let headerIdx = 0;
+  for (let i = 0; i < Math.min(5, lines.length); i++) {
+    if (lines[i].toLowerCase().includes('first name') || lines[i].toLowerCase().includes('vorname')) {
+      headerIdx = i;
+      break;
+    }
+  }
+
+  const headers = parseCSVRow(lines[headerIdx]).map(h => h.toLowerCase().trim());
+  const col = name => headers.findIndex(h => h.includes(name));
+
+  const iFirst = col('first');
+  const iLast = col('last');
+  const iPos = col('position');
+  const iComp = col('company') !== -1 ? col('company') : col('organisation');
+  const iURL = col('url');
+  const iEmail = col('email');
+
+  const rows = [];
+  for (let i = headerIdx + 1; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    const cells = parseCSVRow(lines[i]);
+    const get = idx => (idx >= 0 && cells[idx] ? cells[idx].trim() : '');
+    rows.push({
+      firstname: get(iFirst),
+      lastname: get(iLast),
+      title: get(iPos),
+      company: get(iComp),
+      linkedin: get(iURL),
+      email: get(iEmail),
+    });
+  }
+  return rows.filter(r => r.firstname || r.lastname);
+}
+
+function parseCSVRow(line) {
+  const cells = [];
+  let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') {
+      if (inQ && line[i+1] === '"') { cur += '"'; i++; }
+      else inQ = !inQ;
+    } else if (ch === ',' && !inQ) {
+      cells.push(cur); cur = '';
+    } else {
+      cur += ch;
+    }
+  }
+  cells.push(cur);
+  return cells;
+}
+
+// ---- IMPORT FLOW ----
+let csvRows = [];
+
+function openImport() {
+  csvRows = [];
+  pendingImport = [];
+  document.getElementById('import-preview').style.display = 'none';
+  document.getElementById('import-preview').innerHTML = '';
+  document.getElementById('import-btn').style.display = 'none';
+  document.getElementById('csv-file').value = '';
+  document.getElementById('import-overlay').classList.add('open');
+}
+function closeImport() { document.getElementById('import-overlay').classList.remove('open'); }
+
+function dragOver(e) { e.preventDefault(); document.getElementById('drop-zone').classList.add('dragover'); }
+function dragLeave() { document.getElementById('drop-zone').classList.remove('dragover'); }
+function dropFile(e) { e.preventDefault(); dragLeave(); handleFile(e.dataTransfer.files[0]); }
+
+function handleFile(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => processCSV(e.target.result);
+  reader.readAsText(file, 'UTF-8');
+}
+
+function processCSV(text) {
+  csvRows = parseCSV(text);
+  const keywords = document.getElementById('import-keywords').value
+    .split(/[,\n]+/).map(k => k.trim()).filter(Boolean);
+  const titleFilter = document.getElementById('import-title-filter').value
+    .split(',').map(t => t.trim().toLowerCase()).filter(Boolean);
+
+  // Filter executives
+  let execs = csvRows.filter(r => {
+    if (!r.title) return false;
+    const t = r.title.toLowerCase();
+    if (titleFilter.length) return titleFilter.some(f => t.includes(f));
+    return isExecutive(r.title);
+  });
+
+  // Score & sort
+  execs = execs.map(r => ({ ...r, score: scoreRelevance(r.title, r.company, keywords) }))
+    .sort((a, b) => b.score - a.score);
+
+  // Skip already imported (same name+company)
+  const existing = new Set(contacts.map(c => (c.firstname+c.lastname+c.company).toLowerCase()));
+  const newOnes = execs.filter(r => !existing.has((r.firstname+r.lastname+r.company).toLowerCase()));
+
+  pendingImport = newOnes;
+
+  const preview = document.getElementById('import-preview');
+  preview.style.display = '';
+  if (execs.length === 0) {
+    preview.className = 'import-preview error';
+    preview.innerHTML = `<strong>&#9888; Keine Führungskräfte gefunden.</strong><br>
+      Prüfe ob die Datei das richtige Format hat (Connections.csv von LinkedIn) und ob die Titel-Filter passen.
+      Gefunden: ${csvRows.length} Einträge gesamt.`;
+    document.getElementById('import-btn').style.display = 'none';
+    return;
+  }
+
+  const emailCount = execs.filter(r => r.email).length;
+  preview.className = 'import-preview';
+  preview.innerHTML = `
+    <strong>&#10003; ${execs.length} Führungskräfte gefunden</strong> aus ${csvRows.length} Verbindungen<br>
+    ${newOnes.length} neu (${execs.length - newOnes.length} bereits importiert) &nbsp;·&nbsp;
+    <span style="color:#059669;font-weight:600;">&#10003; ${emailCount} mit E-Mail-Adresse</span><br><br>
+    <strong>Top 5 nach Relevanz:</strong><br>
+    ${execs.slice(0,5).map(r => `&bull; <strong>${r.firstname} ${r.lastname}</strong> – ${r.title} @ ${r.company} (Score: ${r.score})${r.email ? ' ✉' : ''}`).join('<br>')}
+    ${execs.length > 5 ? `<br><em>... und ${execs.length - 5} weitere</em>` : ''}
+  `;
+  document.getElementById('import-btn').style.display = newOnes.length > 0 ? '' : 'none';
+  document.getElementById('import-btn').textContent = `${newOnes.length} Kontakte importieren`;
+}
+
+function doImport() {
+  const keywords = document.getElementById('import-keywords').value;
+  const kw = keywords.split(/[,\n]+/).map(k => k.trim()).filter(Boolean);
+  const mainKeyword = kw[0] || '';
+
+  pendingImport.forEach(r => {
+    contacts.push({
+      id: newId(),
+      firstname: r.firstname,
+      lastname: r.lastname,
+      title: r.title,
+      company: r.company,
+      linkedin: r.linkedin || '',
+      email: r.email || '',
+      keyword: mainKeyword,
+      status: 'Offen',
+      notes: '',
+      score: r.score,
+      added: new Date().toLocaleDateString('de-DE'),
+    });
+  });
+
+  save();
+  closeImport();
+  renderTable();
+  alert(`&#10003; ${pendingImport.length} Führungskräfte erfolgreich importiert!`);
+}
+
+// ---- STATS ----
+function updateStats() {
+  document.getElementById('stat-total').textContent = contacts.length;
+  document.getElementById('stat-offen').textContent = contacts.filter(c => c.status === 'Offen').length;
+  document.getElementById('stat-kontaktiert').textContent = contacts.filter(c => c.status === 'Kontaktiert').length;
+  document.getElementById('stat-vernetzt').textContent = contacts.filter(c => c.status === 'Vernetzt').length;
+  document.getElementById('stat-antwort').textContent = contacts.filter(c => c.status === 'Antwort erhalten').length;
+  document.getElementById('stat-email').textContent = contacts.filter(c => c.email).length;
+}
+
+// ---- FILTER ----
+function setFilter(el) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter = el.dataset.status;
+  renderTable();
+}
+
+// ---- TABLE ----
+function renderTable() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  let filtered = contacts.filter(c => {
+    const matchStatus = currentFilter === 'alle' || c.status === currentFilter;
+    const matchSearch = !q || [c.firstname, c.lastname, c.company, c.title, c.keyword]
+      .join(' ').toLowerCase().includes(q);
+    return matchStatus && matchSearch;
+  });
+
+  const tbody = document.getElementById('contacts-tbody');
+  const empty = document.getElementById('empty-state');
+
+  if (contacts.length === 0) {
+    tbody.innerHTML = '';
+    empty.style.display = '';
+    updateStats();
+    return;
+  }
+  empty.style.display = 'none';
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:2rem;color:#9ca3af;">Kein Ergebnis für diesen Filter.</td></tr>`;
+    updateStats();
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(c => `
+    <tr>
+      <td>
+        <div class="person-name">${c.firstname} ${c.lastname}</div>
+        <div class="person-title">${c.title}</div>
+        ${c.email ? `<div style="font-size:.72rem;margin-top:.15rem;"><a href="mailto:${c.email}" style="color:#059669;text-decoration:none;">✉ ${c.email}</a></div>` : ''}
+      </td>
+      <td style="font-size:.85rem;">${c.company || '–'}</td>
+      <td>
+        <span class="status-badge ${statusClass(c.status)}" onclick="cycleStatus('${c.id}')" title="Klicken zum Weiterschhalten">
+          ${c.status}
+        </span>
+      </td>
+      <td>${c.score > 0 ? `<span class="score-pill">${c.score} Pkt</span>` : '<span style="color:#d1d5db;">–</span>'}</td>
+      <td style="font-size:.8rem;color:#6b7280;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${(c.notes||'').replace(/"/g,'&quot;')}">${c.notes || '–'}</td>
+      <td>
+        <div style="display:flex;gap:.35rem;flex-wrap:wrap;">
+          <button class="btn btn-primary btn-sm" onclick="openOutreach('${c.id}')">Anschreiben</button>
+          <button class="btn btn-gray btn-sm" onclick="openEdit('${c.id}')">&#9998;</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteContact('${c.id}')">&#10005;</button>
+          ${c.linkedin ? `<a href="${c.linkedin}" target="_blank" class="btn btn-gray btn-sm">in</a>` : ''}
+        </div>
+      </td>
+    </tr>
+  `).join('');
+  updateStats();
+}
+
+function statusClass(s) {
+  return { 'Offen':'s-offen','Kontaktiert':'s-kontaktiert','Vernetzt':'s-vernetzt','Antwort erhalten':'s-antwort','Abgeschlossen':'s-abgeschlossen' }[s]||'s-offen';
+}
+
+const STATUS_CYCLE = ['Offen','Kontaktiert','Vernetzt','Antwort erhalten','Abgeschlossen'];
+function cycleStatus(id) {
+  const c = contacts.find(x => x.id === id);
+  if (!c) return;
+  c.status = STATUS_CYCLE[(STATUS_CYCLE.indexOf(c.status)+1)%STATUS_CYCLE.length];
+  save(); renderTable();
+}
+
+// ---- ADD / EDIT ----
+function openAdd() {
+  editingId = null;
+  document.getElementById('modal-title').textContent = 'Kontakt hinzufügen';
+  ['firstname','lastname','title','company','linkedin','keyword','notes'].forEach(f => document.getElementById('f-'+f).value='');
+  document.getElementById('f-status').value='Offen';
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(()=>document.getElementById('f-firstname').focus(),100);
+}
+function openEdit(id) {
+  const c = contacts.find(x=>x.id===id); if(!c) return;
+  editingId=id;
+  document.getElementById('modal-title').textContent='Kontakt bearbeiten';
+  document.getElementById('f-firstname').value=c.firstname||'';
+  document.getElementById('f-lastname').value=c.lastname||'';
+  document.getElementById('f-title').value=c.title||'';
+  document.getElementById('f-company').value=c.company||'';
+  document.getElementById('f-linkedin').value=c.linkedin||'';
+  document.getElementById('f-keyword').value=c.keyword||'';
+  document.getElementById('f-status').value=c.status||'Offen';
+  document.getElementById('f-notes').value=c.notes||'';
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+function saveContact() {
+  const fn=document.getElementById('f-firstname').value.trim();
+  const ln=document.getElementById('f-lastname').value.trim();
+  const ti=document.getElementById('f-title').value.trim();
+  const co=document.getElementById('f-company').value.trim();
+  if(!fn||!ln||!ti||!co){alert('Bitte Vorname, Nachname, Titel und Unternehmen ausfüllen.');return;}
+  const data={firstname:fn,lastname:ln,title:ti,company:co,
+    linkedin:document.getElementById('f-linkedin').value.trim(),
+    keyword:document.getElementById('f-keyword').value.trim(),
+    status:document.getElementById('f-status').value,
+    notes:document.getElementById('f-notes').value.trim(),
+    added:new Date().toLocaleDateString('de-DE')};
+  if(editingId){const i=contacts.findIndex(x=>x.id===editingId);contacts[i]={...contacts[i],...data};}
+  else{contacts.unshift({id:newId(),score:0,...data});}
+  save();closeModal();renderTable();
+}
+function deleteContact(id){if(!confirm('Kontakt löschen?'))return;contacts=contacts.filter(x=>x.id!==id);save();renderTable();}
+
+// ---- OUTREACH ----
+function openOutreach(id) {
+  outreachContact=contacts.find(x=>x.id===id); if(!outreachContact) return;
+  document.getElementById('op-name').textContent=outreachContact.firstname+' '+outreachContact.lastname;
+  document.getElementById('op-meta').textContent=outreachContact.title+' · '+outreachContact.company;
+  document.getElementById('op-keyword').value=outreachContact.keyword||'';
+  document.getElementById('op-li-btn').style.display=outreachContact.linkedin?'':'none';
+  document.getElementById('op-mail-btn').style.display=outreachContact.email?'':'none';
+  const hunterQ = encodeURIComponent(outreachContact.firstname+' '+outreachContact.lastname);
+  const emailSec = document.getElementById('op-email-section');
+  if (outreachContact.email) {
+    emailSec.innerHTML = `<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:6px;padding:.6rem .9rem;font-size:.85rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap;">
+      <span>✉ <a href="mailto:${outreachContact.email}" style="color:#059669;font-weight:600;">${outreachContact.email}</a></span>
+      <button class="btn btn-sm" style="background:#d1fae5;color:#065f46;" onclick="navigator.clipboard.writeText('${outreachContact.email}')">Kopieren</button>
+    </div>`;
+  } else {
+    emailSec.innerHTML = `<div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:.6rem .9rem;font-size:.83rem;color:#78350f;">
+      Keine E-Mail in LinkedIn-Daten — <a href="https://hunter.io/email-finder" target="_blank" style="color:#0077b5;font-weight:600;">Hunter.io öffnen →</a>
+      <span style="opacity:.7;font-size:.78rem;display:block;margin-top:.2rem;">Suche: ${outreachContact.firstname} ${outreachContact.lastname} · ${outreachContact.company}</span>
+    </div>`;
+  }
+  buildOutreach();
+  document.getElementById('outreach-overlay').classList.add('open');
+  document.getElementById('outreach-panel').classList.add('open');
+}
+function closeOutreach(){document.getElementById('outreach-overlay').classList.remove('open');document.getElementById('outreach-panel').classList.remove('open');}
+function buildOutreach() {
+  if(!outreachContact) return;
+  const tpl=document.getElementById('op-template').value;
+  const kw=document.getElementById('op-keyword').value||outreachContact.keyword||'Ihrem Fachgebiet';
+  const name=outreachContact.firstname+' '+outreachContact.lastname;
+  const co=outreachContact.company;
+  const nlUrl=getNewsletterUrl();
+  const sender=getSenderName();
+  const signature=sender ? `\n\nMit freundlichen Grüßen\n${sender}` : `\n\nMit freundlichen Grüßen`;
+  const texts={
+    collaboration:`Betreff: Möglichkeit zur Zusammenarbeit im Bereich ${kw}\n\nSehr geehrte/r ${name},\n\nich bin auf Ihr Profil gestoßen und beeindruckt von Ihrer Arbeit bei ${co} im Bereich ${kw}.\n\nAls jemand, der ebenfalls intensiv in diesem Feld tätig ist, sehe ich großes Potenzial für eine strategische Zusammenarbeit, die beiden Seiten konkreten Mehrwert bieten könnte.\n\nWären Sie offen für ein kurzes Gespräch (15–20 Min.) um auszuloten, ob es Synergien gibt?${signature}`,
+    insight:`Betreff: Ihre Perspektive zu ${kw} – kurze Frage\n\nSehr geehrte/r ${name},\n\nIhre Führungsarbeit bei ${co} im Bereich ${kw} ist bemerkenswert.\n\nIch beschäftige mich intensiv mit diesem Thema und würde Ihre Einschätzung zu aktuellen Entwicklungen sehr schätzen. Hätten Sie 10 Minuten für einen kurzen Austausch?${signature}`,
+    value:`Betreff: Konkreter Mehrwert für ${co} im Bereich ${kw}\n\nSehr geehrte/r ${name},\n\nich habe Ihre Strategie bei ${co} aufmerksam verfolgt und glaube, dass ich Ihnen im Bereich ${kw} konkreten Mehrwert bieten kann.\n\nMein Ansatz hat in vergleichbaren Situationen bereits messbare Ergebnisse erzielt. Gerne teile ich Details in einem kurzen Call.${signature}`,
+    newsletter:`Betreff: Persönliche Einladung – Impulse zu ${kw}\n\nSehr geehrte/r ${name},\n\nwir sind auf LinkedIn vernetzt und ich schätze Ihre Arbeit bei ${co}. Ich teile regelmäßig fundierte Impulse und Analysen rund um ${kw} – kompakt und praxisnah.\n\nFalls das für Sie interessant ist, würde ich mich freuen, Sie unter meinen Leserinnen und Lesern zu begrüßen. Die Anmeldung erfolgt selbstverständlich freiwillig und mit einem Klick – hier können Sie sich selbst eintragen:\n\n${nlUrl}\n\nKein Interesse? Dann ignorieren Sie diese Nachricht einfach – Sie werden von mir nicht ungefragt in einen Verteiler aufgenommen.${signature}`
+  };
+  document.getElementById('outreach-textarea').value=texts[tpl]||texts.collaboration;
+}
+function copyOutreach(){
+  const el=document.getElementById('outreach-textarea');
+  navigator.clipboard.writeText(el.value).catch(()=>{el.select();document.execCommand('copy');});
+  const btn=event.target; btn.textContent='&#10003; Kopiert!';
+  setTimeout(()=>btn.innerHTML='Text kopieren',2000);
+}
+function openLinkedIn(){if(outreachContact&&outreachContact.linkedin)window.open(outreachContact.linkedin,'_blank');}
+function sendEmail(){
+  if(!outreachContact||!outreachContact.email){alert('Für diesen Kontakt ist keine E-Mail-Adresse hinterlegt.');return;}
+  const full=document.getElementById('outreach-textarea').value;
+  let subject='', body=full;
+  const m=full.match(/^Betreff:\s*(.+)\n\n?([\s\S]*)$/);
+  if(m){subject=m[1].trim();body=m[2];}
+  const href='mailto:'+encodeURIComponent(outreachContact.email)
+    +'?subject='+encodeURIComponent(subject)
+    +'&body='+encodeURIComponent(body);
+  window.location.href=href;
+  // Nach dem Öffnen automatisch als kontaktiert markieren
+  const c=contacts.find(x=>x.id===outreachContact.id);
+  if(c&&c.status==='Offen'){c.status='Kontaktiert';save();renderTable();}
+}
+function markKontaktiert(){
+  if(!outreachContact) return;
+  const c=contacts.find(x=>x.id===outreachContact.id);
+  if(c&&c.status==='Offen'){c.status='Kontaktiert';save();renderTable();}
+  closeOutreach();
+}
+
+// ---- CSV EXPORT ----
+function exportCSV(){
+  if(!contacts.length){alert('Keine Kontakte.');return;}
+  const h=['Vorname','Nachname','Titel','Unternehmen','Status','Relevanz','Keyword','LinkedIn','E-Mail','Notiz','Hinzugefügt'];
+  const rows=contacts.map(c=>[c.firstname,c.lastname,c.title,c.company,c.status,c.score||0,c.keyword||'',c.linkedin||'',c.email||'',(c.notes||'').replace(/\n/g,' '),c.added||''].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','));
+  const csv=[h.join(','),...rows].join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'}));
+  a.download='executive_outreach_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeImport();closeOutreach();}});
+load(); renderTable();
+</script>
+</body>
+</html>

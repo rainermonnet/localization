@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Suche – Executive Finder{% endblock %}
+
+{% block content %}
+<h1>Führungskräfte suchen</h1>
+<p style="margin-bottom:1.5rem;color:#555;">Gib Schlüsselwörter aus deinem Kompetenzfeld ein – die Relevanz wird automatisch berechnet.</p>
+
+<form method="POST" action="/search">
+  <div class="card">
+    <h2>Kompetenzfeld & Filter</h2>
+
+    <label for="keywords_raw">Schlüsselwörter (eines pro Zeile oder kommagetrennt) *</label>
+    <textarea id="keywords_raw" name="keywords_raw" rows="4"
+      placeholder="z.B.&#10;digitale Transformation&#10;KI / Machine Learning&#10;Change Management"></textarea>
+
+    <label for="titles_raw">Gewünschte Titel (optional, kommagetrennt)</label>
+    <input type="text" id="titles_raw" name="titles_raw"
+      placeholder="z.B. CEO, CTO, Managing Director, Founder">
+
+    <label for="location">Region / Land (optional)</label>
+    <input type="text" id="location" name="location"
+      placeholder="z.B. Deutschland, München, DACH">
+
+    <label>Datenquellen</label>
+    <div style="display:flex;gap:1.5rem;margin-bottom:1rem;">
+      <label style="display:flex;align-items:center;gap:.4rem;font-weight:400;">
+        <input type="checkbox" name="sources" value="crunchbase" checked>
+        Crunchbase
+      </label>
+      <label style="display:flex;align-items:center;gap:.4rem;font-weight:400;">
+        <input type="checkbox" name="sources" value="apollo" checked>
+        Apollo.io
+      </label>
+    </div>
+
+    <label for="limit">Ergebnisse pro Quelle</label>
+    <select id="limit" name="limit" style="width:auto;">
+      <option value="10">10</option>
+      <option value="25" selected>25</option>
+      <option value="50">50</option>
+    </select>
+
+    <div class="alert alert-info">
+      Kein API-Key konfiguriert? Die App liefert Demo-Ergebnisse, damit du die Oberfläche testen kannst.
+      Trage deine Keys in <code>.env</code> ein (siehe <code>.env.example</code>).
+    </div>
+
+    <button type="submit" class="btn btn-primary">Suche starten</button>
+  </div>
+</form>
+{% endblock %}

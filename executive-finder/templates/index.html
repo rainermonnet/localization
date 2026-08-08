@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Executive Finder – Start{% endblock %}
+
+{% block content %}
+<div style="max-width:680px;margin:3rem auto;text-align:center;">
+  <h1 style="font-size:2rem;margin-bottom:1rem;">Führungskräfte gezielt finden</h1>
+  <p style="font-size:1.05rem;margin-bottom:2rem;">
+    Filtere CEOs, CTOs und andere Führungskräfte nach Nähe zu deinem Kompetenzfeld
+    – aus Crunchbase und Apollo.io – und generiere direkt passende Outreach-Nachrichten.
+  </p>
+
+  {% if profile %}
+    <a href="/dashboard" class="btn btn-primary" style="font-size:1rem;padding:.75rem 2rem;">
+      Zur Suche
+    </a>
+  {% else %}
+    <a href="/guest" class="btn btn-primary" style="font-size:1rem;padding:.75rem 2rem;">
+      Direkt starten (ohne Login)
+    </a>
+    <div style="margin-top:1rem;font-size:.85rem;color:#888;">
+      oder &nbsp;
+      <a href="/auth/login" style="color:#0077b5;">mit LinkedIn anmelden</a>
+      &nbsp;(optional – benötigt LinkedIn Developer App)
+    </div>
+  {% endif %}
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;text-align:left;">
+    <div class="card" style="padding:1.25rem;">
+      <div style="font-size:1.4rem;margin-bottom:.5rem;">🔍</div>
+      <strong>Gezielte Suche</strong>
+      <p style="font-size:.85rem;margin-top:.3rem;">Keywords + Titel-Filter kombinieren. Quellen: Crunchbase & Apollo.io.</p>
+    </div>
+    <div class="card" style="padding:1.25rem;">
+      <div style="font-size:1.4rem;margin-bottom:.5rem;">📊</div>
+      <strong>Relevanz-Ranking</strong>
+      <p style="font-size:.85rem;margin-top:.3rem;">Automatische Bewertung nach Kompetenzüberschneidung.</p>
+    </div>
+    <div class="card" style="padding:1.25rem;">
+      <div style="font-size:1.4rem;margin-bottom:.5rem;">✉️</div>
+      <strong>Outreach-Templates</strong>
+      <p style="font-size:.85rem;margin-top:.3rem;">3 fertige Anschreiben-Vorlagen – direkt personalisiert.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
