@@ -1,0 +1,599 @@
+<title>Zwergenladen — Werbematerial und Texte</title>
+<style>
+@font-face{font-family:'Mulish';src:url(data:font/woff2;base64,__MULISH__) format('woff2');font-weight:300 1000;font-style:normal;font-display:swap}
+@font-face{font-family:'Literata';src:url(data:font/woff2;base64,__LITERATA__) format('woff2');font-weight:300 800;font-style:normal;font-display:swap}
+__CAVEAT_FACE__
+
+:root{
+  --wand:#C8C7C6;
+  --boden:#F3390A;
+  --muetze:#CF2634;
+  --leinen:#CCB9A1;
+  --kohle:#23211D;
+  --papier:#F2F1EE;
+  --karte:#FBFAF8;
+  --grund:#EAE9E6;
+  --linie:#CBC9C4;
+  --gedaempft:#6E6B65;
+  --nacht:#0D1B4C;
+  --schatten:rgba(35,33,29,.10);
+  --sans:'Mulish',system-ui,sans-serif;
+  --serif:'Literata',Georgia,serif;
+  --hand:'Caveat',cursive;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --wand:#3C4770;
+    --papier:#0D1B4C;
+    --karte:#182658;
+    --grund:#101F52;
+    --linie:#2C3D77;
+    --kohle:#E8E9F1;
+    --gedaempft:#9AA3C4;
+    --leinen:#B9A88E;
+    --schatten:rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --wand:#3C4770;--papier:#0D1B4C;--karte:#182658;--grund:#101F52;--linie:#2C3D77;
+  --kohle:#E8E9F1;--gedaempft:#9AA3C4;--leinen:#B9A88E;--schatten:rgba(0,0,0,.45);
+}
+:root[data-theme="light"]{
+  --wand:#C8C7C6;--papier:#F2F1EE;--karte:#FBFAF8;--grund:#EAE9E6;--linie:#CBC9C4;
+  --kohle:#23211D;--gedaempft:#6E6B65;--leinen:#CCB9A1;--schatten:rgba(35,33,29,.10);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--papier);color:var(--kohle);
+  font-family:var(--serif);font-size:17px;line-height:1.62;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto;padding:0 28px}
+.lese{max-width:66ch}
+p{margin:0 0 1.05em}
+a{color:inherit;text-underline-offset:3px;text-decoration-thickness:1px}
+:focus-visible{outline:2.5px solid var(--boden);outline-offset:3px;border-radius:2px}
+strong{font-weight:700}
+em{font-style:italic}
+
+h1,h2,h3,h4,.label{font-family:var(--sans);text-wrap:balance}
+h1{font-weight:900;font-size:clamp(2.6rem,7vw,4.4rem);line-height:.96;letter-spacing:-.032em;margin:0}
+h2{font-weight:900;font-size:clamp(1.6rem,3.4vw,2.3rem);line-height:1.06;letter-spacing:-.024em;margin:0 0 .5em}
+h3{font-weight:800;font-size:1.16rem;line-height:1.25;letter-spacing:-.012em;margin:2.4em 0 .6em}
+h4{font-weight:800;font-size:.95rem;letter-spacing:-.006em;margin:1.9em 0 .45em}
+.label{font-weight:800;font-size:.685rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gedaempft)}
+
+/* ---- Horizont: das eine Strukturelement ---- */
+.horizont{position:relative;padding-top:64px;margin:82px 0 0}
+.horizont::before{content:"";position:absolute;left:0;right:0;top:38px;height:5px;background:var(--boden)}
+.horizont > .label{position:absolute;top:6px;left:0}
+section{scroll-margin-top:20px}
+
+/* ---- Kopf ---- */
+.kopf{position:relative;background:var(--wand);overflow:hidden;border-bottom:9px solid var(--boden)}
+.kopf .tex{position:absolute;inset:0;background-image:var(--tw);background-size:cover;
+  opacity:.9;mix-blend-mode:multiply}
+@media (prefers-color-scheme:dark){.kopf .tex{opacity:.28;mix-blend-mode:soft-light}}
+:root[data-theme="dark"] .kopf .tex{opacity:.28;mix-blend-mode:soft-light}
+:root[data-theme="light"] .kopf .tex{opacity:.9;mix-blend-mode:multiply}
+.kopf .inner{position:relative;display:grid;grid-template-columns:1fr auto;gap:34px;align-items:end;
+  max-width:920px;margin:0 auto;padding:74px 28px 0}
+.kopf h1{color:#23211D}
+.kopf .dach{font-family:var(--sans);font-weight:800;font-size:.7rem;letter-spacing:.19em;
+  text-transform:uppercase;color:#5C5A55;margin:0 0 18px}
+.kopf .unter{font-family:var(--serif);font-size:1.06rem;color:#3A3833;max-width:44ch;margin:20px 0 46px}
+.kopf img{display:block;height:min(35vh,300px);width:auto;margin-bottom:0;
+  filter:drop-shadow(0 10px 18px rgba(0,0,0,.18))}
+@media(max-width:700px){.kopf .inner{grid-template-columns:1fr}.kopf img{height:210px;justify-self:end}}
+
+/* ---- Kritik-Stimmen: hängende Marginalie, keine Karten ---- */
+.stimme{display:grid;grid-template-columns:118px 1fr;gap:26px;margin:0 0 1.7em}
+.stimme .wer{font-family:var(--sans);font-weight:900;font-size:.72rem;letter-spacing:.11em;
+  text-transform:uppercase;line-height:1.35;padding-top:.42em;color:var(--kohle)}
+.stimme .wer span{display:block;font-weight:600;letter-spacing:.02em;text-transform:none;
+  color:var(--gedaempft);font-size:.74rem}
+.stimme p:last-child{margin-bottom:0}
+@media(max-width:640px){.stimme{grid-template-columns:1fr;gap:5px}.stimme .wer{padding-top:0}}
+
+/* ---- Papier: fertige Textfassungen ---- */
+.papier{background:var(--karte);border:1px solid var(--linie);border-radius:2px;
+  padding:34px 38px;margin:1.5em 0 2em;box-shadow:0 2px 0 var(--schatten)}
+.papier .kopfzeile{display:flex;justify-content:space-between;align-items:baseline;
+  gap:16px;flex-wrap:wrap;border-bottom:2px solid var(--boden);padding-bottom:9px;margin-bottom:22px}
+.papier .kopfzeile .label{color:var(--kohle)}
+.papier .fmt{font-family:var(--sans);font-weight:600;font-size:.74rem;color:var(--gedaempft)}
+.satz{font-family:var(--sans)}
+.satz .h{font-weight:900;font-size:1.5rem;letter-spacing:-.02em;line-height:1.1;margin:0 0 .55em}
+.satz p{font-family:var(--serif);margin:0 0 .85em}
+.satz .adr{font-family:var(--sans);font-weight:600;font-size:.83rem;line-height:1.5;
+  color:var(--gedaempft);border-top:1px solid var(--linie);padding-top:12px;margin-top:20px}
+.hand{font-family:var(--hand);font-size:1.42rem;line-height:1.3;color:var(--boden)}
+
+/* ---- Entwürfe ---- */
+.mockup{margin:1.6em 0 .7em}
+.karte{position:relative;aspect-ratio:148/105;background:var(--wand);overflow:hidden;
+  border:1px solid var(--linie);box-shadow:0 8px 26px var(--schatten);border-radius:1px}
+.karte .tex{position:absolute;inset:0 0 32% 0;background-image:var(--tw);background-size:cover;mix-blend-mode:multiply;opacity:.85}
+.karte .flur{position:absolute;left:0;right:0;bottom:0;height:32%;background:var(--boden);
+  background-image:var(--tf);background-size:cover}
+.karte .reihe{position:absolute;left:5%;right:5%;bottom:26%;height:62%;display:flex;
+  align-items:flex-end;justify-content:flex-start;gap:2.5%}
+.karte .reihe img{height:100%;width:auto;object-fit:contain;object-position:bottom}
+.karte .reihe img:nth-child(2){height:88%}
+.karte .reihe img:nth-child(3){height:96%}
+.karte .reihe img:nth-child(4){height:84%}
+.karte .reihe img.gedreht{transform:scaleX(-1)}
+.bu{font-family:var(--sans);font-size:.78rem;font-weight:600;color:var(--gedaempft);
+  margin:11px 0 0;line-height:1.45}
+.zwei{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:30px}
+
+.plakat{position:relative;aspect-ratio:594/841;background:var(--wand);overflow:hidden;
+  border:1px solid var(--linie);box-shadow:0 8px 26px var(--schatten)}
+.plakat .tex{position:absolute;inset:0 0 26% 0;background-image:var(--tw);background-size:cover;mix-blend-mode:multiply;opacity:.85}
+.plakat .flur{position:absolute;left:0;right:0;bottom:0;height:26%;background:var(--boden);background-image:var(--tf);background-size:cover}
+.plakat .fig{position:absolute;bottom:24%;left:5%;height:48%;filter:drop-shadow(0 8px 14px rgba(0,0,0,.22))}
+.plakat .txt{position:absolute;top:7%;left:7%;right:7%;text-align:right}
+.plakat .zeile{font-family:var(--sans);font-weight:900;color:#23211D;font-size:clamp(1.02rem,3.5vw,1.6rem);
+  line-height:1.0;letter-spacing:-.03em;margin:0}
+.plakat .sub{font-family:var(--sans);font-weight:700;font-size:clamp(.58rem,1.6vw,.74rem);
+  color:#4A4842;margin:.9em 0 0;letter-spacing:.01em;line-height:1.4}
+
+.bild{display:block;width:100%;height:auto;border:1px solid var(--linie);border-radius:1px;
+  box-shadow:0 6px 20px var(--schatten)}
+.bildweiss{background:#fff;padding:16px}
+
+/* ---- Tabellen ---- */
+.tabelle{overflow-x:auto;margin:1.4em 0 1.8em;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:480px;font-family:var(--sans);font-size:.87rem}
+th{font-weight:800;text-align:left;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--gedaempft);border-bottom:2px solid var(--kohle);padding:0 14px 8px 0;vertical-align:bottom}
+td{border-bottom:1px solid var(--linie);padding:11px 14px 11px 0;vertical-align:top}
+td.z,th.z{text-align:right;font-variant-numeric:tabular-nums;padding-right:0}
+tr:last-child td{border-bottom:none}
+.swatch{display:inline-block;width:15px;height:15px;border-radius:2px;vertical-align:-2px;
+  margin-right:9px;border:1px solid rgba(0,0,0,.16)}
+
+/* ---- Merker ---- */
+.merker{border-left:4px solid var(--boden);padding:2px 0 2px 20px;margin:1.6em 0}
+.merker .label{display:block;margin-bottom:.35em;color:var(--boden)}
+.merker p:last-child{margin-bottom:0}
+
+ul,ol{margin:0 0 1.1em;padding-left:1.25em}
+li{margin-bottom:.45em}
+li::marker{color:var(--boden)}
+.klar{list-style:none;padding-left:0}
+.klar li{display:grid;grid-template-columns:22px 1fr;gap:12px}
+.klar li::before{content:"";width:9px;height:9px;background:var(--boden);margin-top:.55em;border-radius:1px}
+
+footer{margin:96px 0 0;border-top:1px solid var(--linie);padding:26px 0 60px;
+  font-family:var(--sans);font-size:.79rem;color:var(--gedaempft)}
+@media print{.kopf .tex,.karte .tex{opacity:.6}body{font-size:11pt}}
+</style>
+
+<header class="kopf">
+  <div class="tex"></div>
+  <div class="inner">
+    <div>
+      <p class="dach">Zwergenladen · Schwimmbadstraße 36 · Freiburg-Wiehre · seit 1998</p>
+      <h1>Die Zwerge<br>drehen sich um.</h1>
+      <p class="unter">Werbematerial und Texte — überarbeitet. Der Zwerg von hinten ist raus,
+      und die Texte sind nicht mehr die eines Anbieters, sondern die eines Ladens, in dem jemand steht.</p>
+    </div>
+    <img src="__Z4__" alt="Gemalter Zwerg von vorn, Hände vor dem Bauch gefaltet">
+  </div>
+</header>
+
+<div class="wrap">
+
+<section class="horizont">
+  <span class="label">Was sich geändert hat</span>
+  <div class="lese">
+    <h2>Der Einwand war richtig</h2>
+    <p>Ich hatte den Zwerg von hinten zum Signet gemacht, weil er eine Richtung anzeigt. Das war
+    formal schlüssig und in der Sache falsch. Ein abgewandter Rücken ist die Körpersprache von jemandem,
+    der gerade keine Zeit hat. Auf einem Schaufenster, einer Tüte oder einem Stempel steht das als erste
+    Aussage über den Laden — und es ist die eine Aussage, die ein kleiner Laden sich nicht leisten kann.
+    Der Rückenzwerg ist raus.</p>
+    <p>Dazu kommt, was das neue Material gezeigt hat: Zwei Sachen, die ich vorgeschlagen habe, gibt es längst.</p>
+    <ul class="klar">
+      <li><div><strong>Den Horizont gibt es schon.</strong> Graue Wand, oranger Boden, Zwerge auf
+      der Linie — genau das ist die Postkarte von 11/2023. Ich habe etwas erfunden, das Barbara Monnet
+      längst gemalt hat. Es bleibt, aber als ihres, nicht als meines.</div></li>
+      <li><div><strong>Eine einfarbige Strichfassung gibt es auch schon</strong>, im Stempel.
+      Sie ist gut. Nur liegt sie als Pixelbild vor, nicht als Vektor — das ist die einzige echte Lücke.</div></li>
+    </ul>
+    <p>Was bleibt, ist also weniger Gestaltung und mehr Text. Genau da liegt auch das größere Problem.</p>
+  </div>
+</section>
+
+<section class="horizont">
+  <span class="label">Das Prinzip</span>
+  <div class="lese">
+    <h2>Auf Augenhöhe</h2>
+    <p>Zwerge sind klein. Kinder auch. Das ist kein Kalauer, sondern die brauchbarste Eigenschaft,
+    die dieses Bildmaterial hat: Der Zwerg steht auf der Höhe, auf der ein Kind steht, und schaut
+    von dort nach oben — so, wie ein Kind jemanden ansieht, der zur Tür hereinkommt.</p>
+    <p>Daraus werden drei Regeln, die für jedes gedruckte Stück gelten:</p>
+    <ol>
+      <li><strong>Jeder Zwerg, der nach außen zeigt, hat ein Gesicht.</strong> Auf Schaufenster, Tüte,
+      Plakat, Stempel und Aufkleber steht nur, wer den Betrachter ansehen kann. Die Rückenansicht
+      darf nach innen — im Laden, am Regal, wo sie zeigt, wohin man schauen soll.</li>
+      <li><strong>Der Zwerg steht auf der Linie, nie darüber.</strong> Die Füße berühren den orangen
+      Boden. Schwebende Figuren sehen nach Freisteller aus, stehende nach Laden.</li>
+      <li><strong>Ein Blick pro Fläche.</strong> Vier Zwerge auf einer Postkarte sind eine Szene.
+      Ein Zwerg auf einem Aufkleber ist ein Gegenüber. Alles dazwischen ist Dekoration.</li>
+    </ol>
+  </div>
+
+  <div class="mockup zwei">
+    <div>
+      <div class="karte">
+        <div class="tex"></div><div class="flur"></div>
+        <div class="reihe">
+          <img src="__Z4__" alt="Zwerg von vorn"><img src="__Z2__" alt="Zwerg mit Blick nach oben"><img src="__Z3__" alt="Zwerg im Profil"><img class="gedreht" src="__Z2__" alt="Zwerg mit Blick nach oben, gespiegelt">
+        </div>
+      </div>
+      <p class="bu"><strong>Neu.</strong> Dieselbe Szene, dieselben Figuren — nur sieht die Reihe den
+      Betrachter jetzt an. Der vierte Zwerg — vorher der mit dem Rücken — ist der einzige Eingriff.</p>
+    </div>
+    <div>
+      <img class="bild" src="__PK__" alt="Bestehende Postkarte: vier gemalte Zwerge vor grauer Wand auf orangem Boden">
+      <p class="bu"><strong>Bestand, Postkarte 11/2023.</strong> Der Aufbau stimmt. Rechts außen steht der
+      Zwerg mit dem Rücken zum Betrachter — an der Stelle, an der das Auge zuletzt hängen bleibt.</p>
+    </div>
+  </div>
+</section>
+
+<section class="horizont">
+  <span class="label">Copy-Salon</span>
+  <h2>Der Text auf der Rückseite</h2>
+  <div class="lese">
+    <p>Der Salon nimmt sich den Text vor, der wirklich gedruckt ist — nicht einen erfundenen.
+    Er steht auf der Rückseite der Postkarte von 11/2023:</p>
+  </div>
+  <div class="papier">
+    <div class="kopfzeile"><span class="label">Bestand</span><span class="fmt">Postkarte 11/2023, Rückseite</span></div>
+    <div class="satz">
+      <p class="h">Leuchtende Kinderaugen</p>
+      <p>Für Kinder zwischen 0 und 12 Jahren, Eltern und Verwandte. Wir verkaufen nachhaltige Spielzeuge
+      mit hohem Qualitätsanspruch, ebenso Kinderbücher und Ratgeber. Unsere Produkte sind langlebig und
+      fördern kreative und kognitive Fähigkeiten.</p>
+    </div>
+  </div>
+
+  <div class="lese">
+    <div class="stimme">
+      <div class="wer">Schwartz<span>Verlangen</span></div>
+      <div>
+        <p><em>Leuchtende Kinderaugen</em> ist die beste Zeile im ganzen Laden. Sie benennt nicht das Produkt,
+        sondern das, was jemand wirklich will. Und dann wirft der zweite Satz sie weg.
+        „Für Kinder zwischen 0 und 12 Jahren, Eltern und Verwandte“ ist eine Zielgruppendefinition, die man
+        der Zielgruppe vorliest. Noch nie hat sich jemand von einer Altersspanne angesprochen gefühlt.</p>
+        <p>Und <em>„Wir verkaufen“</em> schwenkt die Kamera in drei Wörtern vom Gesicht des Kindes auf die Kasse.
+        Die Leserin ist problembewusst — sie weiß längst, dass sie kein Plastik mehr will. Also nicht mit
+        dem Sortiment anfangen, sondern mit dem, was sie satt hat.</p>
+      </div>
+    </div>
+    <div class="stimme">
+      <div class="wer">Ogilvy<span>Beweis</span></div>
+      <div>
+        <p>Vier Behauptungen, null Belege: hochwertig, nachhaltig, langlebig, fördert kognitive Fähigkeiten.
+        Die letzte ist die heikelste — eine Wirkungsaussage, die niemand belegen kann und die als
+        Werbeaussage angreifbar ist. Streichen, nicht abschwächen.</p>
+        <p>Dabei liegt der beste Beweis der Branche ungenutzt herum: <strong>seit 1998 am selben Ort.</strong>
+        28 Jahre sind keine Behauptung, sondern eine Tatsache, die kein Mitbewerber nachbauen kann. Der zweite
+        ungenutzte Beleg: Die Bilder sind von einer Künstlerin gemalt, Barbara Monnet — der Name steht in 6 pt
+        quer am linken Rand. Der gehört nach vorn.</p>
+      </div>
+    </div>
+    <div class="stimme">
+      <div class="wer">Wiebe<span>Struktur</span></div>
+      <div>
+        <p>Es gibt keinen nächsten Schritt. Die Karte hört mit einer Telefonnummer auf — das ist kein
+        Handlungsaufruf, das ist ein Impressum.</p>
+        <p>Und die Hierarchie steht auf dem Kopf: Das Größte ist die Überschrift, das Kleinste sind die
+        Öffnungszeiten. Dabei sind die Öffnungszeiten das Einzige auf der Karte, was jemand tatsächlich
+        braucht, um zu handeln. Dazu ein fünfzeiliger Absatz auf Rechtsbündig — bei Fließtext kostet das
+        Tempo, ohne dass es etwas zurückgibt.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Neufassung</h3>
+  <div class="papier">
+    <div class="kopfzeile"><span class="label">Entwurf · Siez-Fassung</span><span class="fmt">Postkarte A6, Rückseite · ca. 105 Wörter</span></div>
+    <div class="satz">
+      <p class="h">Leuchtende Kinderaugen</p>
+      <p>Dafür machen wir das. Seit 1998, in derselben Ladenzeile in der Wiehre.</p>
+      <p>Bei uns steht nichts hinter Glas. Kinder dürfen anfassen, drehen, aufziehen und wieder
+      hinstellen — und ja, manchmal geht dabei etwas zu Bruch. Halb so wild. Ein Spielzeug, das ein
+      Kind nicht in die Hand nehmen darf, ist ohnehin das falsche.</p>
+      <p>Es gibt Holz, Wolle, Filz und Papier. Bücher, die man so oft vorliest, bis der Rücken weich
+      wird. Und Sachen zum Selbermachen, die nicht schon am zweiten Nachmittag langweilig sind.</p>
+      <p><strong>Was Sie bei uns nicht finden: Plastik, Batterien, Bildschirme.</strong></p>
+      <p>Kommen Sie vorbei. Wir haben Zeit zum Beraten — das ist der Vorteil, wenn man klein bleibt.</p>
+      <p class="adr"><strong>Zwergenladen</strong> · Schwimmbadstraße 36 · 79100 Freiburg-Wiehre<br>
+      Mo–Sa 10–13.30 Uhr · Mo, Di, Do, Fr 15–18 Uhr<br>
+      0761 1376456 · zwergenladen.info · Zwergenbild: © Barbara Monnet</p>
+    </div>
+  </div>
+
+  <div class="lese">
+    <h4>Was hier eingesetzt ist</h4>
+    <ul>
+      <li><strong>Identifikation:</strong> „nichts hinter Glas“ ist ein Bild, das jeder Elternteil kennt,
+      der schon mal ein Kind aus einem Laden getragen hat.</li>
+      <li><strong>Neudefinierung:</strong> Aus „langlebig“ (Behauptung) wird „darf angefasst werden“ (Verhalten).
+      Aus „hochwertig“ wird eine Materialliste. Materialien kann man nachprüfen, Qualitätsansprüche nicht.</li>
+      <li><strong>Tarnung:</strong> Der Satz mit dem Bruch verkauft nichts und macht den Rest glaubwürdig.
+      Ein Text, der einen kleinen Nachteil zugibt, wird für den Rest weniger streng geprüft.</li>
+      <li><strong>Konzentration:</strong> Die Negativliste steht allein auf einer Zeile. Sie ist der
+      schärfste Satz und braucht Platz um sich.</li>
+      <li><strong>CTA:</strong> „Kommen Sie vorbei“ plus Öffnungszeiten in lesbarer Größe. Der nächste
+      Schritt ist eine Uhrzeit, keine Telefonnummer.</li>
+    </ul>
+
+    <div class="merker">
+      <span class="label">Vor dem Druck prüfen</span>
+      <p>Die Negativliste muss buchstäblich stimmen. Wenn im Laden irgendwo eine Spieluhr mit Batterie
+      oder eine Plastikverpackung steht, findet das jemand — und dann fällt der ganze Text. Falls
+      es Ausnahmen gibt, lautet die Zeile: <em>„Was Sie bei uns kaum finden: Plastik und Batterien.“</em>
+      Das ist schwächer, aber es hält.</p>
+    </div>
+
+    <h4>Dieselbe Passage geduzt</h4>
+    <p>Zum Vergleich, falls im Laden ohnehin geduzt wird. Ich würde beim Sie bleiben — Großeltern
+    sind eine ausdrückliche Zielgruppe, und beim Sie kann niemand danebenliegen:</p>
+  </div>
+  <div class="papier">
+    <div class="kopfzeile"><span class="label">Variante · Duz-Fassung</span><span class="fmt">nur die letzten beiden Absätze</span></div>
+    <div class="satz">
+      <p><strong>Was du bei uns nicht findest: Plastik, Batterien, Bildschirme.</strong></p>
+      <p>Komm einfach vorbei. Wir haben Zeit zum Beraten — das ist der Vorteil, wenn man klein bleibt.</p>
+    </div>
+  </div>
+</section>
+
+<section class="horizont">
+  <span class="label">Texte für die übrigen Stücke</span>
+  <h2>Fertig zum Setzen</h2>
+  <div class="lese">
+    <p>Alles unten ist ausgeschriebener Text, keine Platzhalter. Wo eine Entscheidung nötig ist,
+    steht sie dabei.</p>
+  </div>
+
+  <h3>Plakat und Schaufenster</h3>
+  <div class="lese">
+    <p>Auf 20 Meter liest niemand einen Satz. Es zählt eine Zeile, und die muss etwas behaupten,
+    das der Nachbarladen nicht behaupten kann.</p>
+  </div>
+  <div class="mockup zwei">
+    <div>
+      <div class="plakat">
+        <div class="tex"></div><div class="flur"></div>
+        <img class="fig" src="__Z2__" alt="Zwerg mit Blick nach oben">
+        <div class="txt"><p class="zeile">Hier darf<br>angefasst<br>werden.</p>
+        <p class="sub">Holz, Wolle, Filz, Papier.<br>Schwimmbadstraße 36 · seit 1998</p></div>
+      </div>
+      <p class="bu"><strong>A1 / A2.</strong> Die Zeile beantwortet die Frage, die Eltern vor einem
+      Spielzeugladen tatsächlich haben.</p>
+    </div>
+    <div>
+      <div class="plakat">
+        <div class="tex"></div><div class="flur"></div>
+        <img class="fig" src="__Z3__" alt="Zwerg im Profil">
+        <div class="txt"><p class="zeile">Seit 1998<br>ohne<br>Batterien.</p>
+        <p class="sub">Zwergenladen · Freiburg-Wiehre</p></div>
+      </div>
+      <p class="bu"><strong>Zweitmotiv.</strong> Behauptung plus Beweis in vier Wörtern. Nur drucken,
+      wenn es wörtlich stimmt.</p>
+    </div>
+  </div>
+
+  <div class="lese">
+    <h4>Weitere Zeilen, dieselbe Bauart</h4>
+    <ul>
+      <li>„Das Regal auf Kinderhöhe ist Absicht.“</li>
+      <li>„Wir haben Zeit. Das ist das ganze Konzept.“</li>
+      <li>Advent: „Etwas, das im Januar noch da ist.“ — der einzige ehrliche Weihnachtsanspruch,
+      den ein Holzspielzeugladen erheben kann.</li>
+      <li>Schaufensterband, durchlaufend: <strong>Leuchtende Kinderaugen — seit 1998 in der Wiehre.</strong></li>
+    </ul>
+  </div>
+
+  <h3>Danke-Karte für die Tüte</h3>
+  <div class="papier">
+    <div class="kopfzeile"><span class="label">Entwurf</span><span class="fmt">A7 hoch, 300 g Naturpapier</span></div>
+    <div class="satz">
+      <p class="h">Danke.</p>
+      <p>Sie haben gerade in einem Laden eingekauft, den es seit 1998 gibt — und den es nur weiter
+      gibt, weil Leute hereinkommen, statt zu klicken.</p>
+      <p>Wenn Ihnen etwas gefallen hat: Erzählen Sie es weiter. Am liebsten jemandem, der gerade
+      ein Geschenk sucht und nicht weiß, wohin.</p>
+      <p class="hand">Und wenn etwas kaputtgeht — bringen Sie es vorbei.</p>
+    </div>
+  </div>
+  <div class="lese">
+    <p>Diese Karte ersetzt die Bewertungskarte aus dem ersten Konzept. Sie bittet um Weitererzählen
+    statt um eine Rezension, kostet nichts, verspricht nichts und hat kein rechtliches Problem.
+    Der handschriftliche Nachsatz führt zur nächsten Idee.</p>
+  </div>
+
+  <h3>Reparaturkarte</h3>
+  <div class="papier">
+    <div class="kopfzeile"><span class="label">Entwurf</span><span class="fmt">A6 quer · Aushang und Karte</span></div>
+    <div class="satz">
+      <p class="h">Wir kleben das.</p>
+      <p>Holz bricht. Wolle geht auf. Eine Achse verbiegt sich. Das ist kein Grund, etwas wegzuwerfen —
+      es ist meistens ein Grund für zehn Minuten und ein bisschen Leim.</p>
+      <p>Bringen Sie kaputtes Holzspielzeug vorbei. Auch das, was Sie nicht bei uns gekauft haben.
+      Wir sehen es uns an und sagen ehrlich, ob sich die Reparatur lohnt.</p>
+      <p class="adr">Zwergenladen · Schwimmbadstraße 36 · Freiburg-Wiehre</p>
+    </div>
+  </div>
+  <div class="lese">
+    <div class="merker">
+      <span class="label">Das ist eine Zusage, keine Werbung</span>
+      <p>Diese Karte ist der stärkste Beweis für „langlebig“, den es gibt — sie ersetzt eine Behauptung
+      durch ein Verhalten. Sie verpflichtet aber auch: Wer sie druckt, muss Leute mit kaputten Holzenten
+      empfangen wollen. Deine Entscheidung, nicht meine. Wenn ja, würde ich sie nicht bepreisen und
+      auch keine Frist nennen.</p>
+    </div>
+  </div>
+
+  <h3>Gutscheinkarte</h3>
+  <div class="papier">
+    <div class="kopfzeile"><span class="label">Entwurf</span><span class="fmt">A6 quer, Rückseite</span></div>
+    <div class="satz">
+      <p>Dieser Gutschein gilt über <strong>________ Euro</strong> im Zwergenladen,
+      Schwimmbadstraße 36 in Freiburg-Wiehre.</p>
+      <p>Einlösbar auf alles, was im Laden steht. Restbeträge schreiben wir gut — es muss nicht
+      auf einmal ausgegeben werden.</p>
+      <p>Ausgestellt am ________. Zeit bis 31. Dezember ________.</p>
+      <p class="adr">Mo–Sa 10–13.30 Uhr · Mo, Di, Do, Fr 15–18 Uhr · 0761 1376456</p>
+    </div>
+  </div>
+  <div class="lese">
+    <p>Auf der Vorderseite eine handschriftliche Zeile <span class="hand">Für ________</span> und ein
+    Zwerg. Die Jahreszahl ist das Ausstellungsjahr plus drei — kürzere Fristen sind bei Gutscheinen
+    in aller Regel unwirksam, und eine Frist, die vor Gericht fällt, ärgert nur die Kundschaft.</p>
+  </div>
+</section>
+
+<section class="horizont">
+  <span class="label">Bestandsmaterial</span>
+  <h2>Drei Anmerkungen</h2>
+  <div class="mockup zwei">
+    <div>
+      <img class="bild bildweiss" src="__STEMPEL__" alt="Bestehende Stempelvorlage: zwei Zwerge als Strichzeichnung mit Wortmarke und Anschrift">
+      <p class="bu"><strong>Stempel.</strong> Gute Strichfassung, beide Zwerge mit Gesicht. Die Zeile
+      mit Adresse und E-Mail ist 47 Zeichen breit — bei 40 mm Stempelbreite laufen die Punzen von
+      e, a und g im Gummi zu. Kürzen auf <em>zwergenladen.info</em>; die E-Mail-Adresse wiederholt
+      die Domain ohnehin. Und: als Vektor nachzeichnen lassen, dann trägt dieselbe Zeichnung auch
+      Stickerei, Gravur und Folienschnitt.</p>
+    </div>
+    <div>
+      <img class="bild" src="__ADVENT__" alt="Adventspostkarte 2024: digital nachgezeichnete Zwerge vor blauem Nachthimmel">
+      <p class="bu"><strong>Advent 2024.</strong> Die Idee stimmt, die Ausführung kostet den Kern:
+      Die digitale Nachzeichnung ersetzt Pinselstruktur durch glatte Flächen. Was die Zwerge besonders
+      macht, ist genau das Malerische. Besser: die gemalten Figuren freistellen und vor einen dunklen
+      Himmel setzen — Material dafür ist da.</p>
+    </div>
+  </div>
+  <div class="lese">
+    <h4>Und die Hausschrift</h4>
+    <p>Postkarte und Stempel sind in <strong>Avenir Black</strong> und <strong>Avenir Book</strong>
+    gesetzt. Es gibt also längst eine gesetzte Wortmarke — mein erster Vorschlag (Fraunces) war ein
+    Vorschlag ins Blaue. Avenir ist eine gute Wahl und passt zu den Figuren. Sie ist nur lizenzpflichtig:
+    Wer sie setzt, braucht eine Lizenz, und die Druckerei braucht eine Einbettungserlaubnis.</p>
+    <p>Zwei saubere Wege: Avenir behalten und einmal ordentlich lizenzieren. Oder auf <strong>Mulish</strong>
+    wechseln — kostenfrei, sehr nah an Avenirs Proportionen, in dieser Seite als Überschriftenschrift zu sehen.
+    Ich rate zum Behalten, solange nur wenige Stücke gesetzt werden. Wechseln lohnt erst, wenn viele Hände
+    Dateien anfassen.</p>
+  </div>
+</section>
+
+<section class="horizont">
+  <span class="label">Farbe</span>
+  <h2>Aus den Bildern gemessen</h2>
+  <div class="lese">
+    <p>Nicht geschätzt, sondern aus der Postkartendatei ausgelesen. Damit stimmen Druck und Gemälde überein.</p>
+  </div>
+  <div class="tabelle">
+    <table>
+      <thead><tr><th>Farbe</th><th>HEX</th><th>Herkunft</th><th>Einsatz</th></tr></thead>
+      <tbody>
+        <tr><td><span class="swatch" style="background:#F3390A"></span>Bodenorange</td><td>#F3390A</td><td>Boden der Postkarte</td><td>nur die Bodenzone, nie hinter Lesetext</td></tr>
+        <tr><td><span class="swatch" style="background:#CF2634"></span>Mützenrot</td><td>#CF2634</td><td>Zwergenmützen</td><td>kleine Marken, max. 10 % Fläche</td></tr>
+        <tr><td><span class="swatch" style="background:#C8C7C6"></span>Wandgrau</td><td>#C8C7C6</td><td>Wand der Postkarte</td><td>die große Ruhefläche</td></tr>
+        <tr><td><span class="swatch" style="background:#CCB9A1"></span>Leinen</td><td>#CCB9A1</td><td>Kittel und Haar</td><td>Zwischentöne, Papierwahl</td></tr>
+        <tr><td><span class="swatch" style="background:#273465"></span>Adventblau</td><td>#273465</td><td>Adventskarte</td><td>nur Winter, Nov.–Dez.</td></tr>
+        <tr><td><span class="swatch" style="background:#23211D"></span>Kohle</td><td>#23211D</td><td>Konturen</td><td>aller Text, alle Linien</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="lese">
+    <p>Zwei Regeln reichen: <strong>Orange und Rot berühren sich nie direkt</strong> — dazwischen liegt
+    immer eine Kontur in Kohle oder eine graue Zone. Und <strong>Text steht nie auf Orange.</strong>
+    Bei #F3390A gegen Schwarz liegt der Kontrast bei etwa 3,4:1, das reicht für eine Auszeichnungszeile
+    in Großbuchstaben, aber nicht für Fließtext.</p>
+  </div>
+</section>
+
+<section class="horizont">
+  <span class="label">Ideen</span>
+  <h2>Fünf Sachen, die sich drucken lassen</h2>
+  <div class="lese">
+    <ol>
+      <li><strong>Jeder Zwerg hat eine Geschichte.</strong> Vier Postkarten statt einer, jede mit einem
+      Zwerg und drei Sätzen auf der Rückseite. Wer viermal kommt, hat sie voll. Namen und Geschichten
+      gehören Barbara — sie hat die Figuren gemalt, sie sollte sie benennen.</li>
+      <li><strong>Die Reparaturecke</strong> (siehe oben). Aus einem Werbewort wird eine Leistung.</li>
+      <li><strong>Der Jahreszeitenzettel.</strong> Viermal im Jahr ein Blatt mit einer einzigen Bastelidee
+      für den Jahreszeitentisch — an der Kasse in die Tüte, nicht verschickt. Vier Anlässe im Jahr,
+      wiederzukommen, ohne dass jemand etwas kaufen muss.</li>
+      <li><strong>Die Erstausstattungskarte.</strong> Für Geburt, Taufe, Einschulung: eine Blankokarte,
+      die im Laden von Hand beschriftet und dem Geschenk beigelegt wird. Großeltern sind eine erklärte
+      Zielgruppe, und das ist ihr Moment.</li>
+      <li><strong>Das Zwergenfenster im Advent.</strong> 24 Tage, jeden Tag ändert sich eine Kleinigkeit
+      in der Schaufensterszene. Kostet keinen Druck, nur Aufmerksamkeit — und die Kinder auf dem
+      Schulweg kontrollieren das täglich.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="horizont">
+  <span class="label">Produktion</span>
+  <h2>Was zuerst</h2>
+  <div class="tabelle">
+    <table>
+      <thead><tr><th>Stufe</th><th>Stücke</th><th class="z">Richtpreis</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Sofort</strong></td><td>Postkarte neu gesetzt (250 St.), Danke-Karte (250 St.),
+        Aufkleber rund 50 mm (500 St.), Plakat A2 (10 St.), Schaufensterband, Stempel neu</td><td class="z">560 €</td></tr>
+        <tr><td><strong>Nach 4–6 Wochen</strong></td><td>Signet vektorisiert, Gutscheinkarten (250 St.),
+        Reparaturkarte als Aushang, Plakat A1 (5 St.)</td><td class="z">490 €</td></tr>
+        <tr><td><strong>Nach 3 Monaten</strong></td><td>Zwergenkarten-Serie zu viert (4 × 250 St.),
+        Jahreszeitenzettel, Baumwollbeutel bestickt (50 St.)</td><td class="z">780 €</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="lese">
+    <p class="bu" style="margin-bottom:1.2em">Richtwerte für Onlinedruckereien, ohne Gestaltung, ohne Gewähr.</p>
+    <p>Wenn es nur drei Dinge werden: die <strong>neue Postkartenrückseite</strong>, das
+    <strong>vektorisierte Signet</strong> und die <strong>Danke-Karte</strong>. Das ist der Anteil,
+    der jeden Tag arbeitet.</p>
+    <div class="merker">
+      <span class="label">Auflösung</span>
+      <p>Die freigestellten Zwerge reichen bei 300 dpi bis rund 150 mm Höhe, der größte bis 152 mm.
+      Für Postkarte, Aufkleber und A3 ist das genug. <strong>Für A1 reicht keiner davon.</strong>
+      Falls die Originalgemälde noch existieren: ein Scan mit 600 dpi löst das ein für alle Mal —
+      sonst müssen die großen Plakate mit dem Vektorsignet arbeiten statt mit den Gemälden.</p>
+    </div>
+  </div>
+</section>
+
+<section class="horizont">
+  <span class="label">Offen</span>
+  <h2>Sechs Entscheidungen</h2>
+  <div class="lese">
+    <ol>
+      <li><strong>Sie oder Du.</strong> Ich habe Sie gesetzt. Umstellen ist eine Viertelstunde.</li>
+      <li><strong>Avenir lizenzieren oder auf Mulish wechseln.</strong> Empfehlung: behalten.</li>
+      <li><strong>Stimmt die Negativliste wörtlich?</strong> Plastik, Batterien, Bildschirme — alle drei?</li>
+      <li><strong>Reparaturkarte: ja oder nein?</strong> Sie ist der beste Beweis im Konzept und die
+      einzige Zusage darin.</li>
+      <li><strong>Gibt es die Gemälde im Original?</strong> Für Plakate ab A2 wird das gebraucht.</li>
+      <li><strong>Wie soll Barbara Monnet genannt werden?</strong> Ich habe die Nennung von der Seite
+      nach unten in die Adresszeile geholt. Das ist ihre Entscheidung, nicht meine.</li>
+    </ol>
+    <p>Sondernutzungserlaubnis der Stadt für Kundenstopper oder Bodenaufkleber, Gutscheinverjährung und
+    Werbeaussagenrecht sind sorgfältig recherchiert, aber keine Rechtsberatung.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Zwergenladen · Schwimmbadstraße 36 · 79100 Freiburg-Wiehre · 0761 1376456 · zwergenladen.info<br>
+  Zwergenbilder © Barbara Monnet. Überschriften Mulish, Lesetext Literata, Handschrift Caveat —
+  alle drei unter SIL Open Font License.</p>
+</footer>
+</div>

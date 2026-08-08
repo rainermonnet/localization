@@ -18,6 +18,21 @@ Zwergenbilder © Barbara Monnet
 | `zwerge/zwerg-4-frontal.png` | Freigestellt, 600 × 1000 px. Die Leitfigur. |
 | `zwerge/stempel-bestand.pdf` | Vorhandene Stempelvorlage. |
 | `zwerge/stempel-strichfassung-2231px.png` | Die Strichzeichnung aus dem Stempel, aus dem PDF extrahiert. Vorlage für die Vektorisierung. |
+| `zwerge/postkarte-*.pdf` und `.png` | Postkarte 11/2023 (Vorder- und Rückseite) und Adventskarte 2024 im Original. |
+| `quelle/` | Bauquellen von `konzept.html`: Vorlage, Schriften und Skript. |
+
+## konzept.html neu bauen
+
+Texte und Layout stehen in `quelle/vorlage.html`. Nach einer Änderung:
+
+```
+pip install pillow
+python3 quelle/build.py
+```
+
+Das schreibt `konzept.html` neu — eine eigenständige Datei mit eingebetteten
+Schriften und Bildern, die offline läuft und sich im Browser als PDF drucken lässt.
+Netz wird nicht gebraucht, die Schriften liegen in `quelle/schriften.json` bei.
 
 ## Der Kern
 
