@@ -27,6 +27,8 @@
   "serverOptions/contentLogging/title": "Protokollierung von Prompts und Antworten",
   "serverOptions/contentLogging/subtitle": "Lokale Anfrage-/Antwortprotokollierungseinstellungen",
   "serverOptions/contentLogging/hint": "Gibt an, ob Prompts und/oder die Antwort in der lokalen Server-Protokolldatei protokolliert werden sollen.",
+  "serverOptions/jitModelLoading/title": "Just-in-Time-Laden von Modellen",
+  "serverOptions/jitModelLoading/hint": "Wenn aktiviert und eine Anfrage ein Modell angibt, das nicht geladen ist, wird dieses automatisch geladen und verwendet. Zusätzlich enthält der Endpunkt \"/v1/models\" dann auch Modelle, die noch nicht geladen sind.",
   "serverOptions/loadModel/error": "Fehler beim Laden des Modells",
 
   "serverLogs/scrollToBottom": "Zum Ende springen",
