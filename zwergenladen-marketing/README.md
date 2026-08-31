@@ -23,7 +23,8 @@ Zwergenbilder © Barbara Monnet
 | `quelle/` | Bauquellen von `konzept.html`: Vorlage, Schriften und Skript. |
 | `druck/postkarte-vorderseite.pdf` | Zwei Fassungen: S. 1 gerahmt mit 5 mm Papierrand, Signatur bleibt stehen; S. 2 randabfallend, Signatur wird angeschnitten. Vor dem Bestellen eine Seite löschen. |
 | `druck/postkarte-rueckseite.pdf` | Rückseite, 148 × 105 mm + 2 mm Beschnitt. |
-| `druck/visitenkarte.pdf` | 85 × 55 mm + 2 mm Beschnitt, zwei gleiche Karten zu 85 × 27,5 mm mit Schnittmarken für den Mittelschnitt. |
+| `druck/visitenkarte-einzeln.pdf` | 85 × 55 mm + 2 mm Beschnitt, zweiseitig, Ecken gerundet r = 3 mm. |
+| `druck/visitenkarte-2auf1.pdf` | Dasselbe Format, darauf zwei Karten zu 85 × 27,5 mm zum Selbertrennen. S. 1 beide Vorderseiten, S. 2 beide Rückseiten. |
 | `druck/gutschein.pdf` | 95 × 95 mm + 2 mm Beschnitt, zweiseitig, Ecken gerundet r = 5 mm, Code-128-Barcode. |
 | `druck/flagge.pdf` | Zwei Aufstellerflaggen, Entwurf im Maßstab 1:10 für 60 × 200 cm. |
 
@@ -38,6 +39,15 @@ python3 druck/bauen.py
 
 Farbraum ist RGB. Die meisten Onlinedruckereien wandeln selbst nach CMYK; wer ein
 CMYK-PDF verlangt, konvertiert die fertigen Dateien.
+
+### Warum auf `visitenkarte-2auf1.pdf` keine Schnittmarken liegen
+
+Marken können dort nichts ausrichten. Was im Beschnitt liegt, schneidet die
+Druckerei ohnehin weg; was innerhalb des Endformats liegt, bleibt als Strich auf
+der fertigen Karte stehen. Stattdessen führt eine Farbkante: Der orange Boden der
+oberen Karte endet exakt auf der Trennlinie, auf beiden Seiten des Bogens. Am
+Übergang von Orange zu Weiß entlangschneiden. Ein halber Millimeter Versatz fällt
+an einer Farbkante nicht auf, an einem gedruckten Strich schon.
 
 ## konzept.html neu bauen
 

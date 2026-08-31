@@ -1,0 +1,121 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Zwergenladen — zwei Visitenkarten auf einer</title>
+<style>
+@font-face{font-family:'Mulish';src:url(data:font/woff2;base64,__MULISH__) format('woff2');font-weight:300 1000;font-style:normal}
+/* Bestellt wird das gängige Format 85 × 55 mm, ringsum 2 mm Beschnitt.
+   Darauf liegen zwei gleiche Karten zu 85 × 27,5 mm, die selbst in der Mitte
+   getrennt werden. Seite 1 sind beide Vorderseiten, Seite 2 beide Rückseiten.
+
+   Zur Schnittführung: Schnittmarken können hier nicht helfen, weil die
+   Druckerei den gesamten Beschnitt wegschneidet — was im Beschnitt liegt, ist
+   nach der Lieferung weg, und was innerhalb des Endformats liegt, bleibt als
+   Strich auf der fertigen Karte stehen. Deshalb führt hier eine Farbkante:
+   Der orange Boden der oberen Karte endet exakt auf der Schnittlinie, auf
+   beiden Seiten des Bogens. Am Übergang von Orange zu Weiß entlangschneiden.
+   Ein Versatz von einem halben Millimeter fällt an einer Farbkante nicht auf,
+   an einem gedruckten Strich schon. */
+@page{size:89mm 59mm;margin:0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;
+  font-family:'Mulish',sans-serif;color:#23211D}
+.seite{position:relative;width:89mm;height:59mm;overflow:hidden;background:#fff;
+  page-break-after:always;break-after:page}
+.seite:last-child{page-break-after:auto;break-after:auto}
+
+.karte{position:absolute;left:0;width:89mm;height:29.5mm;overflow:hidden}
+.karte.oben{top:0}
+.karte.unten{top:29.5mm}
+
+/* ---------- Vorderseiten ---------- */
+.wand{position:absolute;left:0;width:89mm;background:#C8C7C6}
+.oben  .wand{top:0;height:21.5mm}
+.unten .wand{top:0;height:19.5mm}
+
+/* Die Unterkante dieses Bandes ist die Schnittlinie. */
+.boden{position:absolute;left:0;width:89mm;background:#F3390A}
+.oben  .boden{top:21.5mm;height:8mm}
+.unten .boden{top:19.5mm;height:10mm}
+
+.zwerg{position:absolute;left:8mm;height:17.5mm;width:auto}
+.oben  .zwerg{top:5.2mm}
+.unten .zwerg{top:3.2mm}
+
+.marke{position:absolute;left:31mm;right:8mm}
+.oben  .marke{top:7.4mm}
+.unten .marke{top:5.4mm}
+.marke .wort{font-weight:900;font-size:12pt;letter-spacing:-.035em;line-height:1;white-space:nowrap}
+.marke .was{font-weight:700;font-size:6.2pt;line-height:1.45;color:#46433E;margin-top:1.6mm}
+.marke .seit{font-weight:700;color:#6E6A64}
+
+/* ---------- Rückseiten ---------- */
+/* Auch hier endet ein oranges Band exakt auf der Schnittlinie. */
+.rboden{position:absolute;left:0;width:89mm;background:#F3390A}
+.oben  .rboden{top:26.3mm;height:3.2mm}
+.unten .rboden{top:24.3mm;height:5.2mm}
+
+.r{position:absolute;left:8mm;right:8mm;display:flex;
+   justify-content:space-between;align-items:flex-start;gap:5mm}
+.oben  .r{top:5mm}
+.unten .r{top:3mm}
+.r .name{font-weight:900;font-size:9pt;letter-spacing:-.03em;line-height:1}
+.r .adr{font-size:6.1pt;line-height:1.55;font-weight:500;color:#3B3833;margin-top:1.5mm}
+.r .adr b{font-weight:800;color:#23211D;display:inline-block;width:2.8mm}
+.r img{width:15mm;height:15mm;display:block;flex:none}
+</style>
+
+<!-- ======== Seite 1: beide Vorderseiten ======== -->
+<div class="seite">
+  <div class="karte oben">
+    <div class="wand"></div><div class="boden"></div>
+    <img class="zwerg" src="__Z4__" alt="">
+    <div class="marke">
+      <div class="wort">Zwergenladen</div>
+      <div class="was">Holz, Wolle, Filz und Papier.<br>
+        <span class="seit">In der Wiehre, seit 1998.</span></div>
+    </div>
+  </div>
+  <div class="karte unten">
+    <div class="wand"></div><div class="boden"></div>
+    <img class="zwerg" src="__Z4__" alt="">
+    <div class="marke">
+      <div class="wort">Zwergenladen</div>
+      <div class="was">Holz, Wolle, Filz und Papier.<br>
+        <span class="seit">In der Wiehre, seit 1998.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== Seite 2: beide Rückseiten ======== -->
+<div class="seite">
+  <div class="karte oben">
+    <div class="rboden"></div>
+    <div class="r">
+      <div>
+        <div class="name">Zwergenladen</div>
+        <div class="adr">
+          Schwimmbadstraße 36 · 79100 Freiburg-Wiehre<br>
+          <b>T</b> 0761 1376456 · <b>E</b> email@zwergenladen.info<br>
+          <b>I</b> www.zwergenladen.info<br>
+          Mo–Fr 10–13.30 · Mo, Di, Do, Fr 15–18 Uhr
+        </div>
+      </div>
+      <img src="__QR__" alt="">
+    </div>
+  </div>
+  <div class="karte unten">
+    <div class="rboden"></div>
+    <div class="r">
+      <div>
+        <div class="name">Zwergenladen</div>
+        <div class="adr">
+          Schwimmbadstraße 36 · 79100 Freiburg-Wiehre<br>
+          <b>T</b> 0761 1376456 · <b>E</b> email@zwergenladen.info<br>
+          <b>I</b> www.zwergenladen.info<br>
+          Mo–Fr 10–13.30 · Mo, Di, Do, Fr 15–18 Uhr
+        </div>
+      </div>
+      <img src="__QR__" alt="">
+    </div>
+  </div>
+</div>

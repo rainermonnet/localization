@@ -23,8 +23,8 @@ HIER = pathlib.Path(__file__).resolve().parent
 ZWERGE = HIER.parent / "zwerge"
 SCHRIFTEN = HIER.parent / "quelle" / "schriften.json"
 
-VORLAGEN = ["postkarte-vorderseite", "postkarte-rueckseite", "visitenkarte",
-             "gutschein", "flagge"]
+VORLAGEN = ["postkarte-vorderseite", "postkarte-rueckseite",
+             "visitenkarte-einzeln", "visitenkarte-2auf1", "gutschein", "flagge"]
 
 
 def bild_uri(pfad, hoehe, qualitaet=90):
