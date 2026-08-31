@@ -1,0 +1,62 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Zwergenladen — Postkarte Rückseite</title>
+<style>
+@font-face{font-family:'Mulish';src:url(data:font/woff2;base64,__MULISH__) format('woff2');font-weight:300 1000;font-style:normal}
+/* Endformat 148 × 105 mm, ringsum 2 mm Beschnitt */
+@page{size:152mm 109mm;margin:0}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:152mm;height:109mm}
+body{font-family:'Mulish',sans-serif;color:#23211D;background:#fff;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+/* Sicherheitsabstand: 5 mm vom Endformat, also 7 mm von der Datenkante */
+.satz{position:absolute;left:9mm;top:9mm;right:9mm;bottom:9mm}
+
+.kopf{font-weight:900;font-size:15pt;letter-spacing:-.02em;line-height:1;margin-bottom:3.2mm}
+.strich{width:26mm;height:.9mm;background:#F3390A;margin-bottom:3.4mm}
+.text{width:86mm;font-size:7.6pt;line-height:1.5;font-weight:400}
+.text p{margin-bottom:1.9mm}
+.text .nein{font-weight:800}
+
+.fuss{position:absolute;left:0;bottom:0;width:96mm;font-size:6.8pt;line-height:1.62;font-weight:500}
+.fuss .name{font-weight:900;font-size:8.4pt;letter-spacing:-.01em;display:block;margin-bottom:.7mm}
+.fuss .zeiten{font-weight:700}
+
+.rechts{position:absolute;right:0;bottom:0;width:26mm;text-align:right}
+.rechts img{width:22mm;height:22mm;display:block;margin-left:auto}
+.rechts .bild{font-size:5.6pt;line-height:1.35;font-weight:500;color:#57544E;margin-top:1.6mm}
+
+/* Malfläche: der obere Teil bleibt frei, damit die Karte beschrieben werden kann */
+.leer{position:absolute;right:0;top:0;width:26mm;height:1mm}
+</style>
+
+<div class="satz">
+  <div class="kopf">Leuchtende Kinderaugen</div>
+  <div class="strich"></div>
+
+  <div class="text">
+    <p>Dafür machen wir das. Seit 1998, in derselben Ladenzeile in der Wiehre.</p>
+    <p>Bei uns steht nichts hinter Glas. Kinder dürfen anfassen, drehen, aufziehen
+    und wieder hinstellen — und ja, manchmal geht dabei etwas zu Bruch. Halb so wild.
+    Ein Spielzeug, das ein Kind nicht in die Hand nehmen darf, ist ohnehin das falsche.</p>
+    <p>Es gibt Holz, Wolle, Filz und Papier. Bücher, die man so oft vorliest, bis der
+    Rücken weich wird. Und Sachen zum Selbermachen, die nicht schon am zweiten
+    Nachmittag langweilig sind.</p>
+    <p class="nein">Was Sie bei uns nicht finden: Plastik, Batterien, Bildschirme.</p>
+    <p>Kommen Sie vorbei. Wir haben Zeit zum Beraten — das ist der Vorteil,
+    wenn man klein bleibt.</p>
+  </div>
+
+  <div class="fuss">
+    <span class="name">Zwergenladen</span>
+    Schwimmbadstraße 36 · 79100 Freiburg-Wiehre · 0761 1376456<br>
+    email@zwergenladen.info · www.zwergenladen.info<br>
+    <span class="zeiten">Mo–Fr 10–13.30 Uhr · Mo, Di, Do, Fr 15–18 Uhr</span>
+  </div>
+
+  <div class="rechts">
+    <img src="__QR__" alt="">
+    <div class="bild">Zwergenbild:<br>Barbara Monnet, 2012</div>
+  </div>
+</div>

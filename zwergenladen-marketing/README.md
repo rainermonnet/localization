@@ -20,6 +20,22 @@ Zwergenbilder © Barbara Monnet
 | `zwerge/stempel-strichfassung-2231px.png` | Die Strichzeichnung aus dem Stempel, aus dem PDF extrahiert. Vorlage für die Vektorisierung. |
 | `zwerge/postkarte-*.pdf` und `.png` | Postkarte 11/2023 (Vorder- und Rückseite) und Adventskarte 2024 im Original. |
 | `quelle/` | Bauquellen von `konzept.html`: Vorlage, Schriften und Skript. |
+| `druck/postkarte-rueckseite.pdf` | Rückseite, 148 × 105 mm + 2 mm Beschnitt. |
+| `druck/visitenkarte.pdf` | 85 × 55 mm + 2 mm Beschnitt, zwei gleiche Karten zu 85 × 27,5 mm mit Schnittmarken für den Mittelschnitt. |
+| `druck/gutschein.pdf` | 95 × 95 mm + 2 mm Beschnitt, zweiseitig, Ecken gerundet r = 5 mm, Code-128-Barcode. |
+| `druck/flagge.pdf` | Zwei Aufstellerflaggen, Entwurf im Maßstab 1:10 für 60 × 200 cm. |
+
+## Druckdateien neu bauen
+
+Die Vorlagen sind HTML mit Millimeterangaben, gebaut wird über Chromium:
+
+```
+pip install pillow playwright
+python3 druck/bauen.py
+```
+
+Farbraum ist RGB. Die meisten Onlinedruckereien wandeln selbst nach CMYK; wer ein
+CMYK-PDF verlangt, konvertiert die fertigen Dateien.
 
 ## konzept.html neu bauen
 
