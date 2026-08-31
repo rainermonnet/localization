@@ -23,7 +23,8 @@ HIER = pathlib.Path(__file__).resolve().parent
 ZWERGE = HIER.parent / "zwerge"
 SCHRIFTEN = HIER.parent / "quelle" / "schriften.json"
 
-VORLAGEN = ["postkarte-rueckseite", "visitenkarte", "gutschein", "flagge"]
+VORLAGEN = ["postkarte-vorderseite", "postkarte-rueckseite", "visitenkarte",
+             "gutschein", "flagge"]
 
 
 def bild_uri(pfad, hoehe, qualitaet=90):
@@ -34,6 +35,13 @@ def bild_uri(pfad, hoehe, qualitaet=90):
     puffer = io.BytesIO()
     bild.save(puffer, "PNG", optimize=True)
     return "data:image/png;base64," + base64.b64encode(puffer.getvalue()).decode()
+
+
+def gemaelde_uri():
+    bild = Image.open(ZWERGE / "gemaelde-2012-vorderseite.jpg").convert("RGB")
+    puffer = io.BytesIO()
+    bild.save(puffer, "JPEG", quality=94, subsampling=0, dpi=(600, 600))
+    return "data:image/jpeg;base64," + base64.b64encode(puffer.getvalue()).decode()
 
 
 def marken():
@@ -48,6 +56,8 @@ def marken():
         "__Z4__": bild_uri(ZWERGE / "zwerg-4-frontal.png", 900),
         # 60 mm Barcodebreite ergibt 0,37 mm Modulbreite — deutlich ueber der
         # Grenze von 0,25 mm, ab der Handscanner unzuverlaessig werden.
+        # Das Gemaelde liegt mit 626 dpi vor; bei 138 mm Breite bleiben 690 dpi.
+        "__GEMAELDE__": gemaelde_uri(),
         "__QR__": bild_uri(ZWERGE / "qr-zwergenladen.png", 888),
         "__BARCODE__": "data:image/svg+xml;base64,"
         + base64.b64encode(code128.svg("ZWERG5AB30", 60, 16).encode()).decode(),

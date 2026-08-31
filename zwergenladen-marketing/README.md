@@ -18,8 +18,10 @@ Zwergenbilder © Barbara Monnet
 | `zwerge/zwerg-4-frontal.png` | Freigestellt, 600 × 1000 px. Die Leitfigur. |
 | `zwerge/stempel-bestand.pdf` | Vorhandene Stempelvorlage. |
 | `zwerge/stempel-strichfassung-2231px.png` | Die Strichzeichnung aus dem Stempel, aus dem PDF extrahiert. Vorlage für die Vektorisierung. |
+| `zwerge/gemaelde-2012-vorderseite.jpg` | Das Gemälde aus dem Entwurf 2026, 3749 × 2711 px = 626 dpi im Endformat. |
 | `zwerge/postkarte-*.pdf` und `.png` | Postkarte 11/2023 (Vorder- und Rückseite) und Adventskarte 2024 im Original. |
 | `quelle/` | Bauquellen von `konzept.html`: Vorlage, Schriften und Skript. |
+| `druck/postkarte-vorderseite.pdf` | Zwei Fassungen: S. 1 gerahmt mit 5 mm Papierrand, Signatur bleibt stehen; S. 2 randabfallend, Signatur wird angeschnitten. Vor dem Bestellen eine Seite löschen. |
 | `druck/postkarte-rueckseite.pdf` | Rückseite, 148 × 105 mm + 2 mm Beschnitt. |
 | `druck/visitenkarte.pdf` | 85 × 55 mm + 2 mm Beschnitt, zwei gleiche Karten zu 85 × 27,5 mm mit Schnittmarken für den Mittelschnitt. |
 | `druck/gutschein.pdf` | 95 × 95 mm + 2 mm Beschnitt, zweiseitig, Ecken gerundet r = 5 mm, Code-128-Barcode. |
