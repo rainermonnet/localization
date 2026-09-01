@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Ausgabe der Barcode-Werkbank
+barcode-bogen.html
+
+# Betriebssystem
+.DS_Store
