@@ -37,6 +37,11 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 try:
+    import shopify_zugang as shopify
+except ImportError:
+    shopify = None          # App läuft auch ohne Shopify-Anbindung
+
+try:
     import barcode
     from barcode.writer import SVGWriter
 except ImportError:
@@ -165,7 +170,7 @@ def parse_lines(text: str):
     rows = []
     for line in text.splitlines():
         line = line.strip()
-        if not line:
+        if not line or line.startswith("#"):     # leer oder Kommentar
             continue
         if "|" in line:
             code, caption = line.split("|", 1)
@@ -255,12 +260,74 @@ SEED = """4012345000009 | Grimms Regenbogen gross
 4260000000004 | Grapat Ring natur
 ZL-KIS-0042   | KISME Stimmungskette"""
 
+if "codes_text" not in st.session_state:
+    st.session_state.codes_text = SEED
+
 with st.sidebar:
+
+    # ── Shopify-Anbindung ────────────────────────────────
+    if shopify is not None:
+        with st.expander("Aus Shopify laden", expanded=False):
+            dom, tok, quelle = shopify.load_credentials(
+                st.session_state.get("shopify_eingabe")
+            )
+
+            if dom and tok:
+                st.caption(f"Zugang aus **{quelle}** · `{shopify.mask(tok)}`")
+            else:
+                st.caption(
+                    "Kein Zugang hinterlegt. Trage ihn in "
+                    "`.streamlit/secrets.toml` ein — oder gib ihn hier für "
+                    "diese Sitzung ein."
+                )
+                d_in = st.text_input("Shop-Domain",
+                                     placeholder="zwergenladen.myshopify.com")
+                t_in = st.text_input("Admin API Access Token",
+                                     type="password", placeholder="shpat_…")
+                if st.button("Zugang übernehmen"):
+                    if d_in and t_in:
+                        st.session_state.shopify_eingabe = (d_in, t_in)
+                        st.rerun()
+                    else:
+                        st.warning("Beide Felder ausfüllen.")
+
+            if dom and tok:
+                mit_leeren = st.checkbox(
+                    "Produkte ohne Barcode mit auflisten", value=False,
+                    help="Werden als Kommentarzeile eingefügt und nicht gedruckt.",
+                )
+                if st.button("Barcodes abrufen", type="primary"):
+                    ok, info = shopify.check_access(dom, tok)
+                    if not ok:
+                        st.error(info)
+                    else:
+                        melder = st.empty()
+                        zeilen, stat = shopify.fetch_barcodes(
+                            dom, tok,
+                            only_with_barcode=not mit_leeren,
+                            progress=melder.caption,
+                        )
+                        melder.empty()
+
+                        if stat["fehler"]:
+                            st.error(stat["fehler"])
+                        if zeilen:
+                            st.session_state.codes_text = "\n".join(zeilen)
+                            st.success(
+                                f"{info}: {stat['mit_barcode']} Barcodes aus "
+                                f"{stat['varianten']} Varianten geladen"
+                                + (f" · {stat['ohne']} ohne Barcode"
+                                   if stat["ohne"] else "")
+                            )
+                            st.rerun()
+                        elif not stat["fehler"]:
+                            st.warning("Keine Varianten mit Barcode gefunden.")
+
     st.subheader("Codes")
     text = st.text_area(
         "Ein Code pro Zeile — optional `Code | Beschriftung`",
-        value=SEED,
         height=200,
+        key="codes_text",
     )
     st.caption("Bei 12 Ziffern wird die EAN-13-Prüfziffer automatisch ergänzt.")
 
