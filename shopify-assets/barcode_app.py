@@ -265,9 +265,38 @@ if "codes_text" not in st.session_state:
 
 with st.sidebar:
 
-    # ── Shopify-Anbindung ────────────────────────────────
+    # ── CSV-Import — ohne Zugangsdaten ───────────────────
     if shopify is not None:
-        with st.expander("Aus Shopify laden", expanded=False):
+        with st.expander("Aus CSV laden", expanded=True):
+            st.caption(
+                "Shopify Admin → **Produkte** → **Exportieren** → "
+                "„Alle Produkte“. Die Datei hier ablegen — keine "
+                "Zugangsdaten nötig."
+            )
+            hochgeladen = st.file_uploader(
+                "Shopify-Produktexport", type=["csv"],
+                label_visibility="collapsed",
+            )
+            if hochgeladen is not None and st.button("CSV einlesen",
+                                                     type="primary"):
+                zeilen, stat = shopify.parse_product_csv(hochgeladen)
+                if stat["fehler"]:
+                    st.error(stat["fehler"])
+                elif zeilen:
+                    st.session_state.codes_text = "\n".join(zeilen)
+                    st.success(
+                        f"{stat['mit_barcode']} Barcodes aus "
+                        f"{stat['varianten']} Zeilen gelesen"
+                        + (f" · {stat['ohne']} ohne Barcode"
+                           if stat["ohne"] else "")
+                    )
+                    st.rerun()
+                else:
+                    st.warning("Keine Varianten mit Barcode gefunden.")
+
+    # ── Shopify-Anbindung über die API ───────────────────
+    if shopify is not None:
+        with st.expander("Aus Shopify laden (API)", expanded=False):
             dom, tok, quelle = shopify.load_credentials(
                 st.session_state.get("shopify_eingabe")
             )

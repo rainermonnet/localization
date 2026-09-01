@@ -205,6 +205,100 @@ def fetch_barcodes(domain: str, token: str, only_with_barcode=True,
     return zeilen, stat
 
 
+# ──────────────────────────────────────────────────────────
+# CSV-Import — der Weg ohne Zugangsdaten
+# ──────────────────────────────────────────────────────────
+def parse_product_csv(datei):
+    """
+    Liest einen Shopify-Produktexport (CSV) und zieht die Barcodes heraus.
+
+    Export erzeugen:
+        Shopify Admin → Produkte → Exportieren
+        → „Alle Produkte“ → „CSV für Excel, Numbers…“
+
+    Shopify schreibt den Produkttitel nur in die ERSTE Zeile eines Produkts;
+    die weiteren Variantenzeilen lassen ihn leer. Der Titel wird deshalb
+    nach unten fortgeschrieben.
+
+    Rückgabe: (zeilen, statistik) — gleiches Format wie fetch_barcodes()
+    """
+    import csv
+    import io
+
+    stat = {"produkte": 0, "varianten": 0, "mit_barcode": 0, "ohne": 0,
+            "fehler": None}
+    zeilen = []
+
+    # Bytes oder Text entgegennehmen, BOM aus Excel-Exporten entfernen
+    roh = datei.read() if hasattr(datei, "read") else datei
+    if isinstance(roh, bytes):
+        for kodierung in ("utf-8-sig", "utf-8", "latin-1"):
+            try:
+                roh = roh.decode(kodierung)
+                break
+            except UnicodeDecodeError:
+                continue
+        else:
+            stat["fehler"] = "Zeichenkodierung nicht erkannt"
+            return [], stat
+
+    leser = csv.DictReader(io.StringIO(roh))
+    if not leser.fieldnames:
+        stat["fehler"] = "Datei ist leer oder keine CSV"
+        return [], stat
+
+    # Spalten tolerant suchen — Gross/Kleinschreibung und Leerzeichen egal
+    def spalte(*kandidaten):
+        norm = {(f or "").strip().lower(): f for f in leser.fieldnames}
+        for k in kandidaten:
+            if k.lower() in norm:
+                return norm[k.lower()]
+        return None
+
+    sp_barcode = spalte("Variant Barcode", "Barcode")
+    sp_titel   = spalte("Title", "Titel")
+    sp_opt     = [spalte(f"Option{i} Value") for i in (1, 2, 3)]
+
+    if not sp_barcode:
+        stat["fehler"] = (
+            "Spalte „Variant Barcode“ fehlt. Ist das wirklich ein "
+            "Shopify-Produktexport?"
+        )
+        return [], stat
+
+    letzter_titel = ""
+    gesehen = set()
+
+    for reihe in leser:
+        titel = (reihe.get(sp_titel) or "").strip() if sp_titel else ""
+        if titel:
+            letzter_titel = titel
+            stat["produkte"] += 1
+        titel = titel or letzter_titel
+
+        stat["varianten"] += 1
+        code = (reihe.get(sp_barcode) or "").strip()
+
+        optionen = [
+            (reihe.get(s) or "").strip()
+            for s in sp_opt
+            if s and (reihe.get(s) or "").strip()
+            and (reihe.get(s) or "").strip().lower() != "default title"
+        ]
+        name = f"{titel} — {' / '.join(optionen)}" if optionen else titel
+
+        if code:
+            if code in gesehen:          # Exporte wiederholen Zeilen für Bilder
+                continue
+            gesehen.add(code)
+            stat["mit_barcode"] += 1
+            zeilen.append(f"{code} | {name}".strip(" |"))
+        else:
+            stat["ohne"] += 1
+
+    return zeilen, stat
+
+
 def next_page_url(link_header: str):
     """Shopify paginiert über den Link-Header mit rel="next"."""
     if not link_header:
