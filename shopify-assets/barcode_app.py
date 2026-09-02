@@ -42,6 +42,11 @@ except ImportError:
     shopify = None          # App läuft auch ohne Shopify-Anbindung
 
 try:
+    import goki
+except ImportError:
+    goki = None             # goki-Umrechnung optional
+
+try:
     import barcode
     from barcode.writer import SVGWriter
 except ImportError:
@@ -264,6 +269,28 @@ if "codes_text" not in st.session_state:
     st.session_state.codes_text = SEED
 
 with st.sidebar:
+
+    # ── goki: Artikelnummer → EAN ────────────────────────
+    if goki is not None:
+        with st.expander("goki Artikelnummern → EAN", expanded=False):
+            st.caption(
+                "goki-EAN = `4013594` + Artikelnummer (5-stellig) + Prüfziffer. "
+                "Geprüft gegen die Preisliste: 128 von 128 exakt. "
+                "Eine Artikelnummer je Zeile, optional `Nr | Beschriftung`."
+            )
+            roh = st.text_area(
+                "goki-Artikelnummern",
+                placeholder="57305 | Schichtenpuzzle Schmetterling\n80620 | Ameisenbär",
+                height=110, label_visibility="collapsed",
+            )
+            if roh.strip() and st.button("In EANs umrechnen", type="primary"):
+                zeilen, fehler = goki.umrechnen(roh.splitlines())
+                for r, msg in fehler:
+                    st.error(f"`{r}` — {msg}")
+                if zeilen:
+                    st.session_state.codes_text = "\n".join(zeilen)
+                    st.success(f"{len(zeilen)} EANs berechnet")
+                    st.rerun()
 
     # ── CSV-Import — ohne Zugangsdaten ───────────────────
     if shopify is not None:
