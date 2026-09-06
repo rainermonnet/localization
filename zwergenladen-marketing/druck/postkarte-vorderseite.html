@@ -1,0 +1,32 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Zwergenladen — Postkarte Vorderseite</title>
+<style>
+/* Zwei Fassungen desselben Gemäldes.
+
+   Seite 1 — gerahmt: Das Bild sitzt mit 5 mm Papierrand im Endformat.
+   Barbara Monnets Signatur bleibt vollständig stehen, und die Karte liest
+   sich als Reproduktion eines Bildes statt als bedruckte Fläche.
+
+   Seite 2 — randabfallend: Das Bild läuft über den Beschnitt hinaus. Sieht
+   satter aus, kostet aber die Signatur — sie liegt im Original genau auf der
+   Schnittlinie und wird zur Hälfte weggeschnitten.
+
+   Vor dem Bestellen eine der beiden Seiten löschen. */
+@page{size:152mm 109mm;margin:0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.seite{position:relative;width:152mm;height:109mm;overflow:hidden;background:#fff;
+  page-break-after:always;break-after:page}
+.seite:last-child{page-break-after:auto;break-after:auto}
+
+/* Gerahmt: Endformat 148 × 105, Rand 5 mm ⇒ Bild 138 × 95 mm,
+   im Datenformat also ab 7 mm bzw. 7 mm. */
+.gerahmt img{position:absolute;left:7mm;top:7mm;width:138mm;height:95mm;object-fit:cover}
+
+/* Randabfallend: füllt das Datenformat vollständig */
+.voll img{position:absolute;inset:0;width:152mm;height:109mm;object-fit:cover}
+</style>
+
+<div class="seite gerahmt"><img src="__GEMAELDE__" alt="Vier gemalte Zwerge vor grauer Wand auf orangem Boden"></div>
+<div class="seite voll"><img src="__GEMAELDE__" alt="Vier gemalte Zwerge vor grauer Wand auf orangem Boden"></div>

@@ -1,0 +1,64 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Zwergenladen — Postkarte Rückseite</title>
+<style>
+@font-face{font-family:'Mulish';src:url(data:font/woff2;base64,__MULISH__) format('woff2');font-weight:300 1000;font-style:normal}
+/* Endformat 148 × 105 mm, ringsum 2 mm Beschnitt.
+
+   Die Platzierung ist aus der Vorlage übernommen und nachgemessen:
+     linke Satzkante            x =   7,9 mm   (5,9 mm vom Endformat)
+     Unterkante der letzten Zeile y = 103,0 mm   (4,0 mm über dem Schnitt)
+     QR-Code                    13,9 × 13,9 mm, rechte Kante x = 140,35 mm,
+                                Unterkante y = 102,3 mm
+     Bildnachweis hochkant      x = 145,8–147,5 mm, Unterkante y = 103,1 mm
+   Der Satz wächst nach oben, die obere Hälfte bleibt frei — dort lässt sich
+   die Karte beschriften. */
+@page{size:152mm 109mm;margin:0}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:152mm;height:109mm}
+body{font-family:'Mulish',sans-serif;color:#23211D;background:#fff;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+/* Der Satzblock hängt an der Unterkante, nicht an der oberen. */
+.satz{position:absolute;left:7.9mm;bottom:5.4mm;width:116mm}
+
+.dach{font-weight:700;font-size:6.4pt;letter-spacing:.055em;color:#5A6068;
+  margin-bottom:2mm}
+
+.kopf{font-weight:900;font-size:13.5pt;letter-spacing:-.035em;line-height:1.02;
+  color:#363C42;margin-bottom:2.8mm}
+
+.strich{width:24mm;height:.9mm;background:#F3390A;margin-bottom:3mm}
+
+.text{font-size:7.2pt;line-height:1.5;font-weight:500;max-width:112mm;
+  margin-bottom:3.6mm}
+
+.adr{font-size:6.7pt;line-height:1.52;font-weight:500;color:#3B3833}
+.adr .name{display:block;font-weight:900;font-size:8.6pt;letter-spacing:-.025em;
+  color:#363C42;margin-bottom:1mm}
+.adr .zeiten{font-weight:700;color:#23211D}
+
+/* QR und Bildnachweis sitzen an den nachgemessenen Stellen der Vorlage. */
+.qr{position:absolute;left:124.5mm;top:86.45mm;width:17.9mm;height:17.9mm}
+
+.nachweis{position:absolute;left:147.75mm;top:78.8mm;transform-origin:left top;
+  transform:rotate(90deg);white-space:nowrap;
+  font-size:6.2pt;font-weight:500;color:#5A6068;letter-spacing:.01em}
+</style>
+
+<div class="satz">
+  <div class="dach">Aus Freiburg · Mit Sorgfalt ausgewählt</div>
+  <div class="kopf">Weniger Spielzeug.<br>Mehr Kind.</div>
+  <div class="strich"></div>
+  <div class="text">Für Eltern, die nicht alles wollen — sondern das Richtige.
+  Wir haben aus über tausend Produkten die handverlesen, die wirklich bleiben.</div>
+  <div class="adr">
+    <span class="name">Zwergenladen</span>
+    <span class="zeiten">Mo–Fr 10–13.30 Uhr · Mo, Di, Do, Fr 15–18 Uhr</span><br>
+    Schwimmbadstraße 36 · 79100 Freiburg-Wiehre · Tel. 0761 1376456<br>
+    www.zwergenladen.info · email@zwergenladen.info
+  </div>
+</div>
+
+<img class="qr" src="__QR__" alt="">
+<div class="nachweis">Bild: © Barbara Monnet</div>

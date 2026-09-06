@@ -1,0 +1,60 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Zwergenladen — Aufstellerflaggen, Entwurf</title>
+<style>
+@font-face{font-family:'Mulish';src:url(data:font/woff2;base64,__MULISH__) format('woff2');font-weight:300 1000;font-style:normal}
+/* Entwurf im Maßstab 1:10 — eine Seite entspricht 60 × 200 cm Flaggenfläche.
+   Das ist eine Vorlage zum Ansehen und Freigeben, keine Druckdatei: Jeder
+   Flaggenhersteller hat eine eigene Schablone mit eigener Saumzugabe und
+   eigener Kopfrundung. Diese Maße dort einsetzen. */
+@page{size:60mm 200mm;margin:0}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:60mm}
+body{font-family:'Mulish',sans-serif;color:#23211D;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.flagge{position:relative;width:60mm;height:200mm;overflow:hidden;background:#C8C7C6;
+  page-break-after:always;break-after:page}
+.flagge:last-child{page-break-after:auto;break-after:auto}
+
+/* Der orange Boden trägt die Figur — dieselbe Linie wie auf allen anderen Stücken */
+.boden{position:absolute;left:0;right:0;bottom:0;height:52mm;background:#F3390A}
+.zwerg{position:absolute;left:50%;transform:translateX(-50%);bottom:49mm;height:98mm;width:auto}
+
+.kopf{position:absolute;left:5mm;right:5mm;top:16mm;text-align:center}
+.kopf .wort{font-weight:900;font-size:15.5pt;letter-spacing:-.035em;line-height:.95;
+  white-space:nowrap;color:#363C42}
+.kopf .zeile{font-weight:800;font-size:7pt;line-height:1.3;margin-top:4mm;color:#5A6068;
+  white-space:nowrap}
+
+.fuss{position:absolute;left:5mm;right:5mm;bottom:9mm;text-align:center;color:#fff}
+.fuss .gross{font-weight:900;font-size:11pt;letter-spacing:-.02em;line-height:1.05}
+.fuss .klein{font-weight:700;font-size:7pt;line-height:1.35;margin-top:2mm}
+</style>
+
+<!-- Flagge links vom Eingang -->
+<div class="flagge">
+  <div class="boden"></div>
+  <div class="kopf">
+    <div class="wort">Zwergenladen</div>
+    <div class="zeile">Aus Freiburg · Mit Sorgfalt ausgewählt</div>
+  </div>
+  <img class="zwerg" src="__Z4__" alt="">
+  <div class="fuss">
+    <div class="gross">Weniger Spielzeug<br>Mehr Kind.</div>
+    <div class="klein">Schwimmbadstraße 36 · seit 1998</div>
+  </div>
+</div>
+
+<!-- Flagge rechts vom Eingang -->
+<div class="flagge">
+  <div class="boden"></div>
+  <div class="kopf">
+    <div class="wort">Zwergenladen</div>
+    <div class="zeile">Aus Freiburg · Mit Sorgfalt ausgewählt</div>
+  </div>
+  <img class="zwerg" src="__Z3__" alt="">
+  <div class="fuss">
+    <div class="gross">Weniger Spielzeug<br>Mehr Kind.</div>
+    <div class="klein">Schwimmbadstraße 36 · seit 1998</div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Zwergenladen — Visitenkarte einzeln, gerundete Ecken</title>
+<style>
+@font-face{font-family:'Mulish';src:url(data:font/woff2;base64,__MULISH__) format('woff2');font-weight:300 1000;font-style:normal}
+/* Gängiges Visitenkartenformat 85 × 55 mm, ringsum 2 mm Beschnitt.
+   Ecken gerundet, Radius 3 mm — die Rundung stanzt die Druckerei, in der
+   Druckdatei wird sie nicht gezeichnet. Wegen der Rundung liegt der
+   Sicherheitsabstand in den Ecken bei 7 mm statt 5 mm.
+   Seite 1 Vorderseite, Seite 2 Rückseite. */
+@page{size:89mm 59mm;margin:0}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;
+  font-family:'Mulish',sans-serif;color:#23211D}
+.seite{position:relative;width:89mm;height:59mm;overflow:hidden;background:#fff;
+  page-break-after:always;break-after:page}
+.seite:last-child{page-break-after:auto;break-after:auto}
+
+/* ---------- Vorderseite ---------- */
+.wand{position:absolute;inset:0 0 14mm 0;background:#C8C7C6}
+.boden{position:absolute;left:0;right:0;bottom:0;height:14mm;background:#F3390A}
+.zwerg{position:absolute;left:8.5mm;bottom:12.6mm;height:27mm;width:auto}
+
+.marke{position:absolute;left:33mm;right:8.5mm;top:13mm}
+.marke .wort{font-weight:900;font-size:16pt;letter-spacing:-.035em;line-height:1;
+  white-space:nowrap;color:#363C42}
+.marke .was{font-weight:700;font-size:7pt;line-height:1.45;color:#5A6068;
+  margin-top:2.4mm;white-space:nowrap}
+/* Der Claim steht als Auszeichnungszeile auf dem Boden, nicht als Lesetext:
+   Weiß auf #F3390A liegt bei rund 4:1 und trägt fette Schrift ab 9 pt. */
+.claim{position:absolute;left:8.5mm;right:8.5mm;bottom:6.2mm;text-align:right;
+  color:#fff;font-weight:900;font-size:10.5pt;letter-spacing:-.025em;line-height:1}
+
+/* ---------- Rückseite ---------- */
+.streifen{position:absolute;left:0;right:0;top:0;height:5.5mm;background:#F3390A}
+.r{position:absolute;left:8.5mm;top:12.5mm;right:8.5mm;display:flex;
+   justify-content:space-between;align-items:flex-start;gap:6mm}
+.r .name{font-weight:900;font-size:10.5pt;letter-spacing:-.03em;line-height:1;color:#363C42}
+.r .adr{font-size:6.8pt;line-height:1.58;font-weight:500;color:#3B3833;margin-top:2.4mm}
+.r .adr b{font-weight:800;color:#23211D;display:inline-block;width:3.2mm}
+.r img{width:17mm;height:17mm;display:block;flex:none}
+
+.zeiten{position:absolute;left:8.5mm;right:8.5mm;bottom:8mm;
+  border-top:.35mm solid #CBC9C4;padding-top:2mm;
+  font-size:6.4pt;line-height:1.45;font-weight:700;color:#46433E}
+.zeiten span{font-weight:500;color:#6E6A64}
+</style>
+
+<!-- Vorderseite -->
+<div class="seite">
+  <div class="wand"></div>
+  <div class="boden"></div>
+  <img class="zwerg" src="__Z4__" alt="">
+  <div class="marke">
+    <div class="wort">Zwergenladen</div>
+    <div class="was">Aus Freiburg · Mit Sorgfalt ausgewählt</div>
+  </div>
+  <div class="claim">Weniger Spielzeug – Mehr Kind.</div>
+</div>
+
+<!-- Rückseite -->
+<div class="seite">
+  <div class="streifen"></div>
+  <div class="r">
+    <div>
+      <div class="name">Zwergenladen</div>
+      <div class="adr">
+        Schwimmbadstraße 36<br>79100 Freiburg-Wiehre<br>
+        <b>T</b> 0761 1376456<br>
+        <b>E</b> email@zwergenladen.info<br>
+        <b>I</b> www.zwergenladen.info
+      </div>
+    </div>
+    <img src="__QR__" alt="">
+  </div>
+  <div class="zeiten">Mo–Fr 10–13.30 Uhr · Mo, Di, Do, Fr 15–18 Uhr<br>
+    <span>Zwergenbild: Barbara Monnet, 2012</span></div>
+</div>
