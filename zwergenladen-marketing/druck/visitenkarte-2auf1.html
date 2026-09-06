@@ -44,9 +44,14 @@ body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;
 .marke{position:absolute;left:31mm;right:8mm}
 .oben  .marke{top:7.4mm}
 .unten .marke{top:5.4mm}
-.marke .wort{font-weight:900;font-size:12pt;letter-spacing:-.035em;line-height:1;white-space:nowrap}
-.marke .was{font-weight:700;font-size:6.2pt;line-height:1.45;color:#46433E;margin-top:1.6mm}
-.marke .seit{font-weight:700;color:#6E6A64}
+.marke .wort{font-weight:900;font-size:12pt;letter-spacing:-.035em;line-height:1;
+  white-space:nowrap;color:#363C42}
+.marke .was{font-weight:700;font-size:6.2pt;line-height:1.45;color:#5A6068;margin-top:1.7mm}
+/* Fester Abstand von der Oberkante des Bodens statt Zentrierung: bei der
+   unteren Karte laeuft der Boden in den Beschnitt, zentriert saesse der
+   Claim sonst zu dicht am Schnitt. */
+.claim{position:absolute;top:2.1mm;left:8mm;right:8mm;text-align:right;
+  color:#fff;font-weight:900;font-size:7.4pt;letter-spacing:-.022em;line-height:1}
 
 /* ---------- Rückseiten ---------- */
 /* Auch hier endet ein oranges Band exakt auf der Schnittlinie. */
@@ -58,7 +63,7 @@ body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;
    justify-content:space-between;align-items:flex-start;gap:5mm}
 .oben  .r{top:5mm}
 .unten .r{top:3mm}
-.r .name{font-weight:900;font-size:9pt;letter-spacing:-.03em;line-height:1}
+.r .name{font-weight:900;font-size:9pt;letter-spacing:-.03em;line-height:1;color:#363C42}
 .r .adr{font-size:6.1pt;line-height:1.55;font-weight:500;color:#3B3833;margin-top:1.5mm}
 .r .adr b{font-weight:800;color:#23211D;display:inline-block;width:2.8mm}
 .r img{width:15mm;height:15mm;display:block;flex:none}
@@ -67,21 +72,21 @@ body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;
 <!-- ======== Seite 1: beide Vorderseiten ======== -->
 <div class="seite">
   <div class="karte oben">
-    <div class="wand"></div><div class="boden"></div>
+    <div class="wand"></div>
+    <div class="boden"><div class="claim">Weniger Spielzeug – Mehr Kind.</div></div>
     <img class="zwerg" src="__Z4__" alt="">
     <div class="marke">
       <div class="wort">Zwergenladen</div>
-      <div class="was">Holz, Wolle, Filz und Papier.<br>
-        <span class="seit">In der Wiehre, seit 1998.</span></div>
+      <div class="was">Aus Freiburg · Mit Sorgfalt ausgewählt</div>
     </div>
   </div>
   <div class="karte unten">
-    <div class="wand"></div><div class="boden"></div>
+    <div class="wand"></div>
+    <div class="boden"><div class="claim">Weniger Spielzeug – Mehr Kind.</div></div>
     <img class="zwerg" src="__Z4__" alt="">
     <div class="marke">
       <div class="wort">Zwergenladen</div>
-      <div class="was">Holz, Wolle, Filz und Papier.<br>
-        <span class="seit">In der Wiehre, seit 1998.</span></div>
+      <div class="was">Aus Freiburg · Mit Sorgfalt ausgewählt</div>
     </div>
   </div>
 </div>
