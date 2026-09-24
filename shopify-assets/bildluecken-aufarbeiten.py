@@ -71,6 +71,17 @@ MARKEN_NORM = {
 # Titel: Ferby-Stifte sind Lyra, alles andere Stockmar.
 LYRA_MUSTER = re.compile(r"\blyra\b|\bferby\b", re.I)
 
+# Unter "Zwergenladen" steht Fremdware, die falsch zugeordnet wurde.
+# Sonnenleder benennt seine Lederwaren nach Schriftstellern — dieses
+# Muster erkennt sie zuverlässig, weil es nur innerhalb der eigenen
+# Marke angewandt wird.
+EIGENMARKE = {"zwergenladen", "zwergenladen-fr"}
+SONNENLEDER_MUSTER = re.compile(
+    r"\b(storm|simmel|handke|b[oö]ll?|bert|wienfluss+|mozart)\b"
+    r"|schreibetui|stecketui|stiftemäppchen|geldbörse|schlüsseletui", re.I)
+# Hersteller, die im Titel statt im Herstellerfeld stehen
+IM_TITEL = ("kraul", "goki", "ostheimer", "grimms", "nanchen")
+
 PRODUKTE_PRO_SEITE = 25
 VARIANTEN_PRO_PRODUKT = 30
 PAUSE = 0.4
@@ -109,8 +120,20 @@ def marke_normalisiert(vendor, titel):
     """Vereinheitlichter Markenname — reiner Vorschlag."""
     v = (vendor or "").strip()
     schluessel = v.lower()
+    t = titel or ""
+
     if schluessel == "stockmar / lyra":
-        return "Lyra" if LYRA_MUSTER.search(titel or "") else "Stockmar"
+        return "Lyra" if LYRA_MUSTER.search(t) else "Stockmar"
+
+    # Innerhalb der Eigenmarke steckt Fremdware
+    if schluessel in EIGENMARKE:
+        if SONNENLEDER_MUSTER.search(t):
+            return "Sonnenleder"
+        for hersteller in IM_TITEL:
+            if re.search(rf"\b{hersteller}\b", t, re.I):
+                return hersteller.capitalize() if hersteller != "goki" else "Goki"
+        return "Zwergenladen"
+
     return MARKEN_NORM.get(schluessel, v)
 
 
