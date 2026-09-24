@@ -79,6 +79,7 @@ def main():
     google_ohne_bild = []
     google_ohne_gtin = []
     google_ohne_bestand = []
+    google_ohne_shopseite = []
     google_vollstaendig = 0
     cursor = None
 
@@ -113,19 +114,26 @@ def main():
             gtin = any((v["node"].get("barcode") or "").strip()
                        for v in p.get("variants", {}).get("edges", []))
             bestand = (p.get("totalInventory") or 0) > 0
+            im_shop = bool(p.get("onlineStoreUrl"))
 
             eintrag = {"Produkt-ID": kurz_id(p["id"]), "Titel": titel,
                        "Marke": p.get("vendor", ""),
                        "Bild": "ja" if bild else "NEIN",
                        "GTIN": "ja" if gtin else "NEIN",
-                       "Bestand": p.get("totalInventory") or 0}
+                       "Bestand": p.get("totalInventory") or 0,
+                       "Admin-Link": f"https://admin.shopify.com/store/"
+                                     f"zwergenladen-fr/products/{kurz_id(p['id'])}"}
             if not bild:
                 google_ohne_bild.append(eintrag)
             if not gtin:
                 google_ohne_gtin.append(eintrag)
             if not bestand:
                 google_ohne_bestand.append(eintrag)
-            if bild and gtin and bestand:
+            # Im Google-Kanal, aber ohne Seite im Onlineshop: Google hat keine
+            # Zielseite und meldet "Seite nicht verfügbar".
+            if not im_shop:
+                google_ohne_shopseite.append(eintrag)
+            if bild and gtin and bestand and im_shop:
                 google_vollstaendig += 1
 
         if gesamt % 250 == 0:
@@ -147,10 +155,12 @@ def main():
 
     print(f"\nIM GOOGLE-KANAL: {im_google}")
     if im_google:
-        print(f"  davon vollständig (Bild + GTIN + Bestand)  {google_vollstaendig:>5}")
+        print(f"  davon vollständig                          {google_vollstaendig:>5}")
         print(f"  ohne Bild                                  {len(google_ohne_bild):>5}")
         print(f"  ohne GTIN / Barcode                        {len(google_ohne_gtin):>5}")
         print(f"  ohne Bestand                               {len(google_ohne_bestand):>5}")
+        print(f"  ohne Seite im Onlineshop                   {len(google_ohne_shopseite):>5}"
+              "   ← 'Seite nicht verfügbar'")
 
     def schreiben(name, zeilen):
         if not zeilen:
@@ -165,6 +175,16 @@ def main():
     schreiben("google-ohne-bild.csv", google_ohne_bild)
     schreiben("google-ohne-gtin.csv", google_ohne_gtin)
     schreiben("google-ohne-bestand.csv", google_ohne_bestand)
+    schreiben("google-ohne-shopseite.csv", google_ohne_shopseite)
+
+    if google_ohne_shopseite:
+        print(f"\n{len(google_ohne_shopseite)} Produkte stehen im Google-Kanal, haben aber")
+        print("keine Seite im Onlineshop. Google findet keine Zielseite und lehnt sie ab.")
+        print("Zwei Wege: im Onlineshop veröffentlichen — oder aus dem Google-Kanal nehmen.")
+        for z in google_ohne_shopseite[:15]:
+            print(f"  {z['Marke'][:16]:<16} {z['Titel'][:48]}")
+        if len(google_ohne_shopseite) > 15:
+            print(f"  … und {len(google_ohne_shopseite)-15} weitere in der CSV")
 
     if im_google and gesamt:
         print(f"\nNur {100*im_google/gesamt:.0f} % deines Katalogs steht im Google-Kanal.")

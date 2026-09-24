@@ -54,11 +54,20 @@ SONNENLEDER_MUSTER = re.compile(
     r"|schreibetui|stecketui|stiftemäppchen|geldbörse|schlüsseletui", re.I)
 IM_TITEL = ("kraul", "goki", "ostheimer", "grimms", "nanchen")
 
+# Lieferant steht weder im Hersteller- noch im Titelfeld — namentlich zuordnen.
+# Holzkiste-Sortiment, ausgelaufen (Stand 09/2026).
+NACH_TITEL = {
+    "bogen mit loch": "Holzkiste",
+    "pfeile 3er set": "Holzkiste",
+    "köcher": "Holzkiste",
+    "steinschleuder": "Holzkiste",
+}
+
 
 def marke_normalisiert(vendor, titel):
     v = (vendor or "").strip()
     s = v.lower()
-    t = titel or ""
+    t = (titel or "").strip()
 
     if s == "stockmar / lyra":
         return "Lyra" if LYRA_MUSTER.search(t) else "Stockmar"
@@ -66,6 +75,9 @@ def marke_normalisiert(vendor, titel):
     if s in EIGENMARKE:
         if SONNENLEDER_MUSTER.search(t):
             return "Sonnenleder"
+        nach_titel = NACH_TITEL.get(t.lower())
+        if nach_titel:
+            return nach_titel
         for h in IM_TITEL:
             if re.search(rf"\b{h}\b", t, re.I):
                 return "Goki" if h == "goki" else h.capitalize()
