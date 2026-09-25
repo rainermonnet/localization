@@ -44,6 +44,9 @@ MARKEN_NORM = {
     "k:s me": "KISME",
     "kisme": "KISME",
     "zwergenladen-fr": "Zwergenladen",
+    # Gross- und Kleinschreibung schwankt im Katalog
+    "henrys": "HENRYS",
+    "henry's": "HENRYS",
 }
 
 LYRA_MUSTER = re.compile(r"\blyra\b|\bferby\b", re.I)
