@@ -1,0 +1,147 @@
+{
+  "store": "Zwergenladen",
+  "language": "de",
+  "campaign_type": "Performance Max",
+  "note": "Alle Zeichenangaben sind Maximalwerte. Aktuelle Zeichenzahlen sind im Kommentarfeld angegeben.",
+  "asset_groups": [
+    {
+      "name": "Performance Max-2",
+      "description": "Allgemeine Kampagne – nachhaltiges Spielzeug, alle Kategorien",
+      "headlines": [
+        { "text": "Nachhaltiges Spielzeug", "chars": 22 },
+        { "text": "Qualitätsspielzeug online", "chars": 25 },
+        { "text": "Grimms & Ostheimer Shop", "chars": 23 },
+        { "text": "Käthe Kruse Puppen", "chars": 18 },
+        { "text": "Nachhaltig spielen", "chars": 18 },
+        { "text": "Spielzeug mit Mehrwert", "chars": 22 },
+        { "text": "Holzspielzeug kaufen", "chars": 20 },
+        { "text": "Im Zwergenladen kaufen", "chars": 22 },
+        { "text": "Ökologisches Spielzeug", "chars": 22 },
+        { "text": "Top Marken für Kinder", "chars": 21 },
+        { "text": "Jetzt online bestellen", "chars": 22 },
+        { "text": "Direkt vom Fachhandel", "chars": 21 },
+        { "text": "Sicher & nachhaltig", "chars": 19 },
+        { "text": "Spielzeug für Generationen", "chars": 26 },
+        { "text": "Bewusstes Schenken", "chars": 18 }
+      ],
+      "long_headlines": [
+        {
+          "text": "Nachhaltiges Spielzeug von Grimms, Ostheimer & Käthe Kruse online kaufen",
+          "chars": 72
+        },
+        {
+          "text": "Hochwertige Spielzeugmarken für umweltbewusste Familien – jetzt entdecken",
+          "chars": 73
+        },
+        {
+          "text": "Weniger Spielzeug, mehr Spielfreude – Qualität statt Quantität",
+          "chars": 62
+        },
+        {
+          "text": "Ihr Fachhandel für nachhaltiges Spielzeug – online & vor Ort",
+          "chars": 61
+        },
+        {
+          "text": "Spielzeug, das bleibt: Naturmaterialien, faire Produktion, Qualität",
+          "chars": 68
+        }
+      ],
+      "descriptions": [
+        {
+          "text": "Nachhaltiges Spielzeug von Top-Marken wie Grimms, Ostheimer und Käthe Kruse. Jetzt im Zwergenladen.",
+          "chars": 100,
+          "warning": "KÜRZEN – über 90 Zeichen",
+          "suggestion": "Nachhaltiges Spielzeug von Grimms, Ostheimer & Käthe Kruse. Jetzt entdecken.",
+          "suggestion_chars": 77
+        },
+        {
+          "text": "Holzspielzeug, Puppen & Kuscheltiere aus Naturmaterialien. Bewusst kaufen für bewusstes Spielen.",
+          "chars": 97,
+          "warning": "KÜRZEN – über 90 Zeichen",
+          "suggestion": "Holzspielzeug, Puppen & Kuscheltiere aus Naturmaterialien. Für bewusstes Spielen.",
+          "suggestion_chars": 82
+        },
+        {
+          "text": "Familiengeführter Fachhandel für nachhaltiges Spielzeug – persönliche Beratung inklusive.",
+          "chars": 90
+        },
+        {
+          "text": "Qualität, die Generationen überdauert – nachhaltige Spielzeugmarken im Zwergenladen.",
+          "chars": 85
+        },
+        {
+          "text": "Weniger ist mehr: kuratiertes Spielzeug für kreatives, freies Spielen.",
+          "chars": 70
+        }
+      ]
+    },
+    {
+      "name": "Asset-Gruppe Puppen & Kuscheltiere",
+      "description": "Kategorie-spezifische Kampagne – Puppen und Kuscheltiere",
+      "headlines": [
+        { "text": "Käthe Kruse Puppen", "chars": 18 },
+        { "text": "Stofftiere & Puppen", "chars": 19 },
+        { "text": "Kuscheltiere kaufen", "chars": 19 },
+        { "text": "Waldorf-Puppen online", "chars": 21 },
+        { "text": "Nachhaltige Puppen", "chars": 18 },
+        { "text": "Ostheimer Tiere", "chars": 15 },
+        { "text": "Bio-Kuscheltiere", "chars": 16 },
+        { "text": "Puppen aus Naturmaterialien", "chars": 27 },
+        { "text": "Lieblingspuppe finden", "chars": 21 },
+        { "text": "Kuscheltiere aus Wolle", "chars": 22 },
+        { "text": "Erste Puppe schenken", "chars": 20 },
+        { "text": "Weiche Kuscheltiere", "chars": 19 },
+        { "text": "Puppen für Babys", "chars": 16 },
+        { "text": "Handgemachte Puppen", "chars": 19 },
+        { "text": "Spielkameraden kaufen", "chars": 21 }
+      ],
+      "long_headlines": [
+        {
+          "text": "Käthe Kruse Puppen & nachhaltige Kuscheltiere im Zwergenladen kaufen",
+          "chars": 68
+        },
+        {
+          "text": "Hochwertige Puppen und Kuscheltiere aus Naturmaterialien für Kinder",
+          "chars": 67
+        },
+        {
+          "text": "Waldorf-Puppen, Käthe Kruse & Bio-Kuscheltiere – liebevoll ausgewählt",
+          "chars": 70
+        },
+        {
+          "text": "Sanfte Spielgefährten: Puppen & Kuscheltiere aus nachhaltiger Produktion",
+          "chars": 72
+        },
+        {
+          "text": "Puppen und Kuscheltiere, die ein Leben lang bleiben – Qualität aus dem Zwergenladen",
+          "chars": 84
+        }
+      ],
+      "descriptions": [
+        {
+          "text": "Käthe Kruse Puppen & Kuscheltiere aus Naturmaterialien. Liebevoll ausgewählt im Zwergenladen.",
+          "chars": 94,
+          "warning": "KÜRZEN – über 90 Zeichen",
+          "suggestion": "Käthe Kruse Puppen & Kuscheltiere aus Naturmaterialien. Im Zwergenladen.",
+          "suggestion_chars": 72
+        },
+        {
+          "text": "Waldorf-Puppen, Stofftiere & mehr – nachhaltiger Spielspaß für die Kleinsten.",
+          "chars": 78
+        },
+        {
+          "text": "Handgemachte Puppen und Bio-Kuscheltiere – die perfekte erste Puppe für Ihr Kind.",
+          "chars": 82
+        },
+        {
+          "text": "Hochwertige Puppen & Kuscheltiere als Geschenk – sicher, fair, nachhaltig.",
+          "chars": 75
+        },
+        {
+          "text": "Kuscheltiere aus Wolle und Naturmaterialien – weich, sicher und langlebig.",
+          "chars": 75
+        }
+      ]
+    }
+  ]
+}
