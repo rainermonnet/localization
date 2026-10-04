@@ -21,6 +21,11 @@ AUSFÜHREN
     python3 aus-google-nehmen.py          # Probelauf, ändert nichts
     python3 aus-google-nehmen.py --live   # entfernt aus dem Kanal
 
+Statt ganzer Marken lassen sich auch einzelne Produkte nennen:
+
+    python3 aus-google-nehmen.py 15259388346741
+    python3 aus-google-nehmen.py 15259388346741 --live
+
 Umkehrbar: In Shopify lässt sich ein Produkt jederzeit wieder im
 Google-Kanal veröffentlichen.
 """
@@ -105,13 +110,18 @@ def seite(cursor):
 
 def main():
     live = "--live" in sys.argv
+    # Produkt-IDs als Argumente schlagen die Markenliste
+    einzeln = {a.strip() for a in sys.argv[1:] if a.strip().isdigit()}
     if not live:
         print("PROBELAUF — es wird nichts geändert.")
         print("Zum Entfernen:  python3 aus-google-nehmen.py --live\n")
 
     kanal_id, kanal_name = google_kanal_id()
     print(f"Kanal: {kanal_name}")
-    print(f"Marken: {', '.join(sorted(MARKEN_RAUS))}\n")
+    if einzeln:
+        print(f"Produkt-IDs: {', '.join(sorted(einzeln))}\n")
+    else:
+        print(f"Marken: {', '.join(sorted(MARKEN_RAUS))}\n")
 
     betroffen = []
     gesamt = 0
@@ -130,7 +140,10 @@ def main():
         for kante in block.get("edges", []):
             p = kante["node"]
             gesamt += 1
-            if (p.get("vendor") or "").strip().lower() not in MARKEN_RAUS:
+            if einzeln:
+                if kurz_id(p["id"]) not in einzeln:
+                    continue
+            elif (p.get("vendor") or "").strip().lower() not in MARKEN_RAUS:
                 continue
             kanaele = [(k["node"]["publication"] or {}).get("name", "")
                        for k in p.get("resourcePublicationsV2", {}).get("edges", [])
