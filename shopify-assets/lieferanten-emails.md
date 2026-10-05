@@ -1,7 +1,7 @@
 # Lieferanten-Emails: Bildanfrage Zwergenladen
 
 **Betreff-Vorlage:** Bildanfrage Zwergenladen – [Produktname / Artikelnummer]  
-**Absender:** [Deine E-Mail, z. B. info@zwergenladen.de]  
+**Absender:** [Deine E-Mail, z. B. info@zwergenladen.info]  
 **Stand:** 2026-08-07
 
 ---
@@ -15,7 +15,7 @@
 
 Sehr geehrte Damen und Herren,
 
-wir sind autorisierter Händler Ihrer Produkte und betreiben den Online-Shop **Zwergenladen** (zwergenladen.de).
+wir sind autorisierter Händler Ihrer Produkte und betreiben den Online-Shop **Zwergenladen** (zwergenladen.info).
 
 Für unsere Google-Merchant-Center-Integration benötigen wir hochauflösende Produktbilder (min. 800×800 px, JPG oder PNG, weißer oder heller Hintergrund) für folgende Artikel:
 
@@ -29,7 +29,7 @@ Bitte senden Sie uns die Bilder als E-Mail-Anhang oder teilen Sie uns einen Down
 
 Vielen Dank und freundliche Grüße,  
 [Name]  
-Zwergenladen | zwergenladen.de
+Zwergenladen | zwergenladen.info
 
 ---
 
@@ -42,7 +42,7 @@ Zwergenladen | zwergenladen.de
 
 Sehr geehrte Damen und Herren,
 
-wir betreiben den Online-Shop **Zwergenladen** (zwergenladen.de) und führen Ihre Produkte in unserem Sortiment.
+wir betreiben den Online-Shop **Zwergenladen** (zwergenladen.info) und führen Ihre Produkte in unserem Sortiment.
 
 Für unsere Google-Merchant-Center-Integration benötigen wir hochauflösende Produktbilder (min. 800×800 px, JPG oder PNG) für folgende Artikel:
 
@@ -55,7 +55,7 @@ Wir freuen uns über einen Zugang zum Händler-Bildarchiv oder einen direkten Do
 
 Vielen Dank und freundliche Grüße,  
 [Name]  
-Zwergenladen | zwergenladen.de
+Zwergenladen | zwergenladen.info
 
 ---
 
@@ -68,7 +68,7 @@ Zwergenladen | zwergenladen.de
 
 Sehr geehrte Damen und Herren,
 
-wir sind autorisierter Fachhändler Ihrer Produkte und betreiben den Online-Shop **Zwergenladen** (zwergenladen.de).
+wir sind autorisierter Fachhändler Ihrer Produkte und betreiben den Online-Shop **Zwergenladen** (zwergenladen.info).
 
 Für die Integration in Google Merchant Center benötigen wir ein hochauflösendes Produktbild (min. 800×800 px, JPG oder PNG, freier/weißer Hintergrund) für:
 
@@ -80,7 +80,7 @@ Haben Sie ein Händler-Bildportal, über das wir Bilder beziehen können? Altern
 
 Mit freundlichen Grüßen,  
 [Name]  
-Zwergenladen | zwergenladen.de
+Zwergenladen | zwergenladen.info
 
 ---
 
@@ -93,7 +93,7 @@ Zwergenladen | zwergenladen.de
 
 Sehr geehrte Damen und Herren,
 
-wir führen Ihre Produkte im Online-Shop **Zwergenladen** (zwergenladen.de).
+wir führen Ihre Produkte im Online-Shop **Zwergenladen** (zwergenladen.info).
 
 Für Google Merchant Center benötigen wir ein hochauflösendes Produktbild (min. 800×800 px, JPG oder PNG) für:
 
@@ -105,7 +105,7 @@ Falls Sie ein Händler-Bildportal anbieten, würden wir uns über den Zugang fre
 
 Mit freundlichen Grüßen,  
 [Name]  
-Zwergenladen | zwergenladen.de
+Zwergenladen | zwergenladen.info
 
 ---
 
@@ -121,13 +121,13 @@ Zwergenladen | zwergenladen.de
 
 Sehr geehrte Damen und Herren,
 
-wir führen Grapat-Produkte in unserem Online-Shop **Zwergenladen** (zwergenladen.de).
+wir führen Grapat-Produkte in unserem Online-Shop **Zwergenladen** (zwergenladen.info).
 
 Für Google Merchant Center benötigen wir ein Produktbild für den **Grapat Ring** (Mandala-Ring-Set). Könnten Sie uns ein hochauflösendes Bild (min. 800×800 px) zur Verfügung stellen oder uns an das Grapat-Bildarchiv verweisen?
 
 Mit freundlichen Grüßen,  
 [Name]  
-Zwergenladen | zwergenladen.de
+Zwergenladen | zwergenladen.info
 
 ---
 
@@ -139,7 +139,7 @@ Zwergenladen | zwergenladen.de
 
 Dear Grapat team,
 
-we are an authorized dealer for your products in Germany, operating the online shop **Zwergenladen** (zwergenladen.de).
+we are an authorized dealer for your products in Germany, operating the online shop **Zwergenladen** (zwergenladen.info).
 
 For our Google Merchant Center integration we need a high-resolution product image (min. 800×800 px, JPG or PNG, light background) for:
 
@@ -149,7 +149,7 @@ Do you have a press kit or dealer image archive we can access?
 
 Thank you very much,  
 [Name]  
-Zwergenladen | zwergenladen.de
+Zwergenladen | zwergenladen.info
 
 ---
 
@@ -165,13 +165,13 @@ Zwergenladen | zwergenladen.de
 
 Sehr geehrte Damen und Herren,
 
-wir führen Ihre Produkte im Online-Shop **Zwergenladen** (zwergenladen.de) und benötigen für Google Merchant Center ein hochauflösendes Produktbild für:
+wir führen Ihre Produkte im Online-Shop **Zwergenladen** (zwergenladen.info) und benötigen für Google Merchant Center ein hochauflösendes Produktbild für:
 
 **[Artikelname / Artikelnummer nach Prüfung im Admin eintragen]**
 
 Mit freundlichen Grüßen,  
 [Name]  
-Zwergenladen | zwergenladen.de
+Zwergenladen | zwergenladen.info
 
 ---
 

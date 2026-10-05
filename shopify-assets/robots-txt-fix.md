@@ -131,7 +131,7 @@ Vorhandenes nicht anfassen.
 python3 robots-anpassen.py --pruefen
 ```
 
-oder im Browser `https://zwergenladen.de/robots.txt` aufrufen.
+oder im Browser `https://zwergenladen.info/robots.txt` aufrufen.
 Erwartet: beide Gruppen erscheinen, **und** die Disallow-Zeilen stehen
 unter ihnen.
 

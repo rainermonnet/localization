@@ -77,8 +77,8 @@ AGENTEN = ("Googlebot", "Googlebot-Image")
 # mit drin, weil sie immer funktioniert — auch wenn die Wunschdomain woanders
 # hinzeigt. Eigene Adresse geht vor:  --pruefen https://meineadresse.de
 HOSTS = [
-    "https://zwergenladen.de",
-    "https://www.zwergenladen.de",
+    "https://zwergenladen.info",
+    "https://www.zwergenladen.info",
     "https://zwergenladen-fr.myshopify.com",
 ]
 
