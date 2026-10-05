@@ -73,6 +73,7 @@ except ImportError:
 
 DATEI = "config/robots.txt.liquid"
 AGENTEN = ("Googlebot", "Googlebot-Image")
+MARKER = "# Zwergenladen: eigene robots.txt aktiv"
 
 # Kandidaten für die ausgelieferte robots.txt. Die myshopify-Adresse steht
 # mit drin, weil sie immer funktioniert — auch wenn die Wunschdomain woanders
@@ -120,7 +121,8 @@ Allow: /
 """
 
 # Shopifys dokumentierte Standardausgabe — nur nötig, wenn die Datei neu ist.
-GRUNDGERUEST = """{% for group in robots.default_groups %}
+GRUNDGERUEST = """# Zwergenladen: eigene robots.txt aktiv (config/robots.txt.liquid)
+{% for group in robots.default_groups %}
   {{- group.user_agent }}
   {%- for rule in group.rules %}
     {{ rule }}
@@ -258,11 +260,19 @@ def auswerten(text, zeige_inhalt=False):
     # allein bringt mehrere Gruppen und ein Dutzend Regeln mit.
     if len(nicht_leer) < 10 or zeige_inhalt:
         print("      ── tatsächlicher Inhalt ──")
-        for z in nicht_leer[:25]:
+        grenze = len(nicht_leer) if zeige_inhalt else 25
+        for z in nicht_leer[:grenze]:
             print(f"      {z}")
-        if len(nicht_leer) > 25:
-            print(f"      … und {len(nicht_leer)-25} weitere Zeilen")
+        if len(nicht_leer) > grenze:
+            print(f"      … und {len(nicht_leer)-grenze} weitere Zeilen"
+                  " — vollständig mit --roh")
         print("      ──────────────────────────")
+
+    if MARKER in text:
+        print("      Theme-Vorlage wird angewendet: ja")
+    else:
+        print("      Theme-Vorlage wird angewendet: NEIN — Shopify liefert")
+        print("                                     seine eingebaute Datei aus")
 
     fehlt = []
     for agent in AGENTEN:
