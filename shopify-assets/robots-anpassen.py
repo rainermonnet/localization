@@ -157,9 +157,37 @@ mutation($themeId: ID!, $files: [OnlineStoreThemeFilesUpsertFileInput!]!) {
 """
 
 
+def handweg(grund):
+    """Zeigt Dateiinhalt und Klickweg, wenn die API nicht herankommt."""
+    print(f"\n{grund}\n")
+    print("Dann von Hand — dauert zwei Minuten und ist einmalige Arbeit:")
+    print("  1. Shopify Admin → Online-Shop → Themes")
+    print("  2. Beim aktiven Theme auf ··· → Code bearbeiten")
+    print("  3. Links „Neue Datei hinzufügen“ → Ordner config →")
+    print("     Dateiname robots.txt → Endung .liquid")
+    print("  4. Den folgenden Inhalt vollständig einsetzen und speichern:")
+    print("\n" + "=" * 70)
+    print(GRUNDGERUEST + ZUSATZ)
+    print("=" * 70)
+    print("\nDanach prüfen:  python3 robots-anpassen.py --pruefen")
+    print("(Das liest nur die öffentliche robots.txt und braucht keinen Zugang.)")
+    print("\nLieber doch per Skript? Dann fehlen der App die Zugriffsbereiche")
+    print("read_themes und write_themes. Nach dem Nachtragen im Dev Dashboard")
+    print("muss die Installation erneut bestätigt werden.")
+    sys.exit(0)
+
+
+def _scope_fehlt(fehler):
+    t = str(fehler).lower()
+    return "access_denied" in t or "access scope" in t or "_themes" in t
+
+
 def aktives_theme():
     antwort = shopify_http.execute(THEMES)
     if antwort.get("_error"):
+        if _scope_fehlt(antwort["_error"]):
+            handweg("Der App fehlt der Zugriffsbereich read_themes — "
+                    "das Theme ist über die API nicht lesbar.")
         sys.exit(f"Themes nicht lesbar: {antwort['_error']}")
     kanten = (antwort.get("themes") or {}).get("edges", [])
     if not kanten:
@@ -267,14 +295,10 @@ def main():
         fehler = fehler or None
 
     if fehler:
+        if _scope_fehlt(fehler):
+            handweg("Der App fehlt der Zugriffsbereich write_themes — "
+                    "schreiben ist über die API nicht möglich.")
         print(f"\nFehlgeschlagen: {fehler}")
-        text = str(fehler).lower()
-        if "scope" in text or "access denied" in text or "write_themes" in text:
-            print("\nDer App fehlt der Zugriffsbereich write_themes.")
-            print("Entweder im Dev Dashboard nachtragen und die Installation")
-            print("erneut bestätigen — oder den Inhalt oben von Hand einfügen:")
-            print("Online-Shop → Themes → ··· → Code bearbeiten →")
-            print("Neue Datei hinzufügen → Config → Dateiname robots.txt")
         return
 
     print(f"\nGeschrieben: {DATEI}")

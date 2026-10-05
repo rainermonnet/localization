@@ -1,0 +1,34 @@
+{% for group in robots.default_groups %}
+  {{- group.user_agent }}
+  {%- for rule in group.rules %}
+    {{ rule }}
+  {%- endfor %}
+  {%- if group.sitemap != blank %}
+    {{ group.sitemap }}
+  {%- endif %}
+{% endfor %}
+
+{%- comment -%}
+  Zwergenladen: Google ausdrücklich erlauben (Merchant Center verlangt
+  eigene Gruppen für Googlebot und Googlebot-Image).
+
+  Die Standardsperren aus der *-Gruppe werden mitgeführt, weil eine
+  eigene Gruppe den *-Block sonst vollständig ersetzt und Warenkorb,
+  Kasse, Suche und Filter-URLs zum Crawlen aufgingen.
+{%- endcomment -%}
+{%- capture standard_regeln -%}
+{%- for gruppe in robots.default_groups -%}
+{%- if gruppe.user_agent.value == '*' -%}
+{%- for rule in gruppe.rules %}
+{{ rule }}
+{%- endfor -%}
+{%- endif -%}
+{%- endfor -%}
+{%- endcapture %}
+User-agent: Googlebot
+Allow: /
+{{- standard_regeln }}
+
+User-agent: Googlebot-Image
+Allow: /
+{{- standard_regeln }}
