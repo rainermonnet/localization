@@ -62,6 +62,7 @@ wieder Shopifys Standard.
 """
 
 import sys
+import time
 import urllib.error
 import urllib.request
 
@@ -216,13 +217,29 @@ def bestand_lesen(theme_id):
     return (knoten[0].get("body") or {}).get("content")
 
 
-def holen(basis):
-    """Holt <basis>/robots.txt und gibt (text, ziel_url) zurück — oder (None, Grund)."""
+def holen(basis, frisch=False):
+    """Holt <basis>/robots.txt und gibt (text, ziel_url) zurück — oder (None, Grund).
+
+    `frisch` hängt einen Zufallswert an und bittet um eine ungepufferte
+    Antwort. Shopify liefert robots.txt über ein CDN aus; ohne das sieht
+    man unter Umständen minutenlang die alte Fassung.
+    """
     url = basis.rstrip("/") + "/robots.txt"
+    kopf = {"User-Agent": "Zwergenladen-Pruefung"}
+    if frisch:
+        url += f"?cb={int(time.time())}"
+        kopf["Cache-Control"] = "no-cache"
+        kopf["Pragma"] = "no-cache"
     try:
-        anfrage = urllib.request.Request(
-            url, headers={"User-Agent": "Zwergenladen-Pruefung"})
+        anfrage = urllib.request.Request(url, headers=kopf)
         with urllib.request.urlopen(anfrage, timeout=20) as a:
+            if frisch:
+                alter = a.headers.get("Age") or a.headers.get("age")
+                cache = a.headers.get("CF-Cache-Status") or a.headers.get("X-Cache")
+                hinweise = [x for x in (f"Age: {alter}" if alter else None,
+                                        f"Cache: {cache}" if cache else None) if x]
+                if hinweise:
+                    print(f"      {' · '.join(hinweise)}")
             return a.read().decode("utf-8", "replace"), a.geturl()
     except urllib.error.HTTPError as e:
         return None, f"HTTP {e.code}"
@@ -271,13 +288,13 @@ def auswerten(text, zeige_inhalt=False):
     return fehlt
 
 
-def oeffentlich_pruefen(eigene=None, zeige_inhalt=False):
+def oeffentlich_pruefen(eigene=None, zeige_inhalt=False, frisch=False):
     """Prüft die ausgelieferte robots.txt — erst die eigene Adresse, sonst alle Kandidaten."""
     hosts = [eigene] if eigene else HOSTS
     bester = None
     for basis in hosts:
-        print(f"\n  {basis}/robots.txt")
-        text, ziel = holen(basis)
+        print(f"\n  {basis}/robots.txt{' (Cache umgangen)' if frisch else ''}")
+        text, ziel = holen(basis, frisch)
         if text is None:
             print(f"      nicht erreichbar: {ziel}")
             continue
@@ -297,7 +314,9 @@ def main():
         print("Lese die ausgelieferte robots.txt …")
         if not eigene:
             print("(Eigene Adresse geht vor:  --pruefen https://meineadresse.de)")
-        fehlt = oeffentlich_pruefen(eigene, zeige_inhalt="--roh" in sys.argv)
+        fehlt = oeffentlich_pruefen(eigene,
+                                    zeige_inhalt="--roh" in sys.argv,
+                                    frisch="--frisch" in sys.argv)
 
         if fehlt == []:
             print("\nBeide Gruppen sind draußen. Jetzt im Merchant Center den")
@@ -314,8 +333,8 @@ def main():
             print("  2. Falsche Adresse. Steht oben eine robots.txt mit nur")
             print("     ein, zwei Zeilen, ist das nicht dein Shopify-Shop —")
             print("     dann zeigt die Domain woanders hin.")
-            print("  3. Cache. Shopify liefert robots.txt einige Minuten")
-            print("     gepuffert aus. Das erklärt aber keine 2-Zeilen-Datei.")
+            print("  3. Cache. Shopify liefert robots.txt über ein CDN aus.")
+            print("     Mit Cache umgehen:  --pruefen --frisch")
         return
 
     if not live:
