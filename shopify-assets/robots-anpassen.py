@@ -71,8 +71,16 @@ except ImportError:
     sys.exit("shopify_http.py nicht gefunden — bitte im App-Ordner ausführen.")
 
 DATEI = "config/robots.txt.liquid"
-SHOP_URL = "https://zwergenladen.de/robots.txt"
 AGENTEN = ("Googlebot", "Googlebot-Image")
+
+# Kandidaten für die ausgelieferte robots.txt. Die myshopify-Adresse steht
+# mit drin, weil sie immer funktioniert — auch wenn die Wunschdomain woanders
+# hinzeigt. Eigene Adresse geht vor:  --pruefen https://meineadresse.de
+HOSTS = [
+    "https://zwergenladen.de",
+    "https://www.zwergenladen.de",
+    "https://zwergenladen-fr.myshopify.com",
+]
 
 # ──────────────────────────────────────────────────────────────
 # Der Liquid-Block, der angefügt wird.
@@ -208,41 +216,106 @@ def bestand_lesen(theme_id):
     return (knoten[0].get("body") or {}).get("content")
 
 
-def oeffentlich_pruefen():
-    """Liest die ausgelieferte robots.txt und sagt, was Google dort sieht."""
+def holen(basis):
+    """Holt <basis>/robots.txt und gibt (text, ziel_url) zurück — oder (None, Grund)."""
+    url = basis.rstrip("/") + "/robots.txt"
     try:
         anfrage = urllib.request.Request(
-            SHOP_URL, headers={"User-Agent": "Zwergenladen-Pruefung"})
+            url, headers={"User-Agent": "Zwergenladen-Pruefung"})
         with urllib.request.urlopen(anfrage, timeout=20) as a:
-            text = a.read().decode("utf-8", "replace")
+            return a.read().decode("utf-8", "replace"), a.geturl()
+    except urllib.error.HTTPError as e:
+        return None, f"HTTP {e.code}"
     except (urllib.error.URLError, OSError) as e:
-        print(f"  {SHOP_URL} nicht erreichbar: {e}")
-        return None
+        return None, str(e)
 
+
+def auswerten(text, zeige_inhalt=False):
+    """Sagt, welche der verlangten Gruppen fehlen. Gibt [] zurück, wenn alles da ist."""
     zeilen = [z.strip() for z in text.splitlines()]
-    gruppen = [z for z in zeilen if z.lower().startswith("user-agent:")]
-    print(f"  {len(zeilen)} Zeilen, {len(gruppen)} User-agent-Gruppen")
+    nicht_leer = [z for z in zeilen if z]
+    gruppen = [z for z in nicht_leer if z.lower().startswith("user-agent:")]
+    print(f"      {len(nicht_leer)} Zeilen, {len(gruppen)} User-agent-Gruppen")
+
+    # Unter 10 Zeilen ist das keine Shopify-robots.txt — Shopifys Standard
+    # allein bringt mehrere Gruppen und ein Dutzend Regeln mit.
+    if len(nicht_leer) < 10 or zeige_inhalt:
+        print("      ── tatsächlicher Inhalt ──")
+        for z in nicht_leer[:25]:
+            print(f"      {z}")
+        if len(nicht_leer) > 25:
+            print(f"      … und {len(nicht_leer)-25} weitere Zeilen")
+        print("      ──────────────────────────")
+
     fehlt = []
     for agent in AGENTEN:
-        da = any(z.lower() == f"user-agent: {agent.lower()}" for z in zeilen)
-        print(f"  {'ok   ' if da else 'FEHLT'} {agent}")
+        da = any(z.lower() == f"user-agent: {agent.lower()}" for z in nicht_leer)
+        print(f"      {'ok   ' if da else 'FEHLT'} {agent}")
         if not da:
             fehlt.append(agent)
+        else:
+            # Gruppe vorhanden — stehen auch die Sperren darunter?
+            i = next(i for i, z in enumerate(nicht_leer)
+                     if z.lower() == f"user-agent: {agent.lower()}")
+            block = []
+            for z in nicht_leer[i+1:]:
+                if z.lower().startswith("user-agent:"):
+                    break
+                block.append(z)
+            sperren = sum(1 for z in block if z.lower().startswith("disallow:"))
+            print(f"            Allow: / {'ja' if 'Allow: /' in block else 'FEHLT'}"
+                  f" · {sperren} Sperren übernommen")
+            if sperren == 0:
+                print("            ! Ohne Sperren wären Warenkorb, Kasse und Suche")
+                print("              für Google offen — capture-Block prüfen.")
     return fehlt
+
+
+def oeffentlich_pruefen(eigene=None, zeige_inhalt=False):
+    """Prüft die ausgelieferte robots.txt — erst die eigene Adresse, sonst alle Kandidaten."""
+    hosts = [eigene] if eigene else HOSTS
+    bester = None
+    for basis in hosts:
+        print(f"\n  {basis}/robots.txt")
+        text, ziel = holen(basis)
+        if text is None:
+            print(f"      nicht erreichbar: {ziel}")
+            continue
+        if ziel.rstrip("/") != basis.rstrip("/") + "/robots.txt":
+            print(f"      weitergeleitet nach: {ziel}")
+        fehlt = auswerten(text, zeige_inhalt)
+        if bester is None or not fehlt:
+            bester = fehlt
+    return bester
 
 
 def main():
     live = "--live" in sys.argv
 
     if "--pruefen" in sys.argv:
-        print(f"Lese {SHOP_URL} …")
-        fehlt = oeffentlich_pruefen()
+        eigene = next((a for a in sys.argv[1:] if a.startswith("http")), None)
+        print("Lese die ausgelieferte robots.txt …")
+        if not eigene:
+            print("(Eigene Adresse geht vor:  --pruefen https://meineadresse.de)")
+        fehlt = oeffentlich_pruefen(eigene, zeige_inhalt="--roh" in sys.argv)
+
         if fehlt == []:
             print("\nBeide Gruppen sind draußen. Jetzt im Merchant Center den")
-            print("URL-Test für das Produkt wiederholen.")
-        elif fehlt:
-            print("\nNoch nicht draußen. Shopify liefert robots.txt gecacht aus —")
-            print("nach dem Schreiben können einige Minuten vergehen.")
+            print("URL-Test für goki VW Käfer 1967 (15883509432693) wiederholen.")
+        elif fehlt is None:
+            print("\nKeine der Adressen war erreichbar. Welche Adresse ruft ein")
+            print("Kunde auf? Die hier eintragen:")
+            print("  python3 robots-anpassen.py --pruefen https://deine-adresse.de")
+        else:
+            print("\nNoch nicht draußen. Drei Ursachen, in dieser Reihenfolge prüfen:")
+            print("  1. Falsches Theme. Die Datei muss im VERÖFFENTLICHTEN Theme")
+            print("     liegen, nicht im Entwurf. Online-Shop → Themes →")
+            print("     ganz oben unter „Aktuelles Theme“.")
+            print("  2. Falsche Adresse. Steht oben eine robots.txt mit nur")
+            print("     ein, zwei Zeilen, ist das nicht dein Shopify-Shop —")
+            print("     dann zeigt die Domain woanders hin.")
+            print("  3. Cache. Shopify liefert robots.txt einige Minuten")
+            print("     gepuffert aus. Das erklärt aber keine 2-Zeilen-Datei.")
         return
 
     if not live:
