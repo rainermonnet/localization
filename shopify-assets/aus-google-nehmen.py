@@ -166,7 +166,8 @@ def main():
     print(f"{gesamt} aktive Produkte geprüft\n")
 
     if not betroffen:
-        print("Keine Produkte dieser Marken im Google-Kanal. Nichts zu tun.")
+        was = "dieser IDs" if einzeln else "dieser Marken"
+        print(f"Keine Produkte {was} im Google-Kanal. Nichts zu tun.")
         return
 
     zaehler = Counter(z["Marke"] for z in betroffen)
