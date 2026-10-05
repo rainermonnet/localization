@@ -61,6 +61,7 @@ Umkehrbar: Die Datei lässt sich im Theme-Editor löschen, dann gilt
 wieder Shopifys Standard.
 """
 
+import re
 import sys
 import time
 import urllib.error
@@ -298,6 +299,45 @@ def auswerten(text, zeige_inhalt=False):
     return fehlt
 
 
+def veroeffentlichtes_theme(basis):
+    """Liest aus dem Quelltext der Startseite, welches Theme der Shop ausliefert.
+
+    Shopify schreibt in jede Storefront-Seite einen Block
+        Shopify.theme = {"name":"…","id":123,"role":"main", …}
+    Das ist die einzige Auskunft, die nicht davon abhängt, was im Admin
+    angezeigt wird — und damit der Schiedsrichter bei der Frage, ob die
+    bearbeitete Datei überhaupt im ausgelieferten Theme liegt.
+    """
+    url = basis.rstrip("/") + f"/?cb={int(time.time())}"
+    try:
+        anfrage = urllib.request.Request(
+            url, headers={"User-Agent": "Mozilla/5.0 Zwergenladen-Pruefung",
+                          "Cache-Control": "no-cache"})
+        with urllib.request.urlopen(anfrage, timeout=25) as a:
+            seite = a.read().decode("utf-8", "replace")
+    except (urllib.error.URLError, OSError) as e:
+        print(f"  Startseite nicht lesbar: {e}")
+        return None
+
+    treffer = re.search(r"Shopify\.theme\s*=\s*(\{.*?\})\s*;", seite, re.S)
+    if not treffer:
+        print("  Kein Shopify.theme im Quelltext gefunden.")
+        print("  Entweder antwortet hier kein Shopify-Shop, oder die Seite")
+        print("  wird von einer Zwischenschicht ausgeliefert.")
+        return None
+
+    roh = treffer.group(1)
+    def feld(name):
+        m = re.search(rf'"{name}"\s*:\s*"?([^",}}]+)"?', roh)
+        return m.group(1).strip() if m else "?"
+
+    tid, name, rolle = feld("id"), feld("name"), feld("role")
+    print(f"  Der Shop liefert aus Theme:  {name}")
+    print(f"                     ID:       {tid}")
+    print(f"                     Rolle:    {rolle}")
+    return tid
+
+
 def oeffentlich_pruefen(eigene=None, zeige_inhalt=False, frisch=False):
     """Prüft die ausgelieferte robots.txt — erst die eigene Adresse, sonst alle Kandidaten."""
     hosts = [eigene] if eigene else HOSTS
@@ -318,6 +358,17 @@ def oeffentlich_pruefen(eigene=None, zeige_inhalt=False, frisch=False):
 
 def main():
     live = "--live" in sys.argv
+
+    if "--theme" in sys.argv:
+        basis = next((a for a in sys.argv[1:] if a.startswith("http")), HOSTS[0])
+        print(f"Lese {basis} …\n")
+        tid = veroeffentlichtes_theme(basis)
+        if tid and tid != "?":
+            print(f"\nVergleich diese ID mit der in deiner Editor-Adresse:")
+            print(f"  admin.shopify.com/store/zwergenladen-fr/themes/{tid}")
+            print("\nStimmt sie nicht mit der überein, in der du gearbeitet")
+            print("hast, lag die Datei im falschen Theme. Dann dort anlegen.")
+        return
 
     if "--pruefen" in sys.argv:
         eigene = next((a for a in sys.argv[1:] if a.startswith("http")), None)
