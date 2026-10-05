@@ -75,6 +75,9 @@ except ImportError:
 DATEI = "config/robots.txt.liquid"
 AGENTEN = ("Googlebot", "Googlebot-Image")
 MARKER = "# Zwergenladen: eigene robots.txt aktiv"
+STAND = "2026-10-05c"           # steht in jeder Ausgabe, damit erkennbar ist,
+                                # welche Fassung gerade läuft
+SCHALTER = {"--live", "--pruefen", "--theme", "--roh", "--frisch"}
 
 # Kandidaten für die ausgelieferte robots.txt. Die myshopify-Adresse steht
 # mit drin, weil sie immer funktioniert — auch wenn die Wunschdomain woanders
@@ -356,7 +359,33 @@ def oeffentlich_pruefen(eigene=None, zeige_inhalt=False, frisch=False):
     return bester
 
 
+HOLEN = ('cd "/Users/rainermonnet/Streamlit App/zwergenladen-import-app" && '
+         'curl -fsSL -o robots-anpassen.py "https://raw.githubusercontent.com/'
+         'rainermonnet/localization/claude/shopify-opti-assets-miijc7/'
+         'shopify-assets/robots-anpassen.py"')
+
+
+def argumente_pruefen():
+    """Bricht bei unbekannten Argumenten ab, statt stillschweigend etwas anderes zu tun.
+
+    Ein nicht erkanntes --irgendwas fiel vorher in den Normalbetrieb und
+    versuchte zu schreiben. Das ist genau falsch herum: Ein Tippfehler oder
+    eine veraltete Kopie darf nicht in den schreibenden Zweig führen.
+    """
+    unbekannt = [a for a in sys.argv[1:]
+                 if a.startswith("-") and a not in SCHALTER]
+    if unbekannt:
+        print(f"Unbekanntes Argument: {' '.join(unbekannt)}")
+        print(f"Bekannt sind: {' '.join(sorted(SCHALTER))}")
+        print("\nFalls du den Schalter aus einer Anleitung hast, ist diese")
+        print(f"Kopie veraltet (Stand {STAND}). Neu holen:\n")
+        print(f"  {HOLEN}")
+        sys.exit(1)
+
+
 def main():
+    print(f"robots-anpassen.py · Stand {STAND}\n")
+    argumente_pruefen()
     live = "--live" in sys.argv
 
     if "--theme" in sys.argv:
