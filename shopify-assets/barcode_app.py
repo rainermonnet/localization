@@ -337,7 +337,7 @@ with st.sidebar:
                     "diese Sitzung ein."
                 )
                 d_in = st.text_input("Shop-Domain",
-                                     placeholder="zwergenladen.myshopify.com")
+                                     placeholder="zwergenladen-fr.myshopify.com")
                 t_in = st.text_input("Admin API Access Token",
                                      type="password", placeholder="shpat_…")
                 if st.button("Zugang übernehmen"):

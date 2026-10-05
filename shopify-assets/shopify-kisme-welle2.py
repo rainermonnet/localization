@@ -25,7 +25,7 @@ import time
 # ──────────────────────────────────────────
 # Konfiguration
 # ──────────────────────────────────────────
-SHOP_URL = "zwergenladen.myshopify.com"
+SHOP_URL = "zwergenladen-fr.myshopify.com"
 API_VERSION = "2024-01"
 ACCESS_TOKEN = ""          # TODO: aus 1Password eintragen
 DRY_RUN = True             # True = nur anzeigen, nichts schreiben

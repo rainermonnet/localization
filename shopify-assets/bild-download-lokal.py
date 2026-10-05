@@ -27,7 +27,7 @@ from playwright.sync_api import sync_playwright
 import requests
 
 # ─── Konfiguration ────────────────────────────────────────────────────────────
-SHOP_URL         = "zwergenladen.myshopify.com"
+SHOP_URL         = "zwergenladen-fr.myshopify.com"
 ACCESS_TOKEN     = ""              # Shopify Admin API Token – leer lassen für nur Download
 UPLOAD_TO_SHOPIFY = False          # True: direkt hochladen; False: nur herunterladen
 OUTPUT_DIR       = Path("./downloaded-images")

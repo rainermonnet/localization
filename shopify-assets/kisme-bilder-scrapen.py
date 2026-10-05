@@ -33,7 +33,7 @@ KISME_USER     = "monnet@zwergenladen.info"
 KISME_PASS     = ""        # TODO: aus 1Password eintragen
 KISME_LOGIN    = "https://shop.click-kisme.com/account"
 
-SHOP_URL       = "zwergenladen.myshopify.com"
+SHOP_URL       = "zwergenladen-fr.myshopify.com"
 ACCESS_TOKEN   = ""        # Shopify Admin Token – leer = nur Download
 API_VERSION    = "2024-01"
 UPLOAD         = False     # True = direkt zu Shopify hochladen

@@ -25,7 +25,7 @@ import time
 import requests
 
 # ─── Konfiguration ─────────────────────────────────────────────────────────────
-SHOP_URL      = "zwergenladen.myshopify.com"
+SHOP_URL      = "zwergenladen-fr.myshopify.com"
 ACCESS_TOKEN  = "shpat_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  # TODO: eintragen
 API_VERSION   = "2024-01"
 DRY_RUN       = True    # True = nur ausgeben, nichts ändern

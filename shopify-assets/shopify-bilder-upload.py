@@ -21,7 +21,7 @@ import time
 import requests
 
 # ─── Konfiguration ─────────────────────────────────────────────────────────────
-SHOP_URL      = "zwergenladen.myshopify.com"  # ohne https://
+SHOP_URL      = "zwergenladen-fr.myshopify.com"  # ohne https://
 ACCESS_TOKEN  = "shpat_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  # Custom App Admin API Token
 API_VERSION   = "2024-01"
 

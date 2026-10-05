@@ -30,12 +30,12 @@ WO DU IHN HINTERLEGST
 Variante A — Streamlit-Secrets (empfohlen):
     Datei `.streamlit/secrets.toml` neben der App anlegen:
 
-        shop_domain  = "zwergenladen.myshopify.com"
+        shop_domain  = "zwergenladen-fr.myshopify.com"
         access_token = "shpat_..."
 
 Variante B — Umgebungsvariablen:
 
-        export SHOPIFY_SHOP_DOMAIN="zwergenladen.myshopify.com"
+        export SHOPIFY_SHOP_DOMAIN="zwergenladen-fr.myshopify.com"
         export SHOPIFY_ACCESS_TOKEN="shpat_..."
 
 Variante C — Eingabe direkt in der App. Gilt nur für die laufende
@@ -91,7 +91,7 @@ def load_credentials(session_override=None):
 
 
 def normalise_domain(domain: str) -> str:
-    """'https://zwergenladen.myshopify.com/' → 'zwergenladen.myshopify.com'"""
+    """'https://zwergenladen-fr.myshopify.com/' → 'zwergenladen-fr.myshopify.com'"""
     d = domain.strip()
     d = re.sub(r"^https?://", "", d)
     return d.rstrip("/")

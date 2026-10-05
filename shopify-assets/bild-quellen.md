@@ -13,7 +13,7 @@
 | `15259386872181` | **Sterne Neon** | Produkt im Shopify-Admin löschen (alt / kein Lieferant) |
 
 **Shopify-Admin-Link:**  
-`https://zwergenladen.myshopify.com/admin/products/15259386872181`
+`https://zwergenladen-fr.myshopify.com/admin/products/15259386872181`
 
 ---
 
@@ -37,7 +37,7 @@
 - Alternativ: Grapat offizieller Pressekontakt: info@grapat.com
 
 **Shopify-Admin-Link:**  
-`https://zwergenladen.myshopify.com/admin/products/15259381268853`
+`https://zwergenladen-fr.myshopify.com/admin/products/15259381268853`
 
 ---
 
@@ -61,7 +61,7 @@
 - Amazon-Seite (für Referenzbild): https://www.amazon.de/Goki-51713-Kaufl%C3%A4den-Lebensmittel-Haushaltswaren/dp/B0097QMU38
 
 **Shopify-Admin-Link:**  
-`https://zwergenladen.myshopify.com/admin/products/15719930265973`
+`https://zwergenladen-fr.myshopify.com/admin/products/15719930265973`
 
 ---
 
@@ -80,7 +80,7 @@
 - Alternativ: Produktbild direkt von der Hersteller-Seite (oben)
 
 **Shopify-Admin-Link:**  
-`https://zwergenladen.myshopify.com/admin/products/15923572539765`
+`https://zwergenladen-fr.myshopify.com/admin/products/15923572539765`
 
 ---
 
@@ -100,7 +100,7 @@
 - Suche nach A04083 im HENRYS-Onlineshop
 
 **Shopify-Admin-Link:**  
-`https://zwergenladen.myshopify.com/admin/products/15923572474229`
+`https://zwergenladen-fr.myshopify.com/admin/products/15923572474229`
 
 ---
 
@@ -125,7 +125,7 @@
 - Katalog 2025: https://katalog.ostheimer.de/
 
 **Shopify-Admin-Link:**  
-`https://zwergenladen.myshopify.com/admin/products/15259351777653`
+`https://zwergenladen-fr.myshopify.com/admin/products/15259351777653`
 
 ---
 
@@ -142,7 +142,7 @@
 **Hinweis:** Gleicher HENRYS-Kontakt wie Nr. 3 und 4.
 
 **Shopify-Admin-Link:**  
-`https://zwergenladen.myshopify.com/admin/products/15923572506997`
+`https://zwergenladen-fr.myshopify.com/admin/products/15923572506997`
 
 ---
 
@@ -163,7 +163,7 @@
 - Gleicher goki-Kontakt wie Nr. 2: info@goki.eu
 
 **Shopify-Admin-Link:**  
-`https://zwergenladen.myshopify.com/admin/products/15259350925685`
+`https://zwergenladen-fr.myshopify.com/admin/products/15259350925685`
 
 ---
 
@@ -188,7 +188,7 @@
 **Zusätzlich:** Produkt muss auch im Google-Kanal aktiviert werden (Seite nicht verfügbar).
 
 **Shopify-Admin-Link:**  
-`https://zwergenladen.myshopify.com/admin/products/15259388346741`
+`https://zwergenladen-fr.myshopify.com/admin/products/15259388346741`
 
 ---
 
@@ -211,7 +211,7 @@
 - Alternativ: Produktbild direkt von der Hersteller-Seite
 
 **Shopify-Admin-Link:**  
-`https://zwergenladen.myshopify.com/admin/products/15816849326453`
+`https://zwergenladen-fr.myshopify.com/admin/products/15816849326453`
 
 ---
 
