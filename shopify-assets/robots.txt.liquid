@@ -1,4 +1,4 @@
-# Zwergenladen: eigene robots.txt aktiv (config/robots.txt.liquid)
+# Zwergenladen: eigene robots.txt aktiv (templates/robots.txt.liquid)
 {% for group in robots.default_groups %}
   {{- group.user_agent }}
   {%- for rule in group.rules %}

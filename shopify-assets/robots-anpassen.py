@@ -10,7 +10,12 @@ Merchant Center meldet bei `goki VW Käfer 1967 Modellauto 1:32`
 
 Google verlangt dafür eigene Gruppen für `Googlebot` und
 `Googlebot-Image` in der robots.txt. Shopify liefert die nicht mit —
-sie entstehen nur über die Theme-Datei `config/robots.txt.liquid`.
+sie entstehen nur über die Theme-Datei `templates/robots.txt.liquid`.
+
+ACHTUNG ORDNER: templates, nicht config. Der Code-Editor nimmt eine Datei
+dieses Namens auch unter config/ an und speichert sie — Shopify ignoriert
+sie dort aber vollständig, ohne Fehler und ohne Hinweis. Der Shop liefert
+dann weiter seine eingebaute robots.txt aus.
 
 WARUM NICHT EINFACH „Allow: /"
 -------------------------------
@@ -42,7 +47,7 @@ Keine abgeschriebene Liste, sondern Shopifys eigene Standardgruppen per
 `robots.default_groups` plus die zwei neuen Gruppen. Ändert Shopify den
 Standard, zieht die Datei automatisch mit.
 
-Falls `config/robots.txt.liquid` schon existiert, wird nur angefügt —
+Falls `templates/robots.txt.liquid` schon existiert, wird nur angefügt —
 vorhandener Inhalt bleibt unangetastet.
 
 BRAUCHT
@@ -72,10 +77,10 @@ try:
 except ImportError:
     sys.exit("shopify_http.py nicht gefunden — bitte im App-Ordner ausführen.")
 
-DATEI = "config/robots.txt.liquid"
+DATEI = "templates/robots.txt.liquid"
 AGENTEN = ("Googlebot", "Googlebot-Image")
 MARKER = "# Zwergenladen: eigene robots.txt aktiv"
-STAND = "2026-10-05c"           # steht in jeder Ausgabe, damit erkennbar ist,
+STAND = "2026-10-05d"           # steht in jeder Ausgabe, damit erkennbar ist,
                                 # welche Fassung gerade läuft
 SCHALTER = {"--live", "--pruefen", "--theme", "--roh", "--frisch"}
 
@@ -125,7 +130,7 @@ Allow: /
 """
 
 # Shopifys dokumentierte Standardausgabe — nur nötig, wenn die Datei neu ist.
-GRUNDGERUEST = """# Zwergenladen: eigene robots.txt aktiv (config/robots.txt.liquid)
+GRUNDGERUEST = """# Zwergenladen: eigene robots.txt aktiv (templates/robots.txt.liquid)
 {% for group in robots.default_groups %}
   {{- group.user_agent }}
   {%- for rule in group.rules %}
@@ -178,8 +183,8 @@ def handweg(grund):
     print("Dann von Hand — dauert zwei Minuten und ist einmalige Arbeit:")
     print("  1. Shopify Admin → Online-Shop → Themes")
     print("  2. Beim aktiven Theme auf ··· → Code bearbeiten")
-    print("  3. Links „Neue Datei hinzufügen“ → Ordner config →")
-    print("     Dateiname robots.txt → Endung .liquid")
+    print("  3. Rechtsklick auf den Ordner TEMPLATES (nicht config!) →")
+    print("     Neue Datei → Name robots.txt → Endung .liquid")
     print("  4. Den folgenden Inhalt vollständig einsetzen und speichern:")
     print("\n" + "=" * 70)
     print(GRUNDGERUEST + ZUSATZ)
@@ -417,9 +422,9 @@ def main():
             print("  python3 robots-anpassen.py --pruefen https://deine-adresse.de")
         else:
             print("\nNoch nicht draußen. Drei Ursachen, in dieser Reihenfolge prüfen:")
-            print("  1. Falsches Theme. Die Datei muss im VERÖFFENTLICHTEN Theme")
-            print("     liegen, nicht im Entwurf. Online-Shop → Themes →")
-            print("     ganz oben unter „Aktuelles Theme“.")
+            print("  1. Falscher Ordner. Die Datei muss unter TEMPLATES liegen,")
+            print("     nicht unter config. Unter config wird sie kommentarlos")
+            print("     ignoriert — das ist der häufigste Grund.")
             print("  2. Falsche Adresse. Steht oben eine robots.txt mit nur")
             print("     ein, zwei Zeilen, ist das nicht dein Shopify-Shop —")
             print("     dann zeigt die Domain woanders hin.")

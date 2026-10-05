@@ -18,7 +18,7 @@ python3 robots-anpassen.py --live     # schreibt ins aktive Theme
 python3 robots-anpassen.py --pruefen  # liest die öffentliche robots.txt
 ```
 
-Das Skript legt `config/robots.txt.liquid` an, falls sie fehlt, und fügt
+Das Skript legt `templates/robots.txt.liquid` an, falls sie fehlt, und fügt
 nur an, falls sie existiert. Es braucht den Zugriffsbereich
 `write_themes`. Fehlt der, bricht es ab und zeigt den Inhalt zum
 Einfügen von Hand — dann weiter bei „Von Hand".
@@ -70,12 +70,19 @@ genau das steht unten im Code zum Einfügen.
 
 **Shopify Admin → Online-Shop → Themes → ··· (drei Punkte) → Code bearbeiten**
 
-Links in der Dateiliste nach `config/robots.txt.liquid` suchen.
+Links in der Dateiliste nach `templates/robots.txt.liquid` suchen.
 Gibt es die Datei nicht:
 
-- „Neue Datei hinzufügen" klicken
-- Ordner: **config** → Dateiname: `robots.txt` → Endung `.liquid`
-- Shopify erstellt `config/robots.txt.liquid`
+- **Rechtsklick auf den Ordner `templates`** → „Neue Datei"
+- Dateiname: `robots.txt`, Endung `.liquid`
+- Shopify erstellt `templates/robots.txt.liquid`
+
+**Der Ordner ist das Entscheidende: `templates`, nicht `config`.**
+Unter `config/` nimmt der Editor die Datei anstandslos an, speichert
+sie, zeigt keinen Fehler — und Shopify ignoriert sie vollständig. Der
+Shop liefert weiter seine eingebaute robots.txt aus. Es gibt keinen
+Hinweis darauf, weder im Editor noch im Admin. Genau daran ist der
+erste Anlauf hier gescheitert.
 
 ### Wenn die Datei NEU ist — kompletter Inhalt
 
@@ -149,9 +156,33 @@ In einer früheren Version dieser Datei stand, Shopify biete seit 2022
 eine native robots.txt-Bearbeitung unter *Online-Shop →
 Voreinstellungen*. **Das gibt es nicht.** robots.txt lässt sich bei
 Shopify ausschließlich über die Theme-Datei
-`config/robots.txt.liquid` ändern. Wer in den Voreinstellungen sucht,
+`templates/robots.txt.liquid` ändern. Wer in den Voreinstellungen sucht,
 sucht umsonst.
 
 Ebenfalls falsch war der oben gezeigte Code in der alten Fassung
 (`User-agent: {{ group.user_agent }}`) — siehe Hinweis zur
 Schreibweise.
+
+
+---
+
+## Protokoll eines vermeidbaren Umwegs
+
+Der erste Versuch legte die Datei unter `config/` an. Das ist falsch —
+Shopify liest sie nur aus `templates/`. Weil der Editor die Datei unter
+`config/` klaglos annimmt und speichert, sah alles richtig aus, und die
+Fehlersuche lief in die falsche Richtung: Cache, veröffentlichtes Theme,
+Domain, API-Zugriffsbereiche. Nichts davon war die Ursache.
+
+Was dabei brauchbar entstanden ist und bleibt:
+
+- `robots-anpassen.py --pruefen` liest die ausgelieferte robots.txt und
+  sagt über eine Markierungszeile, ob die Theme-Vorlage überhaupt
+  angewendet wird — die Frage, die drei Stunden offen war.
+- `--theme` liest aus dem Quelltext der Startseite, aus welchem Theme
+  der Shop tatsächlich ausliefert. Unabhängig von der Admin-Anzeige.
+- `--frisch` umgeht den CDN-Cache und zeigt die Cache-Header.
+
+Quellen:
+- https://help.shopify.com/en/manual/promoting-marketing/seo/editing-robots-txt
+- https://shopify.dev/docs/storefronts/themes/architecture/templates/robots-txt-liquid
