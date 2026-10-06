@@ -48,31 +48,43 @@ except ImportError:
 # Reihenfolge zählt — der erste Treffer gewinnt, deshalb Spezielles oben.
 # ──────────────────────────────────────────
 NACH_TITEL = [
-    (r"\b(puppe|püppchen|wichtel|kuschelpuppe|anziehpuppe|stoffpuppe|"
-     r"waldorfpuppe|biegepüppchen)\b",          "Puppen"),
-    (r"\b(malbuch|malbücher)\b",                "Malbuch"),
-    (r"\b(buch|bücher|bilderbuch|liederbuch)\b", "Buch"),
-    (r"\b(puzzle|steckpuzzle|einlegepuzzle|schichtenpuzzle|soundpuzzle)\b",
-                                                 "Puzzle"),
-    (r"\b(bausatz|baukasten|seilbahn|konstruktion|steckturm|bauklötze|"
-     r"bauklotz)\b",                             "Baukasten"),
+    (r"\b(malbuch|malbücher)\b",                          "Malbuch"),
+    (r"\b(buch|bücher|bilderbuch|liederbuch)\b",          "Buch"),
+    (r"\b(puppe|püppchen|wichtel|kuschelpuppe|anziehpuppe|"
+     r"stoffpuppe|waldorfpuppe|biegepüppchen)\b",          "Puppen"),
+    (r"\b(puzzle|steckpuzzle|einlegepuzzle|schichtenpuzzle|"
+     r"soundpuzzle)\b",                                    "Puzzle"),
+    (r"\b(bauklotz|bauklötze|baustein|bausteine|holzbausteine)\b",
+                                                           "Bauklötze"),
+    (r"\b(bausatz|baukasten|seilbahn|konstruktion|steckturm)\b",
+                                                           "Baukasten"),
     (r"\b(greifling|rassel|beißring|schnullerkette|mobile)\b",
-                                                 "Babyspielzeug"),
-    (r"\b(stift|stifte|bleistift|buntstift|wachsmalstift)\b",
-                                                 "Stifte"),
-    (r"\b(diabolo|jonglier|bumerang|frisbee|eurodisc|kendama|yo-?yo)\b",
-                                                 "Jonglieren"),
-    (r"schuh\w*",                                "Schuhe"),   # auch in Eurythmieschuhe
-    (r"\b(seife|lotion|creme|shampoo|zahnpasta|pflegeöl|massageöl)\b",
-                                                 "Körperpflege"),
-    (r"\b(trommel|flöte|klangstab|glockenspiel|leier|kalimba)\b",
-                                                 "Musikspielzeug"),
-    (r"\b(auto|automobil|käfer|bus|isetta|feuerwehr|modellauto|"
-     r"lastwagen|traktor)\b",                    "Fahrzeuge"),
-    (r"\b(kette|armband|ring|schmuck|stimmungskette)\b",
-                                                 "Schmuck"),
-    (r"\b(tier|tiere|figur|figuren|holzfigur|schiebetier|zwerge|"
-     r"elfen|drache)\b",                         "Spielfiguren"),
+                                                           "Babyspielzeug"),
+    (r"\b(knetwachs|knete|modellierwachs|modelliermasse|"
+     r"bienenwachs)\b",                                    "Knete"),
+    (r"\b(aquarellfarbe|malfarbe|wasserfarbe|tusche|"
+     r"pflanzenfarbe)\b",                                  "Malfarbe"),
+    (r"\b(stift|stifte|bleistift|buntstift|wachsmalstift|"
+     r"wachsmalblock|wachsmalblöcke)\b",                   "Stifte"),
+    (r"\b(seccorell|malblock|malset|bastelset|bastelmaterial)\b",
+                                                           "Bastelmaterial"),
+    (r"\b(diabolo|jonglier\w*|bumerang|frisbee|eurodisc|"
+     r"kendama|yo-?yo)\b",                                 "Jonglieren"),
+    (r"schuh\w*",                                          "Schuhe"),
+    (r"\b(geldbörse|börse|portemonnaie|geldbeutel)\b",     "Geldbörse"),
+    (r"\b(schreibetui|stecketui|schlüsseletui|etui|"
+     r"stiftemäppchen|mäppchen)\b",                        "Etui"),
+    (r"\b(raumspray|raumduft|duftmischung|naturduft|"
+     r"duftöl|raumluft)\b",                                "Raumduft"),
+    (r"\b(seife|lotion|creme|shampoo|zahnpasta|pflegeöl|"
+     r"massageöl)\b",                                      "Körperpflege"),
+    (r"\b(trommel|flöte|klangstab|glockenspiel|leier|"
+     r"kalimba)\b",                                        "Musikspielzeug"),
+    (r"\b(auto|automobil|käfer|bus|isetta|feuerwehr|"
+     r"modellauto|lastwagen|traktor)\b",                   "Fahrzeuge"),
+    (r"\b(kette|armband|ring|schmuck|stimmungskette)\b",   "Schmuck"),
+    (r"\b(tier|tiere|figur|figuren|holzfigur|schiebetier|"
+     r"zwerge|elfen|drache)\b",                            "Spielfiguren"),
 ]
 
 # Verlage: Deren Sortiment ist durchweg Buch, egal was im Titel steht.
@@ -88,46 +100,54 @@ NACH_MARKE = {
     "käthe kruse": "Puppen",
     "stockmar":    "Stifte",
     "lyra":        "Stifte",
+    "mercurius":   "Bastelmaterial",
+    "seccorell":   "Bastelmaterial",
     "kraul":       "Baukasten",
     "henrys":      "Jonglieren",
     "kendama":     "Jonglieren",
     "kisme":       "Schmuck",
+    "sonnenleder": "Ledertasche",
+    "primavera":   "Raumduft",
+    "sonett":      "Körperpflege",
 }
 
 # Wenn weder Titel noch Marke greifen
 STANDARD = "Spielzeug"
 
-# Suchbegriff + exakter Zielpfad in Shopifys Taxonomie.
-# Beides stammt aus `--vorschlaege` gegen diesen Shop, nicht aus dem
-# Gedächtnis. Die Suche muss den Pfad zurückliefern, sonst greift nichts.
-# Bewusst eine Ebene höher, wo das Blatt zu eng wäre: „Play Vehicles“
-# statt „Toy Helicopters“, „Juggling“ statt „Juggling Rings“.
+# Suchbegriff + exakter Zielpfad in Shopifys Taxonomie. Beides stammt aus
+# `--vorschlaege` gegen diesen Shop, nicht aus dem Gedächtnis: Die Suche
+# muss den Pfad zurückliefern, sonst greift nichts und das Produkt wird
+# übersprungen. Bewusst eine Ebene höher, wo das Blatt zu eng wäre —
+# „Play Vehicles“ statt „Toy Helicopters“, „Juggling“ statt
+# „Juggling Rings“, „Jewelry“ statt „Jewelry Sets“.
 ZIEL_PFAD = {
-    "Puppen":        ("Dolls", "Toys & Games > Toys > Dolls, Playsets & Toy Figures > Dolls"),
-    "Spielfiguren":  ("Dolls", "Toys & Games > Toys > Dolls, Playsets & Toy Figures"),
-    "Puzzle":        ("Puzzles", "Toys & Games > Puzzles"),
-    "Baukasten":     ("Construction Toys", "Toys & Games > Toys > Building Toys > Construction Set Toys"),
-    "Babyspielzeug": ("Baby Toys", "Baby & Toddler > Baby Toys & Activity Equipment"),
-    "Stifte":        ("Art Supplies", "Office Supplies > Office Instruments > Writing & Drawing Instruments > Pens & Pencils > Pencils > Art Pencils"),
-    "Jonglieren":    ("Juggling", "Arts & Entertainment > Hobbies & Creative Arts > Juggling"),
-    "Schuhe":        ("Athletic Shoes", "Apparel & Accessories > Shoes > Athletic Shoes"),
-    "Körperpflege":  ("Bath and Body", "Health & Beauty > Personal Care > Cosmetics > Bath & Body"),
-    "Buch":          ("Books", "Media > Books"),
-    "Malbuch":       ("Books", "Toys & Games > Toys > Art & Drawing Toys > Coloring Books & Pads"),
+    "Puppen":         ("Dolls", "Toys & Games > Toys > Dolls, Playsets & Toy Figures > Dolls"),
+    "Spielfiguren":   ("Dolls", "Toys & Games > Toys > Dolls, Playsets & Toy Figures"),
+    "Puzzle":         ("Puzzles", "Toys & Games > Puzzles"),
+    "Baukasten":      ("Construction Toys", "Toys & Games > Toys > Building Toys > Construction Set Toys"),
+    "Bauklötze":      ("Wooden Toys", "Toys & Games > Toys > Building Toys > Wooden Blocks"),
+    "Babyspielzeug":  ("Baby Toys", "Baby & Toddler > Baby Toys & Activity Equipment"),
+    "Stifte":         ("Art Supplies", "Office Supplies > Office Instruments > Writing & Drawing Instruments > Pens & Pencils > Pencils > Art Pencils"),
+    "Bastelmaterial": ("Art & Crafting Materials", "Arts & Entertainment > Hobbies & Creative Arts > Arts & Crafts > Art & Crafting Materials"),
+    "Knete":          ("Modeling Clay", "Arts & Entertainment > Hobbies & Creative Arts > Arts & Crafts > Art & Crafting Materials > Pottery & Sculpting Materials > Clay & Modeling Dough > Modeling Dough"),
+    "Malfarbe":       ("Craft Paint", "Arts & Entertainment > Hobbies & Creative Arts > Arts & Crafts > Art & Crafting Materials > Craft Paint, Ink & Glaze > Art & Craft Paint"),
+    "Jonglieren":     ("Juggling", "Arts & Entertainment > Hobbies & Creative Arts > Juggling"),
+    "Schuhe":         ("Athletic Shoes", "Apparel & Accessories > Shoes > Athletic Shoes"),
+    "Geldbörse":      ("Wallets", "Apparel & Accessories > Handbags, Wallets & Cases > Wallets & Money Clips > Wallets"),
+    "Etui":           ("Pencil Cases", "Office Supplies > Filing & Organization > Pen & Pencil Cases"),
+    "Ledertasche":    ("Handbags", "Apparel & Accessories > Handbags, Wallets & Cases"),
+    "Raumduft":       ("Room Fresheners", "Home & Garden > Decor > Home Fragrances > Air Fresheners"),
+    "Körperpflege":   ("Bath and Body", "Health & Beauty > Personal Care > Cosmetics > Bath & Body"),
+    "Buch":           ("Books", "Media > Books"),
+    "Malbuch":        ("Books", "Toys & Games > Toys > Art & Drawing Toys > Coloring Books & Pads"),
     "Musikspielzeug": ("Musical Toys", "Toys & Games > Toys > Musical Toys"),
-    "Fahrzeuge":     ("Toy Vehicles", "Toys & Games > Toys > Play Vehicles"),
-    "Schmuck":       ("Jewelry", "Apparel & Accessories > Jewelry"),
-    "Spielzeug":     ("Toys", "Toys & Games > Toys"),
+    "Fahrzeuge":      ("Toy Vehicles", "Toys & Games > Toys > Play Vehicles"),
+    "Schmuck":        ("Jewelry", "Apparel & Accessories > Jewelry"),
+    "Spielzeug":      ("Toys", "Toys & Games > Toys"),
 }
 
-# Noch ungeklärt — die erste Abfrage lieferte keinen brauchbaren Pfad.
-# „Art Supplies“ gab nur Bleistifte und Pinsel, „Leather Goods“ nur
-# Pferdehalfter. Diese Begriffe gehen in die nächste Abfragerunde.
-SUCHE_OFFEN = [
-    "Art & Crafting Materials", "Modeling Clay", "Craft Paint",
-    "Wallets", "Handbags", "Pencil Cases",
-    "Room Fresheners", "Toy Figures", "Wooden Toys",
-]
+# Begriffe, die --vorschlaege zusätzlich abfragt, um Lücken zu schließen.
+SUCHE_OFFEN = []
 
 PRO_SEITE = 50
 PAUSE = 0.3
