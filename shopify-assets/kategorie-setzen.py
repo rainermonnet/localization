@@ -49,59 +49,85 @@ except ImportError:
 # ──────────────────────────────────────────
 NACH_TITEL = [
     (r"\b(puppe|püppchen|wichtel|kuschelpuppe|anziehpuppe|stoffpuppe|"
-     r"waldorfpuppe|biegepüppchen)\b",          "Dolls"),
+     r"waldorfpuppe|biegepüppchen)\b",          "Puppen"),
+    (r"\b(malbuch|malbücher)\b",                "Malbuch"),
+    (r"\b(buch|bücher|bilderbuch|liederbuch)\b", "Buch"),
     (r"\b(puzzle|steckpuzzle|einlegepuzzle|schichtenpuzzle|soundpuzzle)\b",
-                                                 "Puzzles"),
+                                                 "Puzzle"),
     (r"\b(bausatz|baukasten|seilbahn|konstruktion|steckturm|bauklötze|"
-     r"bauklotz)\b",                             "Construction Toys"),
+     r"bauklotz)\b",                             "Baukasten"),
     (r"\b(greifling|rassel|beißring|schnullerkette|mobile)\b",
-                                                 "Baby Toys"),
-    (r"\b(stift|stifte|bleistift|buntstift|wachsmal|knetbienenwachs|"
-     r"aquarellfarbe|malfarbe|malset|malblock|modellierwachs|"
-     r"seccorell)\b",                            "Art Supplies"),
+                                                 "Babyspielzeug"),
+    (r"\b(stift|stifte|bleistift|buntstift|wachsmalstift)\b",
+                                                 "Stifte"),
     (r"\b(diabolo|jonglier|bumerang|frisbee|eurodisc|kendama|yo-?yo)\b",
-                                                 "Juggling"),
-    (r"\b(schuh|schuhe|eurythmieschuh)\b",       "Athletic Shoes"),
-    (r"\b(seife|öl|lotion|creme|shampoo|zahnpasta|pflegeöl|massageöl)\b",
-                                                 "Bath and Body"),
-    (r"\b(buch|bücher|bilderbuch|malbuch|liederbuch)\b",
-                                                 "Books"),
+                                                 "Jonglieren"),
+    (r"schuh\w*",                                "Schuhe"),   # auch in Eurythmieschuhe
+    (r"\b(seife|lotion|creme|shampoo|zahnpasta|pflegeöl|massageöl)\b",
+                                                 "Körperpflege"),
     (r"\b(trommel|flöte|klangstab|glockenspiel|leier|kalimba)\b",
-                                                 "Musical Toys"),
+                                                 "Musikspielzeug"),
     (r"\b(auto|automobil|käfer|bus|isetta|feuerwehr|modellauto|"
-     r"lastwagen|traktor)\b",                    "Toy Vehicles"),
-    (r"\b(kette|armband|ring|börse|schmuck|stimmungskette)\b",
-                                                 "Jewelry"),
+     r"lastwagen|traktor)\b",                    "Fahrzeuge"),
+    (r"\b(kette|armband|ring|schmuck|stimmungskette)\b",
+                                                 "Schmuck"),
     (r"\b(tier|tiere|figur|figuren|holzfigur|schiebetier|zwerge|"
-     r"elfen|drache)\b",                         "Play Figures"),
+     r"elfen|drache)\b",                         "Spielfiguren"),
 ]
+
+# Verlage: Deren Sortiment ist durchweg Buch, egal was im Titel steht.
+# „Wo unsere Tiere wohnen“ ist ein Bilderbuch und wurde von der
+# Tier-Regel sonst zu einer Spielfigur gemacht. Deshalb vor den Titeln.
+VERLAGE = {"thienemann", "urachhaus", "geistesleben", "grätz", "graetz",
+           "freies geistesleben", "verlag freies geistesleben"}
 
 # Rückfall je Marke, wenn kein Titelwort greift
 NACH_MARKE = {
-    "ostheimer":   "Play Figures",
-    "nanchen":     "Dolls",
-    "käthe kruse": "Dolls",
-    "stockmar":    "Art Supplies",
-    "lyra":        "Art Supplies",
-    "seccorell":   "Art Supplies",
-    "mercurius":   "Art Supplies",
-    "kraul":       "Construction Toys",
-    "henrys":      "Juggling",
-    "kendama":     "Juggling",
-    "sonett":      "Bath and Body",
-    "primavera":   "Bath and Body",
-    "kisme":       "Jewelry",
-    "sonnenleder": "Leather Goods",
+    "ostheimer":   "Spielfiguren",
+    "nanchen":     "Puppen",
+    "käthe kruse": "Puppen",
+    "stockmar":    "Stifte",
+    "lyra":        "Stifte",
+    "kraul":       "Baukasten",
+    "henrys":      "Jonglieren",
+    "kendama":     "Jonglieren",
+    "kisme":       "Schmuck",
 }
 
 # Wenn weder Titel noch Marke greifen
-STANDARD = "Toys"
+STANDARD = "Spielzeug"
 
-# Der exakte Pfad in Shopifys Taxonomie, den ein Suchbegriff treffen MUSS.
-# Was hier nicht eingetragen oder im Shop nicht auffindbar ist, wird
-# übersprungen — nicht geraten. Gefüllt wird die Tabelle aus der Ausgabe von
-#     python3 kategorie-setzen.py --vorschlaege
-ZIEL_PFAD = {}
+# Suchbegriff + exakter Zielpfad in Shopifys Taxonomie.
+# Beides stammt aus `--vorschlaege` gegen diesen Shop, nicht aus dem
+# Gedächtnis. Die Suche muss den Pfad zurückliefern, sonst greift nichts.
+# Bewusst eine Ebene höher, wo das Blatt zu eng wäre: „Play Vehicles“
+# statt „Toy Helicopters“, „Juggling“ statt „Juggling Rings“.
+ZIEL_PFAD = {
+    "Puppen":        ("Dolls", "Toys & Games > Toys > Dolls, Playsets & Toy Figures > Dolls"),
+    "Spielfiguren":  ("Dolls", "Toys & Games > Toys > Dolls, Playsets & Toy Figures"),
+    "Puzzle":        ("Puzzles", "Toys & Games > Puzzles"),
+    "Baukasten":     ("Construction Toys", "Toys & Games > Toys > Building Toys > Construction Set Toys"),
+    "Babyspielzeug": ("Baby Toys", "Baby & Toddler > Baby Toys & Activity Equipment"),
+    "Stifte":        ("Art Supplies", "Office Supplies > Office Instruments > Writing & Drawing Instruments > Pens & Pencils > Pencils > Art Pencils"),
+    "Jonglieren":    ("Juggling", "Arts & Entertainment > Hobbies & Creative Arts > Juggling"),
+    "Schuhe":        ("Athletic Shoes", "Apparel & Accessories > Shoes > Athletic Shoes"),
+    "Körperpflege":  ("Bath and Body", "Health & Beauty > Personal Care > Cosmetics > Bath & Body"),
+    "Buch":          ("Books", "Media > Books"),
+    "Malbuch":       ("Books", "Toys & Games > Toys > Art & Drawing Toys > Coloring Books & Pads"),
+    "Musikspielzeug": ("Musical Toys", "Toys & Games > Toys > Musical Toys"),
+    "Fahrzeuge":     ("Toy Vehicles", "Toys & Games > Toys > Play Vehicles"),
+    "Schmuck":       ("Jewelry", "Apparel & Accessories > Jewelry"),
+    "Spielzeug":     ("Toys", "Toys & Games > Toys"),
+}
+
+# Noch ungeklärt — die erste Abfrage lieferte keinen brauchbaren Pfad.
+# „Art Supplies“ gab nur Bleistifte und Pinsel, „Leather Goods“ nur
+# Pferdehalfter. Diese Begriffe gehen in die nächste Abfragerunde.
+SUCHE_OFFEN = [
+    "Art & Crafting Materials", "Modeling Clay", "Craft Paint",
+    "Wallets", "Handbags", "Pencil Cases",
+    "Room Fresheners", "Toy Figures", "Wooden Toys",
+]
 
 PRO_SEITE = 50
 PAUSE = 0.3
@@ -152,7 +178,12 @@ def kategorie_id(suche):
     if suche in _gefunden:
         return _gefunden[suche]
 
-    antwort = shopify_http.execute(TAXONOMIE, {"suche": suche})
+    begriff, ziel_pfad = ZIEL_PFAD.get(suche, (None, None))
+    if not begriff:
+        _gefunden[suche] = (None, None)
+        return _gefunden[suche]
+
+    antwort = shopify_http.execute(TAXONOMIE, {"suche": begriff})
     if antwort.get("_error"):
         print(f"  ! Taxonomie nicht lesbar: {antwort['_error']}")
         _gefunden[suche] = (None, None)
@@ -169,7 +200,7 @@ def kategorie_id(suche):
     # Blatt, und der Filter erzwang den Abstieg dorthin: Holzfiguren wurden
     # zu Schaukeln, Geldbörsen zu Pferdehalftern, der halbe Katalog zu
     # Spielzeugwaffen. Lieber keine Kategorie als eine erfundene.
-    ziel = ZIEL_PFAD.get(suche, "").strip().lower()
+    ziel = ziel_pfad.strip().lower()
     gewaehlt = next((t for t in treffer
                      if (t.get("fullName") or "").strip().lower() == ziel), None)
 
@@ -179,12 +210,18 @@ def kategorie_id(suche):
 
 def zielkategorie(titel, marke):
     t = (titel or "").lower()
+    m_roh = (marke or "").strip().lower()
+
+    # Verlage zuerst — ihr Sortiment ist Buch, auch wenn Tiere, Zwerge
+    # oder Autos im Titel stehen.
+    if any(v in m_roh for v in VERLAGE):
+        return "Malbuch" if "malbuch" in t else "Buch"
+
     for muster, name in NACH_TITEL:
         if re.search(muster, t):
             return name
-    m = (marke or "").strip().lower()
     for schluessel, name in NACH_MARKE.items():
-        if schluessel in m:
+        if schluessel in m_roh:
             return name
     return STANDARD
 
@@ -208,8 +245,7 @@ def vorschlaege():
     Nur lesend. Daraus wird ZIEL_PFAD gefüllt — mit echten Pfaden aus dem
     Shop statt mit Pfaden aus dem Gedächtnis.
     """
-    begriffe = sorted({name for _, name in NACH_TITEL}
-                      | set(NACH_MARKE.values()) | {STANDARD})
+    begriffe = sorted({b for b, _ in ZIEL_PFAD.values()} | set(SUCHE_OFFEN))
     print(f"{len(begriffe)} Suchbegriffe · Kandidaten aus Shopifys Taxonomie\n")
     for begriff in begriffe:
         antwort = shopify_http.execute(TAXONOMIE, {"suche": begriff})
@@ -288,7 +324,7 @@ def main():
         kid, voll = kategorie_id(name)
         aufgeloest[name] = (kid, voll)
         zeichen = "ok   " if kid else "OFFEN"
-        ziel = ZIEL_PFAD.get(name)
+        ziel = (ZIEL_PFAD.get(name) or (None, None))[1]
         if kid:
             print(f"  {zeichen} „{name}“ → {voll}")
         elif ziel:
