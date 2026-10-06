@@ -22,8 +22,9 @@ ZWEI ENTWURFSENTSCHEIDUNGEN
 AUSFÜHREN
 ---------
     cd "/Users/rainermonnet/Streamlit App/zwergenladen-import-app"
-    python3 kategorie-setzen.py           # Probelauf
-    python3 kategorie-setzen.py --live    # schreibt
+    python3 kategorie-setzen.py --vorschlaege   # zeigt echte Kategoriepfade
+    python3 kategorie-setzen.py                # Probelauf
+    python3 kategorie-setzen.py --live         # schreibt
 
 Der Probelauf zeigt je Kategorie, welche Produkte sie bekämen. Prüf das,
 bevor du schreibst — eine falsch gesetzte Kategorie ist schlechter als
@@ -96,6 +97,12 @@ NACH_MARKE = {
 # Wenn weder Titel noch Marke greifen
 STANDARD = "Toys"
 
+# Der exakte Pfad in Shopifys Taxonomie, den ein Suchbegriff treffen MUSS.
+# Was hier nicht eingetragen oder im Shop nicht auffindbar ist, wird
+# übersprungen — nicht geraten. Gefüllt wird die Tabelle aus der Ausgabe von
+#     python3 kategorie-setzen.py --vorschlaege
+ZIEL_PFAD = {}
+
 PRO_SEITE = 50
 PAUSE = 0.3
 
@@ -152,10 +159,19 @@ def kategorie_id(suche):
         return _gefunden[suche]
 
     treffer = [k["node"] for k in
-               (antwort.get("taxonomy") or {}).get("categories", {}).get("edges", [])]
-    # Nur Blattkategorien taugen; archivierte scheiden aus
-    brauchbar = [t for t in treffer if t.get("isLeaf") and not t.get("isArchived")]
-    gewaehlt = brauchbar[0] if brauchbar else (treffer[0] if treffer else None)
+               (antwort.get("taxonomy") or {}).get("categories", {}).get("edges", [])
+               if not k["node"].get("isArchived")]
+
+    # NUR exakte Pfadtreffer. Kein „nimm den ersten", kein Blattfilter.
+    #
+    # Die frühere Fassung bevorzugte Blattkategorien und nahm den ersten
+    # Treffer. Shopifys Suche antwortet auf „Toys" mit irgendeinem tiefen
+    # Blatt, und der Filter erzwang den Abstieg dorthin: Holzfiguren wurden
+    # zu Schaukeln, Geldbörsen zu Pferdehalftern, der halbe Katalog zu
+    # Spielzeugwaffen. Lieber keine Kategorie als eine erfundene.
+    ziel = ZIEL_PFAD.get(suche, "").strip().lower()
+    gewaehlt = next((t for t in treffer
+                     if (t.get("fullName") or "").strip().lower() == ziel), None)
 
     _gefunden[suche] = ((gewaehlt or {}).get("id"), (gewaehlt or {}).get("fullName"))
     return _gefunden[suche]
@@ -186,7 +202,38 @@ def seite(cursor):
     return {}, "dauerhaft gedrosselt"
 
 
+def vorschlaege():
+    """Zeigt je Suchbegriff, welche Kategorien Shopify tatsächlich kennt.
+
+    Nur lesend. Daraus wird ZIEL_PFAD gefüllt — mit echten Pfaden aus dem
+    Shop statt mit Pfaden aus dem Gedächtnis.
+    """
+    begriffe = sorted({name for _, name in NACH_TITEL}
+                      | set(NACH_MARKE.values()) | {STANDARD})
+    print(f"{len(begriffe)} Suchbegriffe · Kandidaten aus Shopifys Taxonomie\n")
+    for begriff in begriffe:
+        antwort = shopify_http.execute(TAXONOMIE, {"suche": begriff})
+        if antwort.get("_error"):
+            print(f"{begriff}\n  ! {antwort['_error']}\n")
+            continue
+        knoten = [k["node"] for k in
+                  (antwort.get("taxonomy") or {}).get("categories", {}).get("edges", [])
+                  if not k["node"].get("isArchived")]
+        print(f"„{begriff}“")
+        for n in knoten:
+            print(f"    {n.get('fullName')}")
+        if not knoten:
+            print("    (nichts gefunden)")
+        print()
+        time.sleep(0.25)
+    print("Diese Ausgabe in den Chat kopieren — daraus wird die Zuordnung")
+    print("gebaut, mit exakten Pfaden statt Suchtreffern.")
+
+
 def main():
+    if "--vorschlaege" in sys.argv:
+        vorschlaege()
+        return
     live = "--live" in sys.argv
     if not live:
         print("PROBELAUF — es wird nichts geändert.")
@@ -240,8 +287,14 @@ def main():
     for name in sorted(nach_kat):
         kid, voll = kategorie_id(name)
         aufgeloest[name] = (kid, voll)
-        zeichen = "ok " if kid else "FEHLT"
-        print(f"  {zeichen} „{name}“ → {voll or 'nicht gefunden'}")
+        zeichen = "ok   " if kid else "OFFEN"
+        ziel = ZIEL_PFAD.get(name)
+        if kid:
+            print(f"  {zeichen} „{name}“ → {voll}")
+        elif ziel:
+            print(f"  {zeichen} „{name}“ → Pfad „{ziel}“ im Shop nicht gefunden")
+        else:
+            print(f"  {zeichen} „{name}“ → kein Zielpfad hinterlegt, wird übersprungen")
         time.sleep(0.2)
 
     print("\n" + "=" * 70)
