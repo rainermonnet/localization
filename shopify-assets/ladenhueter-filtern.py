@@ -46,6 +46,13 @@ AUSFÜHREN
     # Schwellen anpassen
     python3 ladenhueter-filtern.py <datei.xlsx> --ab-wert 100 --ab-stueck 5
 
+    # nur nach Wert, Mengenregel aus
+    python3 ladenhueter-filtern.py <datei.xlsx> --ab-wert 100 --ab-stueck 0
+
+Die beiden Schwellen wirken als ODER: Ein Artikel bleibt drin, wenn er
+teuer genug ODER zahlreich genug ist. „--ab-wert 100" allein lässt also
+weiterhin alles mit 3 und mehr Stück stehen.
+
 Schreibt `ladenhueter-kurz.xlsx`. Die Ursprungsdatei bleibt unberührt —
 es wird nichts überschrieben und nichts an Shopify gesendet.
 """
@@ -209,7 +216,9 @@ def main():
             weg["zu neu"] += 1
             wert_weg += wert
             continue
-        if wert < ab_wert and stueck < ab_stueck:
+        # --ab-stueck 0 schaltet die Mengenregel ab: dann zählt nur der Wert
+        gross_genug = wert >= ab_wert or (ab_stueck > 0 and stueck >= ab_stueck)
+        if not gross_genug:
             weg["zu klein"] += 1
             wert_weg += wert
             continue
@@ -278,7 +287,9 @@ def main():
         [f"Erzeugt am {datetime.now():%d.%m.%Y} aus {os.path.basename(pfad)}"],
         [],
         ["Aufgenommen wird ein Artikel, wenn alles davon zutrifft:"],
-        [f"  • Lagerwert VK ab {ab_wert:.0f} € ODER Bestand ab {ab_stueck} Stück"],
+        [f"  • Lagerwert VK ab {ab_wert:.0f} €"
+         + (f" ODER Bestand ab {ab_stueck} Stück" if ab_stueck > 0
+            else "  (Mengenregel abgeschaltet)")],
         ["  • keine Bücher, keine Postkarten (Preisbindung — Remission statt Rabatt)"],
         [f"  • seit mindestens {monate} Monaten im Sortiment"
          + ("" if daten else "  (nicht geprüft: ohne --mit-shopify gelaufen)")],
