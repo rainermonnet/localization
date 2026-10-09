@@ -5,15 +5,30 @@ bestand-korrigieren.py — gezählte Bestände nach Shopify zurückschreiben
 Liest die zurückgegebene Zählliste und setzt die Bestände in Shopify auf
 die gezählten Werte.
 
-WELCHE ZAHL GILT
-----------------
-Vorrang hat die Spalte „Ist-Bestand gezählt". Ist sie leer, zählt der
-Wert in „Bestand lt. Shopify" — denn der wurde beim Zählen überschrieben.
+WELCHE ZEILEN ÜBERHAUPT ZÄHLEN
+-------------------------------
+Nur Zeilen mit einem Beleg dafür, dass tatsächlich gezählt wurde:
 
-Verglichen wird NICHT gegen die Ursprungsdatei, sondern gegen den
-Bestand, den Shopify im Moment des Laufs meldet. Zwischen Zählen und
-Korrigieren können Verkäufe liegen; die Datei weiß davon nichts. Nur wo
-Blatt und Shopify auseinanderliegen, wird etwas geändert.
+  1. „Ist-Bestand gezählt" ist ausgefüllt — dann gilt diese Zahl.
+  2. Die Zahl in „Bestand lt. Shopify" ist ROT eingefärbt — dann gilt
+     sie, denn rot heißt: beim Zählen überschrieben.
+
+Alles andere wird übersprungen, auch wenn es von Shopify abweicht.
+
+WARUM DAS SO STRENG IST
+------------------------
+Eine frühere Fassung schrieb jede Abweichung zwischen Blatt und Shopify
+als Korrektur. Das war falsch: In unberührten Zeilen steht noch der
+Bestand vom Stichtag der Auswertung. Was seither verkauft oder geliefert
+wurde, erscheint dort als Abweichung — ist aber der normale Lauf des
+Geschäfts und kein Zählbefund.
+
+Im ersten Durchlauf wären so 20 von 32 Zeilen falsch geschrieben worden,
+darunter goki T1 Bus von 72 auf 12 und Purzel Mädchen von 41 auf 5:
+zusammen über 140 Stück, die der Korrektur zum Opfer gefallen wären.
+
+Die Abweichung zum aktuellen Shopify-Bestand wird weiterhin gezeigt —
+aber als Hinweis, nicht als Begründung.
 
 WAS ÜBERSPRUNGEN WIRD
 ---------------------
@@ -45,6 +60,7 @@ protokolliert und ist im Bestandsverlauf nachvollziehbar.
 import os
 import sys
 import time
+from collections import Counter
 
 try:
     import openpyxl
@@ -113,6 +129,14 @@ def zahl(v):
         return None
 
 
+def ist_rot(zelle):
+    """Rote Schrift = beim Zählen überschrieben."""
+    farbe = zelle.font and zelle.font.color
+    return (farbe is not None
+            and getattr(farbe, "type", None) == "rgb"
+            and str(farbe.rgb).upper() in ("FFFF0000", "00FF0000"))
+
+
 def blatt_lesen(pfad):
     wb = openpyxl.load_workbook(pfad, data_only=True)
     if BLATT not in wb.sheetnames:
@@ -124,21 +148,33 @@ def blatt_lesen(pfad):
         if pflicht not in i:
             sys.exit(f"Spalte „{pflicht}“ fehlt — ist das die Zählliste?")
 
-    zeilen = []
-    for r in ws.iter_rows(min_row=2, values_only=True):
-        handle = str(r[i["Shopify-Handle"]] or "").strip()
+    zeilen, ohne_beleg = [], 0
+    for r in ws.iter_rows(min_row=2):
+        handle = str(r[i["Shopify-Handle"]].value or "").strip()
         if not handle:
             continue
-        gezaehlt = zahl(r[i["Ist-Bestand gezählt"]]) if "Ist-Bestand gezählt" in i else None
-        quelle = "Ist-Bestand gezählt"
+        titel = str(r[i["Produkt"]].value or "")
+
+        # 1. Ist-Bestand ausgefüllt
+        gezaehlt, quelle = None, ""
+        if "Ist-Bestand gezählt" in i:
+            gezaehlt = zahl(r[i["Ist-Bestand gezählt"]].value)
+            if gezaehlt is not None:
+                quelle = "Ist-Bestand ausgefüllt"
+
+        # 2. Sonst: rot eingefärbte Stückzahl
         if gezaehlt is None:
-            gezaehlt = zahl(r[i["Bestand lt. Shopify"]])
-            quelle = "Bestand lt. Shopify"
+            zelle = r[i["Bestand lt. Shopify"]]
+            if ist_rot(zelle):
+                gezaehlt = zahl(zelle.value)
+                quelle = "rot markiert"
+
         if gezaehlt is None:
+            ohne_beleg += 1
             continue
-        zeilen.append({"handle": handle, "titel": str(r[i["Produkt"]] or ""),
+        zeilen.append({"handle": handle, "titel": titel,
                        "soll": gezaehlt, "quelle": quelle})
-    return zeilen
+    return zeilen, ohne_beleg
 
 
 def lagerorte():
@@ -188,8 +224,17 @@ def main():
         print("PROBELAUF — es wird nichts geändert.")
         print("Zum Schreiben:  python3 bestand-korrigieren.py <datei.xlsx> --live\n")
 
-    zeilen = blatt_lesen(pfad)
-    print(f"{len(zeilen)} Zeilen mit Handle und Zahl gelesen")
+    zeilen, ohne_beleg = blatt_lesen(pfad)
+    print(f"{len(zeilen)} Zeilen mit Zählbeleg · {ohne_beleg} ohne Beleg übersprungen")
+    if not zeilen:
+        print("\nKeine Zeile trägt einen Zählbeleg. Erwartet wird entweder")
+        print("eine Zahl in „Ist-Bestand gezählt“ oder eine rot eingefärbte")
+        print("Stückzahl in „Bestand lt. Shopify“.")
+        return
+    nach_quelle = Counter(z["quelle"] for z in zeilen)
+    for q, n in nach_quelle.most_common():
+        print(f"    {n:>4}  {q}")
+    print()
 
     orte = lagerorte()
     print(f"{len(orte)} aktive Lagerorte: {', '.join(o['name'] for o in orte)}\n")
