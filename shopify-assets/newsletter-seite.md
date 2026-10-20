@@ -4,7 +4,8 @@ Die Seite enthielt nur Text und verwies auf ein Formular „ganz unten auf
 dieser Seite" — das kam aus dem Footer des alten Themes und gibt es im
 neuen nicht mehr. Kein einziges Eingabefeld war vorhanden.
 
-Eingesetzt am 20.10.2026 über `pageUpdate` (Seite 703742280053).
+Eingesetzt am 20.10.2026 über `pageUpdate` (Seite 703742280053),
+Nachname am selben Tag ergänzt.
 
 ## Warum reines HTML und kein Liquid
 
@@ -25,6 +26,7 @@ Anmeldung macht. Ohne dieses Feld passiert nichts.
 | Feld | Name | Pflicht |
 |---|---|---|
 | Vorname | `contact[first_name]` | nein |
+| Name | `contact[last_name]` | nein |
 | E-Mail | `contact[email]` | ja (`type=email` prüft das Format) |
 | Einwilligung | `einwilligung` | ja (`required`) |
 
