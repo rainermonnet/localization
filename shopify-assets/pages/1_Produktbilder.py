@@ -50,6 +50,16 @@ try:
 except ImportError:
     shopify_http = None
 
+# Eigene, bereits vorhandene Bildbeschaffung. Sie kennt die
+# Hersteller-Muster (goki über gokitoys.com/media/shop/shop_2020/,
+# HENRYS über die Shopware-Suche, Buchverlage über die ISBN) und wird
+# hier NICHT nachgebaut — sie bleibt die eine Stelle, an der neue
+# Lieferanten dazukommen.
+try:
+    import bild_quellen
+except ImportError:
+    bild_quellen = None
+
 st.set_page_config(page_title="Produktbilder", page_icon="🖼️", layout="wide")
 st.title("Produktbilder")
 st.caption("Fehlende Bilder finden, ansehen und einsetzen — ohne Umweg über Dateien.")
@@ -143,6 +153,29 @@ def von_url(url: str):
     if len(daten) < MIN_BYTES:
         return None, f"Nur {len(daten)} Bytes — das ist ein Platzhalter oder Icon."
     return daten, ""
+
+
+@st.cache_data(show_spinner=False, ttl=3600)
+def vorschlag(marke, sku, ean, titel):
+    """Fragt bild_quellen nach einer Bild-URL und holt das Bild.
+
+    Gibt (daten, quelle, meldung) zurück. Fehler der Fremdfunktion
+    werden abgefangen: Ein Hersteller, der heute anders antwortet,
+    darf die Seite nicht lahmlegen.
+    """
+    if bild_quellen is None:
+        return None, "", "bild_quellen.py liegt nicht neben der App"
+    try:
+        ergebnis = bild_quellen.finde_bild(marke, sku, ean, titel)
+    except Exception as e:                      # fremder Code, fremde Fehler
+        return None, "", f"Suche fehlgeschlagen: {e}"
+    if not ergebnis:
+        return None, "", "kein Treffer"
+    url, quelle = (list(ergebnis) + ["", ""])[:2]
+    if not url:
+        return None, "", "kein Treffer"
+    daten, meldung = von_url(url)
+    return daten, (quelle or url), meldung
 
 
 @st.cache_data(show_spinner="Lese Katalog …", ttl=600)
@@ -262,79 +295,158 @@ if not gefiltert:
             st.write(f"{n:>4}  {m}")
     st.stop()
 
-st.divider()
-produkt = gefiltert[0]
+if bild_quellen is None:
+    st.warning("`bild_quellen.py` liegt nicht neben der App — es gibt dann "
+               "keine automatischen Vorschläge, nur Einfügen von Hand.")
 
-links, rechts = st.columns([1, 1])
+einzeln, stapel = st.tabs(["Einzeln prüfen", "Stapel"])
 
-with links:
-    st.subheader(produkt["titel"])
-    st.write(f"**Marke** {produkt['marke'] or '—'}  ·  "
-             f"**Bestand** {produkt['bestand']}")
-    st.write(f"**Artikelnummer** {produkt['sku'] or '—'}  ·  "
-             f"**EAN** {produkt['ean'] or '—'}")
-    st.caption(f"Handle: {produkt['handle']}")
+# ──────────────────────────────────────────────────────────────
+with einzeln:
+    produkt = gefiltert[0]
+    links, rechts = st.columns([1, 1])
 
-    begriff = produkt["sku"] or produkt["titel"]
-    basis = HERSTELLER.get(produkt["marke"].lower(), "")
-    st.markdown("**Suchen bei**")
-    if basis:
-        st.markdown(f"- [{produkt['marke']} – Herstellerseite]"
-                    f"({basis}{urllib.parse.quote(begriff)})")
-    st.markdown("- [Bildersuche](https://www.google.com/search?tbm=isch&q="
-                + urllib.parse.quote(f"{produkt['marke']} {begriff}") + ")")
-    if produkt["ean"]:
-        st.markdown("- [EAN-Suche](https://www.google.com/search?q="
-                    + urllib.parse.quote(produkt["ean"]) + ")")
+    with links:
+        st.subheader(produkt["titel"])
+        st.write(f"**Marke** {produkt['marke'] or '—'}  ·  "
+                 f"**Bestand** {produkt['bestand']}")
+        st.write(f"**Artikelnummer** {produkt['sku'] or '—'}  ·  "
+                 f"**EAN** {produkt['ean'] or '—'}")
+        st.caption(f"Handle: {produkt['handle']}")
 
-    if st.button("Überspringen", use_container_width=True):
-        st.session_state.erledigt.add(produkt["id"])
+        begriff = produkt["sku"] or produkt["titel"]
+        basis = HERSTELLER.get(produkt["marke"].lower(), "")
+        st.markdown("**Selbst suchen bei**")
+        if basis:
+            st.markdown(f"- [{produkt['marke']} – Herstellerseite]"
+                        f"({basis}{urllib.parse.quote(begriff)})")
+        st.markdown("- [Bildersuche](https://www.google.com/search?tbm=isch&q="
+                    + urllib.parse.quote(f"{produkt['marke']} {begriff}") + ")")
+        if produkt["ean"]:
+            st.markdown("- [EAN-Suche](https://www.google.com/search?q="
+                        + urllib.parse.quote(produkt["ean"]) + ")")
+
+        if st.button("Überspringen", use_container_width=True):
+            st.session_state.erledigt.add(produkt["id"])
+            st.rerun()
+
+    with rechts:
+        daten, dateiname, meldung, quelle = None, "", "", ""
+
+        with st.spinner("Suche beim Hersteller …"):
+            v_daten, v_quelle, v_meldung = vorschlag(
+                produkt["marke"], produkt["sku"], produkt["ean"], produkt["titel"])
+
+        if v_daten:
+            st.success(f"Vorschlag gefunden · Quelle: {v_quelle}")
+            daten, quelle = v_daten, v_quelle
+            dateiname = produkt["handle"] + endung(v_daten)
+        else:
+            st.info(f"Kein Vorschlag ({v_meldung}). Von Hand einsetzen:")
+
+        with st.expander("Anderes Bild verwenden", expanded=not v_daten):
+            weg = st.radio("Herkunft", ["Datei", "Adresse"], horizontal=True,
+                           key="weg_einzeln")
+            if weg == "Datei":
+                hoch = st.file_uploader("Bilddatei",
+                                        type=["jpg", "jpeg", "png", "webp", "gif"],
+                                        key="datei_einzeln")
+                if hoch is not None:
+                    roh = hoch.getvalue()
+                    if ist_bild(roh):
+                        daten, dateiname, quelle = roh, hoch.name, "von Hand"
+                    else:
+                        meldung = "Das ist kein gültiges Bildformat."
+            else:
+                url = st.text_input("Bildadresse", placeholder="https://… .jpg",
+                                    key="url_einzeln")
+                st.caption("Im Browser Rechtsklick aufs Bild → "
+                           "„Bildadresse kopieren“.")
+                if url:
+                    roh, meldung = von_url(url.strip())
+                    if roh:
+                        daten = roh
+                        dateiname = produkt["handle"] + endung(roh)
+                        quelle = "von Hand"
+
+        if meldung:
+            st.warning(meldung)
+
+        if daten:
+            st.image(daten, use_container_width=True)
+            st.caption(f"{len(daten)/1024:.0f} KB · {quelle}")
+            st.info(f"Gehört dieses Bild zu **{produkt['titel']}**?")
+            if st.button("Bild zu diesem Produkt setzen", type="primary",
+                         use_container_width=True):
+                with st.spinner("Lade zu Shopify …"):
+                    fehler = hochladen(produkt, daten, dateiname or "bild.jpg")
+                if fehler:
+                    st.error(fehler)
+                    if "scope" in fehler.lower() or "access denied" in fehler.lower():
+                        st.caption("Der App fehlt der Zugriffsbereich write_products.")
+                else:
+                    st.success("Gesetzt.")
+                    st.session_state.erledigt.add(produkt["id"])
+                    time.sleep(1)
+                    st.rerun()
+
+# ──────────────────────────────────────────────────────────────
+with stapel:
+    st.caption("Sucht für mehrere Produkte auf einmal und zeigt alle Treffer "
+               "nebeneinander. Du hakst ab, was falsch ist — gesetzt wird nur "
+               "das Angehakte.")
+    menge = st.slider("Wie viele Produkte auf einmal", 5, 60, 20, step=5)
+    if st.button("Vorschläge suchen", type="primary"):
+        st.session_state.stapel = []
+        fortschritt = st.progress(0.0, "Suche …")
+        ziel = gefiltert[:menge]
+        for i, p in enumerate(ziel, 1):
+            d, q, m = vorschlag(p["marke"], p["sku"], p["ean"], p["titel"])
+            if d:
+                st.session_state.stapel.append({"p": p, "daten": d, "quelle": q})
+            fortschritt.progress(i / len(ziel), f"{i}/{len(ziel)} · {p['titel'][:40]}")
+        fortschritt.empty()
         st.rerun()
 
-with rechts:
-    weg = st.radio("Bild herholen", ["Datei hochladen", "Bild-Adresse einfügen"],
-                   horizontal=True)
-    daten, dateiname, meldung = None, "", ""
+    treffer = st.session_state.get("stapel", [])
+    if treffer:
+        st.write(f"**{len(treffer)} Vorschläge** — prüf jedes Bild gegen den "
+                 "Titel darunter.")
+        auswahl = {}
+        spalten = st.columns(4)
+        for i, eintrag in enumerate(treffer):
+            with spalten[i % 4]:
+                st.image(eintrag["daten"], use_container_width=True)
+                st.caption(eintrag["p"]["titel"][:60])
+                st.caption(f"{eintrag['p']['marke']} · {eintrag['p']['sku'] or '—'}")
+                auswahl[eintrag["p"]["id"]] = st.checkbox(
+                    "passt", value=True, key="ok_" + eintrag["p"]["id"])
 
-    if weg == "Datei hochladen":
-        hoch = st.file_uploader("Bilddatei", type=["jpg", "jpeg", "png", "webp", "gif"])
-        if hoch is not None:
-            daten = hoch.getvalue()
-            dateiname = hoch.name
-            if not ist_bild(daten):
-                daten, meldung = None, "Das ist kein gültiges Bildformat."
-    else:
-        url = st.text_input("Adresse des Bildes",
-                            placeholder="https://… .jpg")
-        st.caption("Im Browser Rechtsklick aufs Bild → „Bildadresse kopieren“.")
-        if url:
-            daten, meldung = von_url(url.strip())
-            if daten:
-                dateiname = produkt["handle"] + endung(daten)
-
-    if meldung:
-        st.warning(meldung)
-
-    if daten:
-        st.image(daten, caption="So sieht es im Shop aus", use_container_width=True)
-        st.caption(f"{len(daten)/1024:.0f} KB · {dateiname}")
-        st.info("Gehört dieses Bild wirklich zu **" + produkt["titel"] + "**?")
-        if st.button("Bild zu diesem Produkt setzen", type="primary",
-                     use_container_width=True):
-            with st.spinner("Lade zu Shopify …"):
-                fehler = hochladen(produkt, daten, dateiname or "bild.jpg")
-            if fehler:
-                st.error(fehler)
-                if "scope" in fehler.lower() or "access denied" in fehler.lower():
-                    st.caption("Der App fehlt der Zugriffsbereich write_products.")
-            else:
-                st.success("Gesetzt. Shopify verarbeitet das Bild noch kurz nach.")
-                st.session_state.erledigt.add(produkt["id"])
-                time.sleep(1)
-                st.rerun()
+        gewaehlt = [e for e in treffer if auswahl.get(e["p"]["id"])]
+        st.divider()
+        st.write(f"{len(gewaehlt)} von {len(treffer)} ausgewählt")
+        if gewaehlt and st.button(f"{len(gewaehlt)} Bilder setzen",
+                                  type="primary", use_container_width=True):
+            balken = st.progress(0.0, "Lade hoch …")
+            ok = fehlgeschlagen = 0
+            for i, e in enumerate(gewaehlt, 1):
+                name = e["p"]["handle"] + endung(e["daten"])
+                fehler = hochladen(e["p"], e["daten"], name)
+                if fehler:
+                    fehlgeschlagen += 1
+                    st.error(f"{e['p']['titel'][:40]}: {fehler}")
+                else:
+                    ok += 1
+                    st.session_state.erledigt.add(e["p"]["id"])
+                balken.progress(i / len(gewaehlt), f"{i}/{len(gewaehlt)}")
+            balken.empty()
+            st.success(f"{ok} gesetzt, {fehlgeschlagen} fehlgeschlagen")
+            st.session_state.stapel = []
+            time.sleep(1.5)
+            st.rerun()
 
 st.divider()
-with st.expander(f"Noch {len(gefiltert)-1} weitere in dieser Auswahl"):
+with st.expander(f"Noch {max(0, len(gefiltert)-1)} weitere in dieser Auswahl"):
     for p in gefiltert[1:21]:
         st.write(f"· {p['titel'][:70]}  ({p['marke']})")
     if len(gefiltert) > 21:
