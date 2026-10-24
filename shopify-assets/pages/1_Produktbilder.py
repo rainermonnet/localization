@@ -33,6 +33,7 @@ Lizenz. Der saubere Weg führt übers Händlerportal oder eine kurze
 Anfrage; Vorlagen in `lieferanten-emails.md`.
 """
 
+import json
 import mimetypes
 import re
 import sys
@@ -84,6 +85,11 @@ HERSTELLER = {
     "sonett": "https://www.sonett.eu/?s=",
 }
 
+# Verlage: Cover findet man über Titel und ISBN, nicht über Artikelnummern.
+VERLAGE = {"thienemann", "thienemann-esslinger", "urachhaus", "geistesleben",
+           "freies geistesleben", "verlag freies geistesleben", "grätz",
+           "graetz", "ode desjardin", "mellinger"}
+
 PRODUKTE = """
 query($cursor: String) {
   products(first: 50, after: $cursor, query: "status:active") {
@@ -95,7 +101,7 @@ query($cursor: String) {
         resourcePublicationsV2(first: 8) {
           edges { node { isPublished publication { name } } }
         }
-        variants(first: 10) { edges { node { sku barcode } } }
+        variants(first: 10) { edges { node { id sku barcode } } }
       }
     }
   }
@@ -106,6 +112,14 @@ STAGED = """
 mutation($input: [StagedUploadInput!]!) {
   stagedUploadsCreate(input: $input) {
     stagedTargets { url resourceUrl parameters { name value } }
+    userErrors { field message }
+  }
+}
+"""
+
+BARCODE = """
+mutation($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
+  productVariantsBulkUpdate(productId: $productId, variants: $variants) {
     userErrors { field message }
   }
 }
@@ -136,6 +150,72 @@ def endung(daten: bytes) -> str:
     if daten[:4] == b"RIFF":
         return ".webp"
     return ".gif"
+
+
+def isbn_sauber(roh: str) -> str:
+    return re.sub(r"[^0-9Xx]", "", str(roh or "")).upper()
+
+
+def isbn_gueltig(isbn: str) -> bool:
+    """Prüfziffer von ISBN-10 und ISBN-13.
+
+    Ohne diese Prüfung landet jeder Zahlendreher als Fehlgriff im
+    Katalog — und ein falsches Cover fällt niemandem auf.
+    """
+    if len(isbn) == 13 and isbn.isdigit():
+        summe = sum(int(c) * (1 if i % 2 == 0 else 3) for i, c in enumerate(isbn[:12]))
+        return (10 - summe % 10) % 10 == int(isbn[12])
+    if len(isbn) == 10:
+        if not re.fullmatch(r"\d{9}[\dX]", isbn):
+            return False
+        summe = sum((10 - i) * (10 if c == "X" else int(c))
+                    for i, c in enumerate(isbn))
+        return summe % 11 == 0
+    return False
+
+
+def isbn13(isbn: str) -> str:
+    """ISBN-10 nach ISBN-13 umrechnen; ISBN-13 bleibt unverändert."""
+    if len(isbn) == 13:
+        return isbn
+    rumpf = "978" + isbn[:9]
+    summe = sum(int(c) * (1 if i % 2 == 0 else 3) for i, c in enumerate(rumpf))
+    return rumpf + str((10 - summe % 10) % 10)
+
+
+def cover_zu_isbn(isbn: str):
+    """Sucht ein Cover. Google Books zuerst, dann Open Library.
+
+    Beide liefern zu deutschen Kinderbüchern nicht immer etwas — dann
+    bleibt die Handsuche. Geraten wird nicht.
+    """
+    voll = isbn13(isbn)
+    try:
+        req = urllib.request.Request(
+            "https://www.googleapis.com/books/v1/volumes?q=isbn:" + voll,
+            headers={"User-Agent": "Zwergenladen"})
+        with urllib.request.urlopen(req, timeout=ZEIT) as r:
+            antwort = json.loads(r.read().decode("utf-8", "replace"))
+        for eintrag in (antwort.get("items") or [])[:3]:
+            info = eintrag.get("volumeInfo") or {}
+            bilder = info.get("imageLinks") or {}
+            url = (bilder.get("extraLarge") or bilder.get("large")
+                   or bilder.get("medium") or bilder.get("thumbnail"))
+            if url:
+                url = url.replace("http://", "https://").replace("&edge=curl", "")
+                url = re.sub(r"zoom=\d", "zoom=2", url)
+                daten, meldung = von_url(url)
+                if daten:
+                    titel = info.get("title", "")
+                    return daten, f"Google Books · {titel[:40]}", ""
+    except (urllib.error.URLError, OSError, ValueError, json.JSONDecodeError):
+        pass
+
+    daten, meldung = von_url(
+        f"https://covers.openlibrary.org/b/isbn/{voll}-L.jpg?default=false")
+    if daten:
+        return daten, "Open Library", ""
+    return None, "", "Zu dieser ISBN ist kein Cover hinterlegt."
 
 
 def von_url(url: str):
@@ -204,6 +284,8 @@ def katalog():
                 "bestand": n.get("totalInventory") or 0,
                 "sku": next((str(x.get("sku") or "").strip() for x in v if x.get("sku")), ""),
                 "ean": next((str(x.get("barcode") or "").strip() for x in v if x.get("barcode")), ""),
+                "variante": v[0]["id"] if v else "",
+                "varianten": len(v),
                 "shop": any("online" in k.lower() for k in kanaele),
             })
         if not block.get("pageInfo", {}).get("hasNextPage"):
@@ -315,9 +397,14 @@ with einzeln:
         st.caption(f"Handle: {produkt['handle']}")
 
         begriff = produkt["sku"] or produkt["titel"]
+        ist_buch = produkt["marke"].lower() in VERLAGE
         basis = HERSTELLER.get(produkt["marke"].lower(), "")
         st.markdown("**Selbst suchen bei**")
-        if basis:
+        if ist_buch:
+            such = urllib.parse.quote(f'{produkt["titel"]} {produkt["marke"]}')
+            st.markdown(f"- [Buchsuche](https://www.google.com/search?tbm=bks&q={such})")
+            st.markdown(f"- [ISBN finden](https://www.google.com/search?q={such}+ISBN)")
+        elif basis:
             st.markdown(f"- [{produkt['marke']} – Herstellerseite]"
                         f"({basis}{urllib.parse.quote(begriff)})")
         st.markdown("- [Bildersuche](https://www.google.com/search?tbm=isch&q="
@@ -345,8 +432,26 @@ with einzeln:
             st.info(f"Kein Vorschlag ({v_meldung}). Von Hand einsetzen:")
 
         with st.expander("Anderes Bild verwenden", expanded=not v_daten):
-            weg = st.radio("Herkunft", ["Datei", "Adresse"], horizontal=True,
-                           key="weg_einzeln")
+            wege = ["ISBN", "Datei", "Adresse"] if ist_buch else ["Datei", "Adresse"]
+            weg = st.radio("Herkunft", wege, horizontal=True, key="weg_einzeln")
+            if weg == "ISBN":
+                roh_isbn = st.text_input(
+                    "ISBN des Buchs", key="isbn_einzeln",
+                    placeholder="978-3-522-20250-3")
+                st.caption("Steht hinten auf dem Buch über dem Strichcode. "
+                           "Bindestriche egal.")
+                isbn = isbn_sauber(roh_isbn)
+                if isbn and not isbn_gueltig(isbn):
+                    meldung = ("Diese ISBN stimmt nicht — die Prüfziffer passt "
+                               "nicht. Vermutlich ein Zahlendreher.")
+                elif isbn:
+                    with st.spinner("Suche Cover …"):
+                        roh, quelle_isbn, meldung = cover_zu_isbn(isbn)
+                    if roh:
+                        daten = roh
+                        dateiname = produkt["handle"] + endung(roh)
+                        quelle = quelle_isbn
+                        st.session_state["isbn_fertig"] = isbn13(isbn)
             if weg == "Datei":
                 hoch = st.file_uploader("Bilddatei",
                                         type=["jpg", "jpeg", "png", "webp", "gif"],
@@ -376,16 +481,41 @@ with einzeln:
             st.image(daten, width="stretch")
             st.caption(f"{len(daten)/1024:.0f} KB · {quelle}")
             st.info(f"Gehört dieses Bild zu **{produkt['titel']}**?")
+
+            fertige_isbn = st.session_state.get("isbn_fertig", "")
+            isbn_setzen = False
+            if fertige_isbn and produkt["varianten"] == 1 and produkt["variante"]:
+                isbn_setzen = st.checkbox(
+                    f"ISBN {fertige_isbn} auch als Barcode eintragen "
+                    f"(steht jetzt: {produkt['ean'] or 'leer'})", value=True)
+                st.caption("Die achtstelligen Altnummern sind keine ISBN. "
+                           "Mit der echten ISBN im Barcodefeld lässt sich das "
+                           "Buch künftig direkt am Regal scannen.")
+
             if st.button("Bild zu diesem Produkt setzen", type="primary",
                          width="stretch"):
                 with st.spinner("Lade zu Shopify …"):
                     fehler = hochladen(produkt, daten, dateiname or "bild.jpg")
+                if not fehler and isbn_setzen:
+                    antwort = shopify_http.execute(BARCODE, {
+                        "productId": produkt["id"],
+                        "variants": [{"id": produkt["variante"],
+                                      "barcode": fertige_isbn}]})
+                    nebenfehler = antwort.get("_error") or [
+                        u.get("message") for u in
+                        (antwort.get("productVariantsBulkUpdate", {})
+                         .get("userErrors") or [])]
+                    if nebenfehler:
+                        st.warning(f"Bild gesetzt, ISBN nicht: {nebenfehler}")
+                    else:
+                        st.caption(f"ISBN {fertige_isbn} als Barcode eingetragen.")
                 if fehler:
                     st.error(fehler)
                     if "scope" in fehler.lower() or "access denied" in fehler.lower():
                         st.caption("Der App fehlt der Zugriffsbereich write_products.")
                 else:
                     st.success("Gesetzt.")
+                    st.session_state.pop("isbn_fertig", None)
                     st.session_state.erledigt.add(produkt["id"])
                     time.sleep(1)
                     st.rerun()
