@@ -326,7 +326,7 @@ with einzeln:
             st.markdown("- [EAN-Suche](https://www.google.com/search?q="
                         + urllib.parse.quote(produkt["ean"]) + ")")
 
-        if st.button("Überspringen", use_container_width=True):
+        if st.button("Überspringen", width="stretch"):
             st.session_state.erledigt.add(produkt["id"])
             st.rerun()
 
@@ -373,11 +373,11 @@ with einzeln:
             st.warning(meldung)
 
         if daten:
-            st.image(daten, use_container_width=True)
+            st.image(daten, width="stretch")
             st.caption(f"{len(daten)/1024:.0f} KB · {quelle}")
             st.info(f"Gehört dieses Bild zu **{produkt['titel']}**?")
             if st.button("Bild zu diesem Produkt setzen", type="primary",
-                         use_container_width=True):
+                         width="stretch"):
                 with st.spinner("Lade zu Shopify …"):
                     fehler = hochladen(produkt, daten, dateiname or "bild.jpg")
                 if fehler:
@@ -416,7 +416,7 @@ with stapel:
         spalten = st.columns(4)
         for i, eintrag in enumerate(treffer):
             with spalten[i % 4]:
-                st.image(eintrag["daten"], use_container_width=True)
+                st.image(eintrag["daten"], width="stretch")
                 st.caption(eintrag["p"]["titel"][:60])
                 st.caption(f"{eintrag['p']['marke']} · {eintrag['p']['sku'] or '—'}")
                 auswahl[eintrag["p"]["id"]] = st.checkbox(
@@ -426,7 +426,7 @@ with stapel:
         st.divider()
         st.write(f"{len(gewaehlt)} von {len(treffer)} ausgewählt")
         if gewaehlt and st.button(f"{len(gewaehlt)} Bilder setzen",
-                                  type="primary", use_container_width=True):
+                                  type="primary", width="stretch"):
             balken = st.progress(0.0, "Lade hoch …")
             ok = fehlgeschlagen = 0
             for i, e in enumerate(gewaehlt, 1):
