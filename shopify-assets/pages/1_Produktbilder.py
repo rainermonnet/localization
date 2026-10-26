@@ -349,29 +349,74 @@ if "erledigt" not in st.session_state:
     st.session_state.erledigt = set()
 offen = [p for p in offen if p["id"] not in st.session_state.erledigt]
 
+# ──────────────────────────────────────────────────────────────
+# Reihenfolge der Arbeit. Nicht jede Lücke ist gleich viel wert, und
+# „irgendwo anfangen“ führt dazu, dass die teuren Fälle liegen bleiben.
+#
+#   1  im Onlineshop UND lieferbar  — der Kunde sieht es und kann kaufen
+#   2  nur Kasse/Shop-App, lieferbar — hilft beim Kassieren am iPad
+#   3  im Onlineshop, nicht lieferbar — lohnt nur bei Nachbestellung
+#   4  weder sichtbar noch lieferbar — aufheben, nicht aufarbeiten
+# ──────────────────────────────────────────────────────────────
+WELLEN = {
+    1: "① Im Shop und lieferbar",
+    2: "② Kasse und lieferbar",
+    3: "③ Im Shop, nicht lieferbar",
+    4: "④ Rest",
+}
+
+
+def welle(p):
+    hat = (p["bestand"] or 0) > 0
+    if p["shop"] and hat:
+        return 1
+    if hat:
+        return 2
+    if p["shop"]:
+        return 3
+    return 4
+
+
+for p in offen:
+    p["welle"] = welle(p)
+
 with st.sidebar:
-    st.subheader("Auswahl")
-    marken = sorted({p["marke"] or "—" for p in offen})
-    marke = st.selectbox("Marke", ["alle"] + marken)
-    nur_shop = st.checkbox("nur im Onlineshop sichtbar", value=True)
-    nur_bestand = st.checkbox("nur mit Bestand", value=False)
+    st.subheader("Reihenfolge")
+    gewaehlt = st.radio(
+        "Welle", list(WELLEN),
+        format_func=lambda w: f"{WELLEN[w]}  ({sum(1 for p in offen if p['welle'] == w)})",
+        index=0)
+    st.caption("Von oben nach unten abarbeiten. Welle ④ ist nichts wert — "
+               "die Produkte sind weder sichtbar noch lieferbar.")
+
+    st.subheader("Eingrenzen")
+    in_welle = [p for p in offen if p["welle"] == gewaehlt]
+    marken = sorted({p["marke"] or "—" for p in in_welle})
+    marke = st.selectbox(
+        "Marke", ["alle"] + marken,
+        format_func=lambda m: (m if m == "alle" else
+                               f"{m}  ({sum(1 for p in in_welle if (p['marke'] or '—') == m)})"))
+    st.caption("Markenweise arbeiten: eine Quelle, ein Handgriff, "
+               "und man gewöhnt sich an die Benennung des Herstellers.")
+
     if st.button("Katalog neu laden"):
         katalog.clear()
         st.session_state.erledigt = set()
+        st.session_state.pop("stapel", None)
         st.rerun()
 
-gefiltert = [p for p in offen
-             if (marke == "alle" or (p["marke"] or "—") == marke)
-             and (not nur_shop or p["shop"])
-             and (not nur_bestand or (p["bestand"] or 0) > 0)]
+gefiltert = [p for p in in_welle
+             if marke == "alle" or (p["marke"] or "—") == marke]
 
-a, b, c = st.columns(3)
-a.metric("ohne Bild", len(offen))
-b.metric("in dieser Auswahl", len(gefiltert))
-c.metric("in dieser Sitzung gesetzt", len(st.session_state.erledigt))
+a, b, c, d = st.columns(4)
+a.metric("ohne Bild gesamt", len(offen))
+b.metric(WELLEN[gewaehlt].split(" ", 1)[1][:22], len(in_welle))
+c.metric("in dieser Auswahl", len(gefiltert))
+d.metric("heute gesetzt", len(st.session_state.erledigt))
 
 if not gefiltert:
-    st.success("In dieser Auswahl fehlt kein Bild mehr.")
+    st.success("In dieser Auswahl fehlt kein Bild mehr. "
+               "Nächste Marke oder nächste Welle wählen.")
     with st.expander("Verteilung nach Marke"):
         for m, n in Counter(p["marke"] or "—" for p in offen).most_common():
             st.write(f"{n:>4}  {m}")
@@ -528,12 +573,15 @@ with stapel:
     menge = st.slider("Wie viele Produkte auf einmal", 5, 60, 20, step=5)
     if st.button("Vorschläge suchen", type="primary"):
         st.session_state.stapel = []
+        st.session_state.ohne_fund = []
         fortschritt = st.progress(0.0, "Suche …")
         ziel = gefiltert[:menge]
         for i, p in enumerate(ziel, 1):
             d, q, m = vorschlag(p["marke"], p["sku"], p["ean"], p["titel"])
             if d:
                 st.session_state.stapel.append({"p": p, "daten": d, "quelle": q})
+            else:
+                st.session_state.ohne_fund.append({"p": p, "grund": m})
             fortschritt.progress(i / len(ziel), f"{i}/{len(ziel)} · {p['titel'][:40]}")
         fortschritt.empty()
         st.rerun()
@@ -574,6 +622,25 @@ with stapel:
             st.session_state.stapel = []
             time.sleep(1.5)
             st.rerun()
+
+    ohne = st.session_state.get("ohne_fund", [])
+    if ohne:
+        st.divider()
+        st.subheader(f"{len(ohne)} ohne Vorschlag — das ist die Handarbeit")
+        st.caption("Diese Produkte findet die automatische Suche nicht. "
+                   "Im Reiter „Einzeln prüfen“ kommen sie der Reihe nach, "
+                   "mit Suchlinks daneben.")
+        gruende = Counter(e["grund"] or "kein Treffer" for e in ohne)
+        for grund, n in gruende.most_common():
+            st.write(f"· {n}× {grund}")
+        with st.expander("Welche Produkte das sind"):
+            for e in ohne:
+                p_ = e["p"]
+                st.write(f"{p_['titel'][:60]}  ·  {p_['marke']}  ·  "
+                         f"{p_['sku'] or p_['ean'] or 'keine Nummer'}")
+        if all(not (e["p"]["sku"] or e["p"]["ean"]) for e in ohne):
+            st.info("Bei allen fehlt Artikelnummer und EAN. Ohne eine Nummer "
+                    "kann keine Quelle etwas finden — hier hilft nur der Titel.")
 
 st.divider()
 with st.expander(f"Noch {max(0, len(gefiltert)-1)} weitere in dieser Auswahl"):
