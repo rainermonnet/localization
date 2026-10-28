@@ -61,6 +61,13 @@ try:
 except ImportError:
     bild_quellen = None
 
+# Versionsunterschied beim Barcode-Feld. Beim Schreiben ist `barcode`
+# in neueren API-Versionen nicht veraltet, sondern weg.
+try:
+    import barcode_feld as bc
+except ImportError:
+    bc = None
+
 st.set_page_config(page_title="Produktbilder", page_icon="🖼️", layout="wide")
 st.title("Produktbilder")
 st.caption("Fehlende Bilder finden, ansehen und einsetzen — ohne Umweg über Dateien.")
@@ -101,7 +108,7 @@ query($cursor: String) {
         resourcePublicationsV2(first: 8) {
           edges { node { isPublished publication { name } } }
         }
-        variants(first: 10) { edges { node { id sku barcode } } }
+        variants(first: 10) { edges { node { id sku %BARCODE% } } }
       }
     }
   }
@@ -235,6 +242,11 @@ def von_url(url: str):
     return daten, ""
 
 
+def abfrage(text):
+    """Setzt das versionsrichtige Barcode-Feld ein."""
+    return text.replace("%BARCODE%", str(bc.LESEN) if bc else "barcode")
+
+
 @st.cache_data(show_spinner=False, ttl=3600)
 def vorschlag(marke, sku, ean, titel):
     """Fragt bild_quellen nach einer Bild-URL und holt das Bild.
@@ -262,7 +274,7 @@ def vorschlag(marke, sku, ean, titel):
 def katalog():
     liste, cursor = [], None
     while True:
-        antwort = shopify_http.execute(PRODUKTE, {"cursor": cursor})
+        antwort = shopify_http.execute(abfrage(PRODUKTE), {"cursor": cursor})
         fehler = str(antwort.get("_error", ""))
         if fehler:
             if "THROTTLED" in fehler.upper():
@@ -283,7 +295,9 @@ def katalog():
                 "marke": (n.get("vendor") or "").strip(),
                 "bestand": n.get("totalInventory") or 0,
                 "sku": next((str(x.get("sku") or "").strip() for x in v if x.get("sku")), ""),
-                "ean": next((str(x.get("barcode") or "").strip() for x in v if x.get("barcode")), ""),
+                "ean": next((bc.lies(x) for x in v if bc and bc.lies(x)), "")
+                       if bc else next((str(x.get("barcode") or "").strip()
+                                        for x in v if x.get("barcode")), ""),
                 "variante": v[0]["id"] if v else "",
                 "varianten": len(v),
                 "shop": any("online" in k.lower() for k in kanaele),
@@ -542,10 +556,11 @@ with einzeln:
                 with st.spinner("Lade zu Shopify …"):
                     fehler = hochladen(produkt, daten, dateiname or "bild.jpg")
                 if not fehler and isbn_setzen:
+                    neuer_wert = (bc.schreiben(fertige_isbn, "ISBN") if bc
+                                  else {"barcode": fertige_isbn})
                     antwort = shopify_http.execute(BARCODE, {
                         "productId": produkt["id"],
-                        "variants": [{"id": produkt["variante"],
-                                      "barcode": fertige_isbn}]})
+                        "variants": [{"id": produkt["variante"], **neuer_wert}]})
                     nebenfehler = antwort.get("_error") or [
                         u.get("message") for u in
                         (antwort.get("productVariantsBulkUpdate", {})

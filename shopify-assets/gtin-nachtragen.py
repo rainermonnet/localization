@@ -47,6 +47,11 @@ try:
 except ImportError:
     sys.exit("shopify_http.py nicht gefunden — bitte im App-Ordner ausführen.")
 
+# Kapselt den Unterschied zwischen `barcode` (alt) und `barcodes` (neu).
+# Beim Schreiben ist das keine Veralterung, sondern ein Bruch: Neuere
+# API-Versionen kennen `barcode` in der Varianteneingabe nicht mehr.
+import barcode_feld as bc
+
 HENRYS_DATEI = "henrys-ean.csv"
 GOKI_PRAEFIX = "4013594"
 PRO_SEITE = 25
@@ -62,7 +67,7 @@ query($cursor: String, $n: Int!) {
         title
         vendor
         variants(first: 50) {
-          edges { node { id title sku barcode } }
+          edges { node { id title sku %BARCODE% } }
         }
       }
     }
@@ -73,11 +78,16 @@ query($cursor: String, $n: Int!) {
 SCHREIBEN = """
 mutation($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
   productVariantsBulkUpdate(productId: $productId, variants: $variants) {
-    productVariants { id barcode }
+    productVariants { id %BARCODE% }
     userErrors { field message }
   }
 }
 """
+
+
+def abfrage(text):
+    """Setzt das versionsrichtige Barcode-Feld in die Abfrage ein."""
+    return text.replace("%BARCODE%", str(bc.LESEN))
 
 
 def pruefziffer(body):
@@ -139,7 +149,7 @@ def herleiten(sku, marke, henrys):
 
 def seite(cursor):
     for v in range(5):
-        a = shopify_http.execute(PRODUKTE, {"cursor": cursor, "n": PRO_SEITE})
+        a = shopify_http.execute(abfrage(PRODUKTE), {"cursor": cursor, "n": PRO_SEITE})
         f = a.get("_error", "")
         if not f:
             return a, ""
@@ -183,7 +193,7 @@ def main():
             for vk in p.get("variants", {}).get("edges", []):
                 v = vk["node"]
                 varianten_gesamt += 1
-                if (v.get("barcode") or "").strip():
+                if bc.lies(v):
                     continue          # vorhandene nie überschreiben
                 ohne_barcode += 1
                 ean, regel = herleiten(v.get("sku"), marke, henrys)
@@ -238,9 +248,10 @@ def main():
 
     ok = fehler = 0
     for i, (pid, liste) in enumerate(aenderungen.items(), 1):
-        e = shopify_http.execute(SCHREIBEN, {
+        e = shopify_http.execute(abfrage(SCHREIBEN), {
             "productId": pid,
-            "variants": [{"id": vid, "barcode": ean} for vid, ean, _, _ in liste]})
+            "variants": [{"id": vid, **bc.schreiben(ean)}
+                         for vid, ean, _, _ in liste]})
         meldungen = e.get("_error") or [
             u.get("message")
             for u in (e.get("productVariantsBulkUpdate", {}).get("userErrors") or [])]
