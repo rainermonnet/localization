@@ -1,0 +1,295 @@
+{
+ "menu": "gid://shopify/Menu/308786954613",
+ "handle": "farbenkreis",
+ "title": "Farbenkreis",
+ "items": [
+  {
+   "id": "gid://shopify/MenuItem/768318636405",
+   "title": "Holz & Natur",
+   "type": "SEARCH",
+   "url": "/search",
+   "items": [
+    {
+     "id": "gid://shopify/MenuItem/768321585525",
+     "title": "Holzspielzeug",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/702488609141",
+     "items": []
+    },
+    {
+     "id": "gid://shopify/MenuItem/768321552757",
+     "title": "Holztiere",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/703279104373",
+     "items": []
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/MenuItem/768318800245",
+   "title": "Spiel & Bewegung",
+   "type": "COLLECTION",
+   "resourceId": "gid://shopify/Collection/699970814325",
+   "items": [
+    {
+     "id": "gid://shopify/MenuItem/768320045429",
+     "title": "Spielen",
+     "type": "SEARCH",
+     "url": "/search",
+     "items": []
+    },
+    {
+     "id": "gid://shopify/MenuItem/768321651061",
+     "title": "Draußen",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/703279006069",
+     "items": []
+    },
+    {
+     "id": "gid://shopify/MenuItem/768321683829",
+     "title": "Bewegen",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/699970814325",
+     "items": []
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/MenuItem/768319029621",
+   "title": "Themen",
+   "type": "COLLECTION",
+   "resourceId": "gid://shopify/Collection/701488890229",
+   "items": [
+    {
+     "id": "gid://shopify/MenuItem/768327614837",
+     "title": "Waldorf",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/724746797429",
+     "items": []
+    },
+    {
+     "id": "gid://shopify/MenuItem/768318767477",
+     "title": "Puppen",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/701478535541",
+     "items": [
+      {
+       "id": "gid://shopify/MenuItem/768324895093",
+       "title": "Zubehör",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/703279464821",
+       "items": []
+      }
+     ]
+    },
+    {
+     "id": "gid://shopify/MenuItem/768320110965",
+     "title": "Baby und Kleinkind",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/701480403317",
+     "items": []
+    },
+    {
+     "id": "gid://shopify/MenuItem/775513997685",
+     "title": "Für Männer",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/727787536757",
+     "items": [
+      {
+       "id": "gid://shopify/MenuItem/775538737525",
+       "title": "Sonnenleder - perfekt für den Mann",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/729302892917",
+       "items": []
+      },
+      {
+       "id": "gid://shopify/MenuItem/775538606453",
+       "title": "Sonett für den Mann",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/729302958453",
+       "items": []
+      },
+      {
+       "id": "gid://shopify/MenuItem/775538671989",
+       "title": "Primavera - dufte für den Mann",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/729302925685",
+       "items": []
+      },
+      {
+       "id": "gid://shopify/MenuItem/775667450229",
+       "title": "Männerscharf",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/729369346421",
+       "items": []
+      }
+     ]
+    },
+    {
+     "id": "gid://shopify/MenuItem/768321356149",
+     "title": "Geschicklichkeit",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/703270158709",
+     "items": []
+    },
+    {
+     "id": "gid://shopify/MenuItem/768318701941",
+     "title": "Jahreszeiten",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/703278678389",
+     "items": []
+    },
+    {
+     "id": "gid://shopify/MenuItem/768321388917",
+     "title": "Materialien",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/701479813493",
+     "items": []
+    },
+    {
+     "id": "gid://shopify/MenuItem/768318603637",
+     "title": "Wasser & Aquarell",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/703279628661",
+     "items": []
+    },
+    {
+     "id": "gid://shopify/MenuItem/768321421685",
+     "title": "Nach Alter",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/703278449013",
+     "items": [
+      {
+       "id": "gid://shopify/MenuItem/768321716597",
+       "title": "ab 1 Jahr",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/702488871285",
+       "items": []
+      },
+      {
+       "id": "gid://shopify/MenuItem/768321782133",
+       "title": "ab 3 Jahre",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/702488904053",
+       "items": []
+      },
+      {
+       "id": "gid://shopify/MenuItem/768321814901",
+       "title": "ab 5 Jahre",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/702488969589",
+       "items": []
+      },
+      {
+       "id": "gid://shopify/MenuItem/768321847669",
+       "title": "ab 6 Jahre",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/704171049333",
+       "items": []
+      }
+     ]
+    },
+    {
+     "id": "gid://shopify/MenuItem/768321519989",
+     "title": "Geschenke",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/703278612853",
+     "items": [
+      {
+       "id": "gid://shopify/MenuItem/768327647605",
+       "title": "bis 5,- €",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/707316121973",
+       "items": []
+      },
+      {
+       "id": "gid://shopify/MenuItem/768327680373",
+       "title": "5,- bis 10,- €",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/707325919605",
+       "items": []
+      },
+      {
+       "id": "gid://shopify/MenuItem/768327713141",
+       "title": "10,- bis 20,- €",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/707316154741",
+       "items": []
+      },
+      {
+       "id": "gid://shopify/MenuItem/768327745909",
+       "title": "20,- bis 30,- €",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/707326771573",
+       "items": []
+      },
+      {
+       "id": "gid://shopify/MenuItem/768327778677",
+       "title": "30,- bis 40,- €",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/707327099253",
+       "items": []
+      },
+      {
+       "id": "gid://shopify/MenuItem/768327811445",
+       "title": "40,- bis 50,- €",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/707327230325",
+       "items": []
+      },
+      {
+       "id": "gid://shopify/MenuItem/768327844213",
+       "title": "ab 50,- €",
+       "type": "COLLECTION",
+       "resourceId": "gid://shopify/Collection/707327426933",
+       "items": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/MenuItem/768318865781",
+   "title": "Über uns",
+   "type": "PAGE",
+   "resourceId": "gid://shopify/Page/695684563317",
+   "items": [
+    {
+     "id": "gid://shopify/MenuItem/768318898549",
+     "title": "Tagebuch",
+     "type": "BLOG",
+     "resourceId": "gid://shopify/Blog/116182843765",
+     "items": []
+    },
+    {
+     "id": "gid://shopify/MenuItem/768370508149",
+     "title": "Über uns",
+     "type": "PAGE",
+     "resourceId": "gid://shopify/Page/695684563317",
+     "items": []
+    },
+    {
+     "id": "gid://shopify/MenuItem/768320012661",
+     "title": "Kontakt",
+     "type": "PAGE",
+     "resourceId": "gid://shopify/Page/691879575925",
+     "items": []
+    },
+    {
+     "id": "gid://shopify/MenuItem/768318964085",
+     "title": "FAQ",
+     "type": "PAGE",
+     "resourceId": "gid://shopify/Page/702728110453",
+     "items": []
+    },
+    {
+     "id": "gid://shopify/MenuItem/768318996853",
+     "title": "Marken",
+     "type": "COLLECTION",
+     "resourceId": "gid://shopify/Collection/703440060789",
+     "items": []
+    }
+   ]
+  }
+ ]
+}
