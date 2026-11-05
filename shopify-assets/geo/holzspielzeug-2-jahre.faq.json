@@ -1,0 +1,54 @@
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Welches Holzspielzeug eignet sich für ein 2-jähriges Kind?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Am besten robustes Holzspielzeug ohne Kleinteile, das sich schieben, ziehen, stapeln und einfach ausprobieren lässt: Schiebe- und Ziehtiere, Holzfahrzeuge, große Bausteine, Stapelspiele, einfache Puzzles mit wenigen Teilen sowie schlichte Puppen und Spielfiguren für das erste Nachspielen des Alltags."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Worauf muss ich bei der Sicherheit von Spielzeug für 2-Jährige achten?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Spielzeug für Kinder unter drei Jahren darf keine Teile enthalten, die sich verschlucken lassen. Achte auf das CE-Zeichen und die Altersangabe des Herstellers, auf glatte, abgerundete Kanten und auf Oberflächen, die sauber verarbeitet sind. Ist ein Spielzeug erst ab drei Jahren empfohlen, ist es für ein 2-jähriges Kind nicht geeignet."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Warum ist Holzspielzeug für Kleinkinder eine gute Wahl?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Holz ist robust, fühlt sich warm an und hat keine Batterien, Blinklichter oder festgelegten Funktionen. Das Kind entscheidet selbst, was aus einem Holzauto, einem Baustein oder einer Figur wird. Gutes Holzspielzeug hält zudem oft jahrelang und lässt sich weitergeben."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Wie viel Spielzeug braucht ein 2-jähriges Kind?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Weniger, als man denkt. Eine überschaubare Auswahl, die gut erreichbar liegt, wird meist intensiver bespielt als ein volles Regal. Du kannst Spielzeug regelmäßig austauschen, dann bleibt es spannend."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Was kostet gutes Holzspielzeug für 2-Jährige?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Das reicht von wenigen Euro bis zu rund 40 Euro. Beispiele aus unserem Sortiment (Stand November 2026): ein großer Holzball ab 6,60 Euro, ein Schiebehelikopter von goki für 19,95 Euro, ein Kranwagen mit Anhänger von goki für 39,50 Euro."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Kann ich Holzspielzeug für mein Kind in Freiburg ansehen und mich beraten lassen?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ja. Im Zwergenladen in Freiburg (Schwimmbadstraße 36) kannst du Spielzeug in die Hand nehmen und dich zu Alter und Auswahl beraten lassen. Online bestellte Ware legen wir zur Abholung zurück (Click & Collect) oder schicken sie dir zu."
+   }
+  }
+ ]
+}
