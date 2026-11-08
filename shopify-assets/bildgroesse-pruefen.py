@@ -2,7 +2,7 @@
 bildgroesse-pruefen.py — Produktbilder unter 500 x 500 Pixel finden
 ====================================================================
 
-STAND 2026-11-08
+STAND 2026-11-08b (Antwortformat von execute() korrigiert)
 
 Anlass: Google Merchant Center meldet "Bild zu klein für die bevorstehende
 Maßnahme". Ab 31. Januar 2027 müssen Produktbilder mindestens 500 x 500
@@ -43,7 +43,7 @@ except ImportError:
 ADMIN = "https://admin.shopify.com/store/zwergenladen-fr/products/"
 SHOP = "https://zwergenladen.info/products/"
 AUSGABE = "bildgroesse-zu-klein.csv"
-SEITE = 50
+SEITE = 25
 PAUSE = 0.3
 
 QUERY = """
@@ -92,13 +92,26 @@ def groesse(bild):
     return (b, h) if b and h else None
 
 
+def seite_holen(cursor):
+    """Eine Seite lesen. execute() liefert direkt den data-Block oder
+    {'_error': '...'}. Bei Drosselung wird mit Pause wiederholt."""
+    for versuch in range(5):
+        antwort = shopify_http.execute(QUERY, {"cursor": cursor})
+        fehler = antwort.get("_error", "")
+        if not fehler:
+            return antwort["products"]
+        if "THROTTLED" in fehler.upper() and versuch < 4:
+            warte = 2 ** versuch
+            print("\n    gedrosselt, warte %ds …" % warte)
+            time.sleep(warte)
+            continue
+        sys.exit("\nShopify-Fehler:\n%s" % fehler)
+
+
 def holen():
     cursor, alle = None, []
     while True:
-        antwort = shopify_http.execute(QUERY, {"cursor": cursor})
-        if "errors" in antwort and "data" not in antwort:
-            sys.exit("Shopify-Fehler: %s" % antwort["errors"])
-        seite = antwort["data"]["products"]
+        seite = seite_holen(cursor)
         alle.extend(seite["nodes"])
         print("  … %d Produkte gelesen" % len(alle), end="\r")
         if not seite["pageInfo"]["hasNextPage"]:
