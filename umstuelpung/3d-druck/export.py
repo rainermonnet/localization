@@ -32,7 +32,7 @@ def prepare(r, cut=None, n=1440):
     Q[:,2] -= Q[:,2].min()
     return Q, tri
 
-for name, r, cut in [("Oloid_r22mm_66mm_mit-Standflaeche", 22, 0.03), ("Oloid_r30mm_90mm_mit-Standflaeche", 30, 0.03), ("Oloid_r22mm_66mm_exakt", 22, None)]:
+for name, r, cut in [("Oloid_r20mm_6cm_Prototyp", 20, 0.03), ("Oloid_r22mm_mit-Standflaeche", 22, 0.03), ("Oloid_r30mm_mit-Standflaeche", 30, 0.03), ("Oloid_r22mm_exakt-ohne-Standflaeche", 22, None)]:
     Q, tri = prepare(r, cut)
     write_stl(f"{name}.stl", Q, tri, name)
     ext = Q.max(0)-Q.min(0)
