@@ -13,8 +13,14 @@
     "checkForUpdates": "Nach Updates suchen",
     "failedCheckingAppUpdate": "Fehler beim Suchen nach Updates",
     "newUpdateAvailable": "Eine neue Version von LM Studio ist verfügbar! 🎉",
+    "newBetaUpdateAvailable": "Eine neue Beta-Version von LM Studio ist verfügbar! 🛠️🎉",
     "downloadingInProgress": "Update wird heruntergeladen...",
     "downloadUpdate": "Update auf LM Studio {{version}}",
+    "downloadBetaUpdate": "Update auf LM Studio Beta {{version}} (Build {{build}})",
+    "downloadCompleted": "Download abgeschlossen!",
+    "updateDownloadComplete": "Update erfolgreich heruntergeladen!",
+    "updateDownloadFailed": "Update fehlgeschlagen!",
+    "hasFinishedDownloading": "wurde vollständig heruntergeladen.",
     "yourCurrentVersion": "Deine aktuelle Version:",
     "latestVersion": "Die neueste Version ist:",
     "downloadLabel": "Jetzt aktualisieren",
@@ -22,6 +28,9 @@
     "downloadingUpdate": "Update wird heruntergeladen...",
     "updateDownloaded": "Update heruntergeladen!",
     "restartAppToUpdate": "App neu starten, um das Update anzuwenden",
+    "appUpdatedToastTitle": "Aktualisiert auf {{title}}",
+    "appUpdatedToastDescriptionPrefix": "Zeige die ",
+    "AppUpdatedToastDescriptionReleaseNotes": "Versionshinweise",
     "doItLater": "Ich mache es später",
     "failedToUpdate": "App-Update fehlgeschlagen. Bitte überprüfe deine Internetverbindung oder versuche es später erneut.",
     "retryInBackground": "Im Hintergrund wiederholen",
@@ -32,11 +41,13 @@
     "installAndRelaunch": "Installieren und neu starten",
     "uptodate": "Du bist auf dem neuesten Stand! Die aktuelle Version ist {{version}}",
     "preferences": "Einstellungen",
+    "general": "Allgemein",
     "sideButtonLabels": "Seitenleisten-Beschriftungen anzeigen",
     "colorThemeLabel": "Farbschema",
     "complexityLevelLabel": "Komplexitätsstufe der Benutzeroberfläche",
     "selectComplexityLevelPlaceholder": "Wähle eine Standard-Komplexitätsstufe für die Benutzeroberfläche",
     "userComplexityLevelLabel": "Benutzer",
+    "powerUserComplexityLevelLabel": "Fortgeschrittener Benutzer",
     "developerComplexityLevelLabel": "Entwickler",
     "chatSettingsLabel": "Chat-Einstellungen",
 
@@ -59,7 +70,6 @@
     "firstTimeExperienceMarkCompletedLabel": "Als abgeschlossen markieren",
     "firstTimeExperienceResetLabel": "Zurücksetzen",
     "showPromptSuggestionsLabel": "Vorschläge für Prompts anzeigen, wenn ein neuer Chat erstellt wird",
-    "shiftEnterToSendLabel": "Verwende Umschalt + Eingabetaste zum Senden von Nachrichten",
     "darkThemeLabel": "Dunkel",
     "lightThemeLabel": "Hell",
     "systemThemeLabel": "Automatisch",
@@ -80,12 +90,14 @@
 
     "backendDownloadChannel.label": "LM Studio Erweiterungspakete Download-Kanal",
     "backendDownloadChannel.value.stable": "Stabil",
+    "backendDownloadChannel.value.beta": "Beta",
     "backendDownloadChannel.value.latest": "Entwicklung",
     "backendDownloadChannel.shortLabel": "Runtime-Download-Kanal",
     "backendDownloadChannel.hint": "Wählen Sie den Kanal aus, von dem die LM Studio Erweiterungspakete heruntergeladen werden sollen. \"{{stableName}}\" ist der empfohlene Kanal für die meisten Benutzer.",
 
     "appUpdateChannel.label": "LM Studio Update-Kanal",
     "appUpdateChannel.value.stable": "Stabil",
+    "appUpdateChannel.value.beta": "Beta",
     "appUpdateChannel.shortLabel": "App-Update-Kanal",
     "appUpdateChannel.hint": "Wählen Sie den Kanal aus, von dem LM Studio-App-Updates empfangen werden sollen. \"{{stableName}}\" ist der empfohlene Kanal für die meisten Benutzer.",
 
@@ -107,15 +119,23 @@
     "modelLoadingGuardrails.value.custom/subTitle": "Legen Sie Ihr eigenes Limit für die maximale Modellgröße fest, die geladen werden kann",
     "modelLoadingGuardrails.value.custom/detail": "Ausführliche Informationen zu 'Benutzerdefiniert'",
     "modelLoadingGuardrails.custom.label": "Speicherlimit: ",
+    "modelLoadingGuardrails.custom.unitGB": "GB",
     "modelLoadingGuardrails.custom.description": "Legen Sie ein benutzerdefiniertes Speicherlimit für das Laden von Modellen fest. Modelle werden nicht geladen, wenn dieses Limit überschritten wird.",
+
+    "experimentalLoadPresets": "Unterstützung für Modell-Ladekonfigurationen in Voreinstellungen aktivieren",
+    "experimentalLoadPresets.description": "Legt fest, ob Voreinstellungen Modell-Ladekonfigurationen enthalten dürfen. Diese Funktion ist experimentell, über Rückmeldungen freuen wir uns.",
 
     "promptWhenCommittingUnsavedChangesWithNewFields": "Voreinstellungen: Bestätigungsdialog anzeigen, wenn neue Felder zu den Voreinstellungen hinzugefügt werden",
     "promptWhenCommittingUnsavedChangesWithNewFields.description": "Dies ist nützlich, um versehentliches Hinzufügen neuer Felder zu den Voreinstellungen zu verhindern",
+
+    "autoStartOnLogin": "LLM-Dienst bei der Anmeldung starten",
+    "autoStartOnLogin.description": "Startet den LLM-Dienst automatisch bei der Anmeldung am Computer",
 
     "expandConfigsOnClick": "Konfigurationen durch Klicken erweitern, anstatt durch Hover",
 
     "migrateChats": {
     "label": "Chats vor Version 0.3.0 migrieren",
+    "hasBetterLabel": "Chats vor Version 0.3.0 erneut migrieren",
     "action_one": "1 Chat migrieren",
     "action_other": "{{count}} Chats migrieren",
     "inProgress": "Chats werden migriert...",
@@ -124,11 +144,17 @@
       "details": "Der Migrationsprozess wird Ihre alten Chats NICHT löschen, sondern eine Kopie im neuen Format erstellen.",
       "footer": "Sie können weiterhin über ältere Versionen von LM Studio auf Ihre alten Chats zugreifen. Aktuell werden Bilder nicht automatisch migriert."
     },
+    "hasBetterHint": {
+      "primary": "Wir haben den Chat-Migrator verbessert, seit Sie Ihre alten Chats migriert haben. Möchten Sie ihn erneut ausführen?",
+      "details": "Beim Migrationsvorgang wird ein neuer Ordner für die neu migrierten Chats angelegt. Ihre alten Chats bleiben unverändert.",
+      "footer": "Sie können weiterhin über ältere Versionen von LM Studio auf Ihre alten Chats zugreifen. Aktuell werden Bilder nicht automatisch migriert."
+    },
     "success": "Chats erfolgreich migriert!",
     "success_one": "1 Chat erfolgreich migriert",
     "success_other": "{{count}} Chats erfolgreich migriert",
     "showInstructionsButton": "Anweisungen anzeigen",
     "footerCardText": "Chats aus früheren Versionen von LM Studio müssen migriert werden, um in dieser Version genutzt werden zu können.",
+    "hasBetterFooterCardText": "Wir haben den Chat-Migrator verbessert, seit Sie Ihre alten Chats migriert haben. Sie können den Migrationsvorgang erneut ausführen. (Für die neu migrierten Chats wird ein neuer Ordner angelegt.)",
     "dismissConfirm": "Verwerfen",
     "dismissConfirmDescription": "Die Chat-Migration kann jederzeit in den Einstellungen durchgeführt werden"
   }
