@@ -12,7 +12,7 @@ W = 2.4                      # Wandstaerke (normal zur Flaeche)
 SCHLITZ_B, SCHLITZ_L = 3.6, 6.0     # Langloch an der Spitze: Breite (y'), Laenge (x')
 ZAPFEN_B, ZAPFEN_H = 1.0, 1.5       # Feder (Zapfenring): Breite, Hoehe
 NUT_SPIEL = 0.15                    # Spiel je Seite in der Nut
-FADENLOCH_D = 1.8                   # rundes Fadenloch (Variante: Faden vor dem Verkleben von innen)
+FADENLOCH_D = 2.0                   # rundes Fadenloch (Variante: Faden vor dem Verkleben von innen)
 KEY_L = 4.0                         # Passmarke (Luecke im Zapfenring) Breite
 
 def to_m(P, tri): return m3.Manifold(m3.Mesh(P.astype(np.float32), tri.astype(np.uint32)))
