@@ -12,7 +12,7 @@ W = 2.4                      # Wandstaerke (normal zur Flaeche)
 SCHLITZ_B, SCHLITZ_L = 3.6, 6.0     # Langloch an der Spitze: Breite (y'), Laenge (x')
 ZAPFEN_B, ZAPFEN_H = 1.0, 1.5       # Feder (Zapfenring): Breite, Hoehe
 NUT_SPIEL = 0.15                    # Spiel je Seite in der Nut
-FADENLOCH_D = 2.0                   # rundes Fadenloch (Variante: Faden vor dem Verkleben von innen)
+FADENLOCH_D = 1.2                   # rundes Fadenloch (Variante: Faden vor dem Verkleben von innen)
 KEY_L = 4.0                         # Passmarke (Luecke im Zapfenring) Breite
 
 def to_m(P, tri): return m3.Manifold(m3.Mesh(P.astype(np.float32), tri.astype(np.uint32)))
@@ -108,11 +108,7 @@ def schreibe(path, M, name, trafo=None):
     return V, T
 
 if __name__ == '__main__':
-    teile, cav = baue(False)
-    bb = np.array(cav.bounding_box())
-    print("Hohlraum innen: Mass", np.round(bb[3:]-bb[:3], 1))
-    schreibe('Oloid_hohl_einteilig_Langloch.stl', teile['einteilig'], 'oloid_hohl_einteilig')
-    schreibe('Oloid_hohl_Oberhaelfte_Langloch.stl', teile['oben'], 'oloid_oberhaelfte_langloch')
-    schreibe('Oloid_hohl_Unterhaelfte.stl', teile['unten'], 'oloid_unterhaelfte', trafo=lambda V: np.c_[V[:, 1], V[:, 0], -V[:, 2]])
-    t2, _ = baue(True)
+    t2, cav = baue(True)
+    bb = np.array(cav.bounding_box()); print("Hohlraum innen: Mass", np.round(bb[3:]-bb[:3], 1))
     schreibe('Oloid_hohl_Oberhaelfte_Fadenloch.stl', t2['oben'], 'oloid_oberhaelfte_fadenloch')
+    schreibe('Oloid_hohl_Unterhaelfte.stl', t2['unten'], 'oloid_unterhaelfte', trafo=lambda V: np.c_[V[:, 1], V[:, 0], -V[:, 2]])
