@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Oloid-Mobile: eine Drahtbahn, acht Größen</title>
+<style>
+:root{--bg:#FBF7F1;--fg:#2b2620;--mut:#6b655b;--line:#8a8272;--acc:#C98A1D;--card:#F4F1EA;--panel:rgba(244,241,234,.93)}
+@media (prefers-color-scheme:dark){:root{--bg:#1c1a16;--fg:#ece6d8;--mut:#a79f8e;--line:#6b6455;--acc:#F2B24E;--card:#2a2722;--panel:rgba(28,26,22,.9)}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font:15px/1.45 "Georgia","Times New Roman",serif;overflow:hidden}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#titel{position:absolute;left:max(16px,env(safe-area-inset-left));top:12px;right:16px;pointer-events:none}
+#titel h1{font-size:20px;margin:0;font-weight:600}
+#titel p{margin:3px 0 0;font-size:13px;color:var(--mut);max-width:62ch}
+#titel a{pointer-events:auto;color:#4A7EBB;font-size:13px}
+#labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lab{position:absolute;transform:translate(-50%,0);text-align:center;font-size:12px;line-height:1.25;white-space:nowrap;text-shadow:0 0 4px var(--bg),0 0 4px var(--bg),0 0 4px var(--bg)}
+.lab b{font-size:13px}.lab span{color:var(--mut);font-size:11px}
+#panel{position:absolute;left:50%;transform:translateX(-50%);bottom:max(10px,env(safe-area-inset-bottom));background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px 12px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:calc(100vw - 20px)}
+#panel button{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:18px;padding:6px 13px;cursor:pointer;min-height:36px;font:inherit;font-size:14px;touch-action:manipulation}
+#panel button[aria-pressed="true"]{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
+#info{position:absolute;right:max(14px,env(safe-area-inset-right));top:70px;width:min(310px,42vw);background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:12.5px;line-height:1.45}
+#info summary{cursor:pointer;font-weight:600}#info ul{margin:6px 0 0;padding-left:1.1em}
+@media (max-width:760px){#titel p{display:none}#info{top:auto;bottom:70px;right:10px;left:10px;width:auto}}
+</style></head><body>
+<canvas id="cv"></canvas>
+<div id="titel"><h1>Oloid-Mobile: eine Drahtbahn, acht Größen</h1><div><a href="uebersicht.html">← Übersicht</a></div><p>Ein einziger Drahtring, die Bahn des Pentagon-Dodekaeders I (72°), trägt alle acht Oloide. Die Größe folgt dem Winkel: der runde Würfel-Oloid (90°) ist der größte, der Oloid des Ikosaeders I (68,1°) der kleinste.</p></div>
+<div id="labels"></div>
+<details id="info"><summary>Größen, Maße, Material</summary><ul>
+<li>Ring: Messingdraht 1,5 mm, 1,3 m, in die Bahn des Dodekaeders I gebogen (39 × 23 cm), Enden verlötet.</li>
+<li>Aufhängung: zwei Fäden zu den höchsten Punkten, oben zum Knoten senkrecht über dem Schwerpunkt: der Ring hängt waagrecht.</li>
+<li>Oloide hohl (Wand 2,4 mm), Kreisradius 30 / 27 / 24 / 22 / 19 / 17 / 15 / 13 mm, größte Länge 90 bis 39 mm, Gewicht 27 bis 5 g, zusammen 112 g. Silikonfaden im Fadenloch an der Spitze.</li>
+<li>Die Fäden sind unterschiedlich lang (8 bis 26 cm), die Oloide hängen auf verschiedenen Höhen; nichts berührt sich (nachgerechnet, mindestens 3 cm Abstand). Gesamt: Haken bis tiefster Punkt etwa 60 cm, Gewicht etwa 130 g.</li></ul></details>
+<div id="panel"><button type="button" data-v="vorn">Vorne</button><button type="button" data-v="schraeg" aria-pressed="true">Schräg</button><button type="button" data-v="oben">Von oben</button><button type="button" id="dreh" aria-pressed="true">Schwingt</button><button type="button" id="beschr" aria-pressed="true">Beschriftung</button></div>
+<script>__THREE__</script>
+<script>
+const DATA = __DATEN__, PLAN = __PLAN__;
+const NAMEN = ['Würfel','Dodekaeder II','Tetraeder II · Oktaeder · Ikosaeder IV','Ikosaeder II, III','Dodekaeder III','Tetraeder I','Dodekaeder I','Ikosaeder I'];
+const FARBEN = [[90,0xF2B24E],[81,0xE98A3A],[72,0xD8543B],[66,0x9A5480],[62,0x4A7EBB]];
+function farbe(phi) { let a = FARBEN[0], b = FARBEN[FARBEN.length - 1]; for (let i = 0; i + 1 < FARBEN.length; i++) if (phi <= FARBEN[i][0] && phi >= FARBEN[i+1][0]) { a = FARBEN[i]; b = FARBEN[i+1]; }
+  const f = Math.min(1, Math.max(0, (a[0] - phi) / (a[0] - b[0]))); return new THREE.Color(a[1]).lerp(new THREE.Color(b[1]), f); }
+const $ = id => document.getElementById(id), fmt = (x, n) => x.toFixed(n).replace('.', ',');
+const cv = $('cv'); let renderer; try { renderer = new THREE.WebGLRenderer({canvas: cv, antialias: true, alpha: true}); renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); } catch (e) {}
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+scene.add(new THREE.AmbientLight(0xffffff, 1.7)); const L1 = new THREE.DirectionalLight(0xffffff, 1.5); L1.position.set(4, 8, 6); scene.add(L1);
+const L2 = new THREE.DirectionalLight(0xeaf2ff, .6); L2.position.set(-5, -2, -4); scene.add(L2);
+const lineMat = new THREE.LineBasicMaterial({color: 0x6b6455});
+const V3 = a => new THREE.Vector3(a[0], a[1], a[2]);
+function faden(a, b) { return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a, b]), lineMat); }
+const up = new THREE.Vector3(0, 1, 0);
+const root = new THREE.Group(); scene.add(root);
+const brass = new THREE.MeshStandardMaterial({color: 0xC9A24A, metalness: .65, roughness: .3});
+const knotMat = new THREE.MeshStandardMaterial({color: 0x6b6455});
+const units = [];
+function oloid(i, spin, SO) {
+  const D = DATA[i], c0 = new THREE.Vector3(0.5, 0, 0), g = new THREE.Group();
+  const arc = D.c[3], qa = V3(arc[Math.floor(arc.length / 2)]).sub(c0), ha = qa.length() * SO;
+  const qO = new THREE.Quaternion().setFromUnitVectors(qa.clone().normalize(), up), spinQ = new THREE.Quaternion().setFromAxisAngle(up, spin);
+  const tf = p => V3(p).sub(c0).multiplyScalar(SO).applyQuaternion(qO).applyQuaternion(spinQ).add(new THREE.Vector3(0, -ha, 0));   // Aufhaengepunkt im Ursprung
+  const A = D.flaeche[0].map(tf), B = D.flaeche[1].map(tf), n = A.length, pos = [], idx = [];
+  A.forEach(p => pos.push(p.x, p.y, p.z)); B.forEach(p => pos.push(p.x, p.y, p.z));
+  for (let j = 0; j < n; j++) { const j2 = (j + 1) % n; idx.push(j, n + j, j2, n + j, n + j2, j2); }
+  const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); geo.setIndex(idx); geo.computeVertexNormals();
+  g.add(new THREE.Mesh(geo, new THREE.MeshStandardMaterial({color: farbe(D.phi), roughness: 1, metalness: 0, side: THREE.DoubleSide})));
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.025, 0.007, 8, 14), brass); g.add(ring); g.userData.ha = ha; return g;
+}
+
+
+const loop = PLAN.loop.map(V3);
+root.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(loop, true, 'centripetal'), 600, 0.024, 10, true), brass));
+PLAN.susp.forEach(k => { root.add(faden(new THREE.Vector3(0, 0, 0), loop[k])); const m = new THREE.Mesh(new THREE.SphereGeometry(0.04, 10, 8), brass); m.position.copy(loop[k]); root.add(m); });
+root.add(new THREE.Mesh(new THREE.SphereGeometry(0.045, 10, 8), knotMat));
+PLAN.loads.forEach((l, j) => {
+  const A = loop[l.k], U = new THREE.Group(); U.position.copy(A).add(new THREE.Vector3(0, -l.L, 0)); root.add(U);
+  U.add(faden(new THREE.Vector3(0, l.L, 0), new THREE.Vector3(0, 0, 0)));
+  const o = oloid(l.oi, l.oi * 0.9, l.so); U.add(o); units.push({idx: l.oi, g: U, w: 0.5 + 0.05 * j, ph: j * 0.8, ha: o.userData.ha, so: l.so});
+});
+const haken = new THREE.Mesh(new THREE.TorusGeometry(0.1, 0.02, 8, 20), knotMat); haken.position.set(0, 0.1, 0); root.add(haken);
+root.add(faden(new THREE.Vector3(0, 0.2, 0), new THREE.Vector3(0, 0.75, 0)));
+const decke = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.04, 24), new THREE.MeshStandardMaterial({color: 0xbfb5a0})); decke.position.set(0, 0.77, 0); root.add(decke);
+const labs = $('labels'); units.forEach(u => { const d = document.createElement('div'); d.className = 'lab'; labs.appendChild(d); u.el = d; });
+let st = {yaw: 0.55, pitch: 0.2, zoom: 1, dreh: true, beschr: true, ziel: {yaw: 0.55, pitch: 0.2}};
+const ptr = new Map(); let p0 = 0, z0 = 1; const pd = () => { const v = [...ptr.values()]; return Math.hypot(v[0][0] - v[1][0], v[0][1] - v[1][1]); };
+cv.addEventListener('pointerdown', e => { ptr.set(e.pointerId, [e.clientX, e.clientY]); try { cv.setPointerCapture(e.pointerId); } catch (_) {} if (ptr.size === 2) { p0 = pd(); z0 = st.zoom; } });
+cv.addEventListener('pointermove', e => { if (!ptr.has(e.pointerId)) return; const o = ptr.get(e.pointerId); ptr.set(e.pointerId, [e.clientX, e.clientY]);
+  if (ptr.size === 1) { st.yaw -= (e.clientX - o[0]) * 0.007; st.pitch = Math.min(1.55, Math.max(-0.2, st.pitch + (e.clientY - o[1]) * 0.005)); st.ziel.yaw = st.yaw; st.ziel.pitch = st.pitch; }
+  else if (ptr.size === 2) st.zoom = Math.min(2.5, Math.max(0.4, z0 * p0 / Math.max(1, pd()))); });
+const los = e => ptr.delete(e.pointerId); cv.addEventListener('pointerup', los); cv.addEventListener('pointercancel', los);
+cv.addEventListener('wheel', e => { e.preventDefault(); st.zoom = Math.min(2.5, Math.max(0.4, st.zoom * Math.exp(e.deltaY * .001))); }, {passive: false});
+const ANS = {vorn: [0, 0.05], schraeg: [0.55, 0.2], oben: [0.4, 1.35]};
+document.querySelectorAll('[data-v]').forEach(b => b.onclick = () => { st.ziel.yaw = ANS[b.dataset.v][0]; st.ziel.pitch = ANS[b.dataset.v][1]; document.querySelectorAll('[data-v]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); });
+$('dreh').onclick = () => { st.dreh = !st.dreh; $('dreh').setAttribute('aria-pressed', String(st.dreh)); };
+$('beschr').onclick = () => { st.beschr = !st.beschr; $('beschr').setAttribute('aria-pressed', String(st.beschr)); labs.style.display = st.beschr ? '' : 'none'; };
+const DRUCK = location.hash === '#druck'; if (DRUCK) { $('panel').style.display = 'none'; $('info').style.display = 'none'; }
+function resize() { const w = innerWidth, h = innerHeight; if (renderer) renderer.setSize(w, h, false); camera.aspect = w / h; camera.setViewOffset(w, h, 0, DRUCK ? 0 : (w < 760 ? 80 : 40), w, h); camera.updateProjectionMatrix();
+  units.forEach(u => { u.el.innerHTML = '<b>' + fmt(DATA[u.idx].phi, 1) + '° · ' + fmt(PLAN.ext[u.idx][2] / 10, 1) + ' cm</b>' + (w > 760 ? '<br><span>' + NAMEN[u.idx] + '</span>' : ''); }); }
+addEventListener('resize', resize); resize();
+function pose(z) { root.rotation.y = z * 0.18;
+  units.forEach(u => { u.g.rotation.y = z * u.w; u.g.rotation.z = Math.sin(z * 0.9 + u.ph) * 0.05; u.g.rotation.x = Math.cos(z * 0.7 + u.ph) * 0.05; }); }
+let last = 0, zeit = 0; const tmp = new THREE.Vector3();
+function tick(ts) {
+  const dt = Math.min(ts - last, 60) / 1000; last = ts;
+  if (st.dreh) { zeit += dt; pose(zeit); }
+  if (ptr.size === 0) { st.yaw += (st.ziel.yaw - st.yaw) * Math.min(1, dt * 3); st.pitch += (st.ziel.pitch - st.pitch) * Math.min(1, dt * 3); }
+  const asp = camera.aspect, t = Math.tan(camera.fov * Math.PI / 360), d = Math.max(5.8 / (2 * t * asp), 9.2 / (2 * t)) * st.zoom * 1.02;
+  camera.position.set(d * Math.cos(st.pitch) * Math.sin(st.yaw), -3.15 + d * Math.sin(st.pitch), d * Math.cos(st.pitch) * Math.cos(st.yaw)); camera.lookAt(0, -3.15, 0);
+  decke.visible = st.pitch < 1.0; if (renderer) renderer.render(scene, camera);
+  if (st.beschr) units.forEach(u => { u.g.localToWorld(tmp.set(0, -u.ha - 0.38, 0)); tmp.project(camera); u.el.style.left = ((tmp.x * 0.5 + 0.5) * innerWidth) + 'px'; u.el.style.top = ((-tmp.y * 0.5 + 0.5) * innerHeight) + 'px'; });
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+window.__setzeit = z => { st.dreh = false; zeit = z; pose(z); };
+</script></body></html>
