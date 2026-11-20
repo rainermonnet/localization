@@ -21,8 +21,11 @@ Maße: Würfelkante 70 mm, Glied 65 × 33 × 33 mm, Scharnier 25 × 28 × 5,6 mm
 
 - Profil **0.20mm Standard @BBL A1**. Geschwindigkeit nicht herabsetzen.
 - Wände 3, Deckschichten oben 5, unten 3, Füllung 15 % Gyroid
-- **Stützen aus.** Brim aus. Löst sich die spitze Ecke vom Bett, nimm Brim 3 mm.
-- Textured-PEI-Platte, vorher mit Spülmittel waschen
+- **Stützen aus.** **Brim: „Nur äußerer Rand“, 5 mm** (nach dem ersten Fehldruck: die spitzen Ecken und die kleinen Scharniere lösen sich sonst)
+- In Bambu Studio als Plattentyp **Textured PEI Plate** wählen (PLA: Bett 65 °C). Bei „Cool Plate“ bleibt das Bett zu kalt.
+- Im Druckdialog **Druckbett-Nivellierung** einschalten
+- Platte reinigen: warmes Wasser mit Spülmittel (keine Handseife), weiche Bürste, gründlich klar spülen,
+  mit fusselfreiem Papier trocknen, danach nicht mehr mit den Fingern anfassen. Zwischen den Drucken mit Isopropanol abwischen.
 - Die STL-Dateien liegen bereits richtig herum. Nicht drehen.
 - Druckzeit: Probedruck ca. 1 bis 1½ h, Vollsatz ca. 3 bis 4 h. Bambu Studio zeigt die genaue Zeit.
 
