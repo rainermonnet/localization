@@ -1,0 +1,258 @@
+{%- comment -%}
+  exit-intent.liquid — Hinweis beim Verlassen mit gefülltem Warenkorb
+  ===================================================================
+
+  Zeigt einmal je Besucher einen unaufdringlichen Hinweis, wenn jemand
+  den Shop mit Ware im Warenkorb verlassen will.
+
+  ENTWURFSENTSCHEIDUNGEN
+  ----------------------
+  Kein Rabatt. Ein pauschaler Gutschein trifft vor allem Kunden, die
+  ohnehin gekauft hätten — bei dünner Marge ein Verlustgeschäft. Der
+  Hinweis setzt stattdessen auf Beratung und das Ladengeschäft.
+
+  Nur bei gefülltem Warenkorb. Wer nichts ausgewählt hat, hat nichts
+  liegen gelassen; ein Overlay wäre dort reine Belästigung.
+
+  Nur am Desktop. Auf dem Handy gibt es kein verlässliches Signal für
+  "will gleich weg" — jeder Versuch ist Raterei und wird als Nerverei
+  wahrgenommen.
+
+  Einmal pro Woche je Besucher. Gespeichert in localStorage, kein
+  Tracking, keine Cookies, keine externe Verbindung — damit auch
+  einwilligungsfrei.
+
+  EINBAU
+  ------
+  1. Shopify Admin → Online-Shop → Themes → ··· → Code bearbeiten
+  2. Ordner "Snippets" → "Neues Snippet hinzufügen" → Name: exit-intent
+  3. Diesen gesamten Inhalt hineinkopieren, speichern
+  4. Datei layout/theme.liquid öffnen, kurz vor </body> einfügen:
+
+         {% render 'exit-intent' %}
+
+  5. Speichern. Zum Testen: Artikel in den Warenkorb legen, dann mit der
+     Maus zügig über den oberen Fensterrand hinausfahren.
+
+  ABSCHALTEN
+  ----------
+  Die Zeile aus theme.liquid entfernen. Das Snippet kann liegen bleiben.
+{%- endcomment -%}
+
+{%- if cart.item_count > 0 -%}
+<div id="zl-exit" hidden>
+  <div class="zl-exit__hinter" data-zl-schliessen></div>
+
+  <div class="zl-exit__karte" role="dialog" aria-modal="true"
+       aria-labelledby="zl-exit-titel" aria-describedby="zl-exit-text">
+
+    <button type="button" class="zl-exit__zu" data-zl-schliessen
+            aria-label="Hinweis schließen">&times;</button>
+
+    <p class="zl-exit__auge">Noch da?</p>
+
+    <h2 id="zl-exit-titel">
+      {{ cart.item_count }}
+      {%- if cart.item_count == 1 %} Artikel liegt{% else %} Artikel liegen{% endif %}
+      in deinem Warenkorb
+    </h2>
+
+    <p id="zl-exit-text">
+      Wir sind ein echter Laden in Freiburg — seit 1998. Wenn du unsicher bist,
+      ob das Richtige dabei ist: Frag uns einfach. Wir kennen jedes Stück,
+      das wir führen.
+    </p>
+
+    <div class="zl-exit__knoepfe">
+      <a href="{{ routes.cart_url }}" class="zl-exit__haupt">Zum Warenkorb</a>
+      <a href="mailto:{{ shop.email }}?subject=Frage%20zu%20meiner%20Auswahl"
+         class="zl-exit__neben">Kurz nachfragen</a>
+    </div>
+
+    <p class="zl-exit__fuss">
+      Dein Warenkorb bleibt gespeichert — du kannst jederzeit zurückkommen.
+    </p>
+  </div>
+</div>
+
+<style>
+  #zl-exit[hidden] { display: none !important; }
+
+  #zl-exit {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .zl-exit__hinter {
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 22, 20, .55);
+    animation: zl-exit-ein .18s ease-out;
+  }
+
+  .zl-exit__karte {
+    position: relative;
+    background: #fff;
+    color: #1d2320;
+    max-width: 440px;
+    width: 100%;
+    padding: 34px 32px 26px;
+    border-radius: 3px;
+    box-shadow: 0 18px 50px -12px rgba(18, 22, 20, .4);
+    animation: zl-exit-hoch .22s cubic-bezier(.2, .8, .3, 1);
+    text-align: left;
+  }
+
+  .zl-exit__zu {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: 0;
+    font-size: 26px;
+    line-height: 1;
+    color: #8a9490;
+    cursor: pointer;
+    padding: 6px 9px;
+    border-radius: 2px;
+  }
+  .zl-exit__zu:hover { color: #1d2320; }
+  .zl-exit__zu:focus-visible { outline: 2px solid #3f6b52; outline-offset: 1px; }
+
+  .zl-exit__auge {
+    margin: 0 0 6px;
+    font-size: 11px;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: #3f6b52;
+    font-weight: 600;
+  }
+
+  .zl-exit__karte h2 {
+    margin: 0 0 12px;
+    font-size: 21px;
+    line-height: 1.25;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  .zl-exit__karte p#zl-exit-text {
+    margin: 0 0 22px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: #4a534e;
+  }
+
+  .zl-exit__knoepfe {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .zl-exit__haupt,
+  .zl-exit__neben {
+    flex: 1 1 150px;
+    text-align: center;
+    padding: 12px 16px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+  .zl-exit__haupt { background: #3f6b52; color: #fff; }
+  .zl-exit__haupt:hover { background: #355a45; }
+  .zl-exit__neben { border: 1px solid #ccd4d0; color: #1d2320; }
+  .zl-exit__neben:hover { border-color: #3f6b52; color: #3f6b52; }
+  .zl-exit__haupt:focus-visible,
+  .zl-exit__neben:focus-visible { outline: 2px solid #3f6b52; outline-offset: 2px; }
+
+  .zl-exit__fuss {
+    margin: 16px 0 0;
+    font-size: 12.5px;
+    color: #7c8783;
+  }
+
+  @keyframes zl-exit-ein  { from { opacity: 0 } }
+  @keyframes zl-exit-hoch { from { opacity: 0; transform: translateY(10px) } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .zl-exit__hinter, .zl-exit__karte { animation: none; }
+  }
+</style>
+
+<script>
+(function () {
+  "use strict";
+
+  var SPEICHER = "zl-exit-gesehen";
+  var PAUSE_TAGE = 7;
+  var MINDESTVERWEIL = 8000;   // erst nach 8 s scharf schalten
+
+  var kasten = document.getElementById("zl-exit");
+  if (!kasten) return;
+
+  // Nur Zeigegeräte mit Hover — auf Touch gibt es kein Austrittssignal
+  if (!window.matchMedia || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+  function schonGesehen() {
+    try {
+      var wert = localStorage.getItem(SPEICHER);
+      if (!wert) return false;
+      return (Date.now() - parseInt(wert, 10)) < PAUSE_TAGE * 864e5;
+    } catch (e) {
+      return false;   // Speicher gesperrt: lieber einmal zeigen als gar nicht
+    }
+  }
+
+  function merken() {
+    try { localStorage.setItem(SPEICHER, String(Date.now())); } catch (e) {}
+  }
+
+  if (schonGesehen()) return;
+
+  var offen = false;
+  var vorher = null;
+  var scharf = false;
+
+  setTimeout(function () { scharf = true; }, MINDESTVERWEIL);
+
+  function oeffnen() {
+    if (offen || !scharf || schonGesehen()) return;
+    offen = true;
+    merken();
+    vorher = document.activeElement;
+    kasten.hidden = false;
+    document.documentElement.style.overflow = "hidden";
+    var zu = kasten.querySelector(".zl-exit__zu");
+    if (zu) zu.focus();
+  }
+
+  function schliessen() {
+    if (!offen) return;
+    offen = false;
+    kasten.hidden = true;
+    document.documentElement.style.overflow = "";
+    if (vorher && vorher.focus) vorher.focus();
+  }
+
+  // Maus verlässt das Fenster nach oben — Richtung Adressleiste oder Tab-Schließer
+  document.addEventListener("mouseout", function (e) {
+    if (e.relatedTarget || e.clientY > 6) return;
+    oeffnen();
+  });
+
+  kasten.addEventListener("click", function (e) {
+    if (e.target.hasAttribute("data-zl-schliessen")) schliessen();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") schliessen();
+  });
+})();
+</script>
+{%- endif -%}
