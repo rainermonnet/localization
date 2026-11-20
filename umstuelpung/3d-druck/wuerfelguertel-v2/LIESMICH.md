@@ -12,6 +12,7 @@ Ein 3 mm breiter glatter Rand bleibt für die Haftung. Die Innenflächen mit den
 
 | Datei | Inhalt |
 |---|---|
+| `Alles_auf_einer_Platte_A1.stl` | **alles in einem Druck:** 6 Glieder und 6 Scharniere (Spiel 0,4), 11 mm Abstand für den Brim, ca. 3½ h |
 | `Platte1_A1_6_Glieder.stl` | alle 6 Glieder auf einer Platte (A–B–A–B–A–B) |
 | `Platte2_A1_6_Scharniere_Spiel_0.4.stl` | 6 Scharniere, Spiel 0,4 mm |
 | `Glied_1_A.stl` … `Glied_6_B.stl` | die Glieder einzeln; A und B sind Spiegelbilder |
