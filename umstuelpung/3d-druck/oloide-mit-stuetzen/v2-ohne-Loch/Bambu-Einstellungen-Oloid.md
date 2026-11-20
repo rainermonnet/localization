@@ -1,7 +1,7 @@
-# Bambu Studio: Einstellungen für die Oloide mit Stützwänden (A1 mini, PLA)
+# Bambu Studio: Einstellungen für die Oloide mit Stützwänden (A1, PLA)
 
 ## 1. Auf die Werkseinstellungen zurück
-- Drucker: **Bambu Lab A1 mini 0.4 nozzle**
+- Drucker: **Bambu Lab A1 0.4 nozzle**
 - Filament: **Bambu PLA Basic @BBL A1M** (oder das PLA, das du verwendest)
 - Prozess: **0.16mm Optimal @BBL A1M**
 - Steht hinter einem Preset „geändert“ bzw. ein Sternchen: das System-Preset neu auswählen und die Änderungen verwerfen.
