@@ -80,3 +80,7 @@ den Bettseiten Holzstege mit weißem Grund.
 
 Würfelkante 70 mm. Die Außenflächen sind um 2,6 mm nach außen versetzt, damit die Gelenkachse über dem Bett liegt.
 Knöchelradius 3 mm, Bolzen Ø 2,4 mm, Spiel 0,5 mm (auch senkrecht zu den Kegelflächen).
+
+---
+**Achtung, nicht mehr empfohlen:** Der Druck von v3 ist gescheitert. Die stehenden Gelenke 2 und 4 haben am unteren Knöchelrand
+kein Material darunter und werden zu Spaghetti. Bitte die zuverlässige Bauweise in `../wuerfelguertel-v4-zuverlaessig/` verwenden.
