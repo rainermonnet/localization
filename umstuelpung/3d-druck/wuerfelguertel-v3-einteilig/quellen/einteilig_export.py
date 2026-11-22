@@ -30,3 +30,11 @@ print("bbox", np.round(X.bounding_box(), 1), "Teile", len(X.decompose()), "Volum
 WB.schreibe(f"{O}/Wuerfelguertel_einteilig_A1_Spiel05.stl", X, "Wuerfelguertel einteilig")
 import pickle
 pickle.dump([(np.asarray(f.to_mesh().vert_properties)[:, :3], np.asarray(f.to_mesh().tri_verts)) for f in fertig], open(f"{O}/glieder_lokal.pkl", "wb"))
+# --- Zweifarbig: Glieder 1,3,5 (Index 0,2,4) weiss, Glieder 2,4,6 (Index 1,3,5) Holz; gleiche Lage wie oben
+def lage(parts):
+    Y = m3.Manifold.compose(parts).translate([-cx, -cy, 0]).rotate([0, 0, ROT]).translate([128 - (bb[0] + bb[3])/2, 128 - (bb[1] + bb[4])/2, -bb[2]])
+    return Y
+gruppen = {"weiss": [druck[k] for k in (0, 2, 4)], "holz": [druck[k] for k in (1, 3, 5)]}
+for nm, ps in gruppen.items():
+    Y = lage(ps); WB.schreibe(f"{O}/Wuerfelguertel_einteilig_A1_Spiel05_Teil_{nm}.stl", Y, f"Wuerfelguertel {nm}")
+    print(nm, np.round(Y.bounding_box(), 2))

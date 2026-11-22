@@ -17,6 +17,8 @@ mit einem Stück 1,75-mm-Filament geschlossen.
 |---|---|
 | `Wuerfelguertel_einteilig_A1_weiss.3mf` | **Bambu-Studio-Projekt mit fertigen Schnell-Einstellungen**, Filamentfarbe weiß |
 | `Wuerfelguertel_einteilig_A1_holz.3mf` | dasselbe für Holzfilament |
+| `Wuerfelguertel_einteilig_A1_weiss_holz_wechsel.3mf` | **zweifarbig: Glieder 1, 3, 5 weiß, Glieder 2, 4, 6 Holz** (braucht das AMS lite) |
+| `…_Teil_weiss.stl` und `…_Teil_holz.stl` | dieselben Glieder als zwei passgenaue STL-Dateien (Ersatz, falls das Zweifarben-Projekt nicht lädt) |
 | `Wuerfelguertel_einteilig_A1_Spiel05.stl` | nur das Modell, falls du die Einstellungen selbst machst |
 
 Gelenkspiel 0,5 mm, Bolzen Ø 2,4 mm. Größe 147 × 147 × 39 mm, 6 ineinandergreifende Glieder, Waben außen.
@@ -46,10 +48,18 @@ und Geschwindigkeitsgrenzen.
 Gelenke besonders behutsam lösen. Beim A1 die 0,4-mm-Düse verwenden, nicht 0,2 mm. Den Drucker nicht lange heiß warten lassen,
 sonst verstopft die Düse.
 
-**Weiß und Holz zusammen (optional):** Die Glieder abwechselnd in zwei Farben zu drucken würde in jeder Schicht einen
-Farbwechsel bedeuten, etwa 160 Wechsel. Das kostet Stunden und viel Spülabfall, deshalb ist es nicht zu empfehlen. Günstig ist ein einziger
-Wechsel: In Bambu Studio am Schichtregler rechts bei 0,68 mm (Schicht 3) „Filament wechseln“ bzw. „Pause“ setzen.
-Die ersten Schichten in Holz, der Rest in weiß. Dann haben die Waben auf den Bettseiten Holzstege mit weißem Grund.
+**Weiß und Holz im Wechsel (3 + 3 Glieder):** Das geht nur mit dem **AMS lite**, denn der A1 wechselt dann
+in fast jeder Schicht die Farbe, bis 34 mm Höhe etwa 140-mal. Darüber druckt er nur noch Holz.
+- Das Projekt `…_weiss_holz_wechsel.3mf` hat Filament 1 = weiß und Filament 2 = Holz. Nach dem Öffnen bei Filament 2 dein
+  Holzprofil wählen. Die Farbe ist nur zur Ansicht eingetragen.
+- Der Reinigungsturm ist an. Das Spülen geht soweit möglich in die Füllung.
+- Ein Farbwechsel dauert etwa eine Minute. Rechne mit grob 2 bis 3 h zusätzlich und etwa 40 bis 70 g Spülabfall.
+  Bambu Studio zeigt beides nach dem Slicen genau an.
+- Lädt das Zweifarben-Projekt nicht, beide `…_Teil_…stl` gleichzeitig importieren und die Frage „als ein Objekt mit mehreren
+  Teilen laden?“ mit Ja beantworten. Dann rechts jedem Teil sein Filament zuweisen. Die Lage stimmt bereits.
+
+**Alternative mit nur einem Wechsel:** Am Schichtregler bei 0,68 mm „Filament wechseln“ setzen. Dann haben die Waben auf
+den Bettseiten Holzstege mit weißem Grund.
 
 ## Nach dem Druck
 
