@@ -8,13 +8,13 @@ import numpy as np, manifold3d as m3
 import guertel as G
 
 A_MM = 70.0
-AUSSEN = 2.4      # Aussenflaechen nach aussen
+AUSSEN = 2.6      # Aussenflaechen nach aussen
 INNEN = 0.6       # Innenflaechen nach innen
 R = 3.0           # Knoechelradius
-PIN = 1.0         # Bolzenradius (fest an den Knoecheln von Glied j-1)
-SP = 0.4          # Spiel
-SPK = 0.6         # axiales Spiel an den Kegelflaechen der senkrechten Gelenke (= 0,42 mm senkrecht zur Flaeche)
-RF = 5.4          # Freistich um die Achse neben fremden Knoecheln
+PIN = 1.2         # Bolzenradius (fest an den Knoecheln von Glied j-1)
+SP = 0.5          # Spiel
+SPK = 0.7         # axiales Spiel an den Kegelflaechen der senkrechten Gelenke (= 0,42 mm senkrecht zur Flaeche)
+RF = 5.8          # Freistich um die Achse neben fremden Knoecheln
 U0, U1 = 1.5, 33.5  # Knoechelzone auf der 35-mm-Kante
 NK = 5            # Knoechel je Gelenk (A B A B A)
 FIL = 1.0         # Bohrungsradius im offenen Gelenk 0 (Filament 1,75 mm)

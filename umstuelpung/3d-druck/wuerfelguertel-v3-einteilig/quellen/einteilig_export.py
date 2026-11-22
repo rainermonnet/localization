@@ -27,6 +27,6 @@ bb = X.bounding_box(); cx, cy = (bb[0] + bb[3])/2, (bb[1] + bb[4])/2
 X = X.translate([-cx, -cy, 0]).rotate([0, 0, ROT]); bb = X.bounding_box()
 X = X.translate([128 - (bb[0] + bb[3])/2, 128 - (bb[1] + bb[4])/2, -bb[2]])
 print("bbox", np.round(X.bounding_box(), 1), "Teile", len(X.decompose()), "Volumen cm3", round(X.volume()/1000, 1))
-WB.schreibe(f"{O}/Wuerfelguertel_einteilig_A1.stl", X, "Wuerfelguertel einteilig")
+WB.schreibe(f"{O}/Wuerfelguertel_einteilig_A1_Spiel05.stl", X, "Wuerfelguertel einteilig")
 import pickle
 pickle.dump([(np.asarray(f.to_mesh().vert_properties)[:, :3], np.asarray(f.to_mesh().tri_verts)) for f in fertig], open(f"{O}/glieder_lokal.pkl", "wb"))
