@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Zugangsdaten — NIEMALS committen
+.streamlit/secrets.toml
+**/.streamlit/secrets.toml
+.env
+*.env
+
+# Ausgabe der Barcode-Werkbank
+barcode-bogen.html
+
+# Betriebssystem
+.DS_Store
