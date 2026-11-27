@@ -1,0 +1,149 @@
+<style>
+.zf{--gruen:#2f5a3c;--rot:#c4532f;--creme:#f6f0e4;--sand:#efe5d3;--text:#3b3530;color:var(--text);line-height:1.55;max-width:60rem;margin:0 auto}
+.zf *{box-sizing:border-box}
+.zf h2,.zf h3,.zf .zf-titel{font-family:Georgia,"Times New Roman",serif;color:var(--gruen);font-weight:700;line-height:1.15;margin:0 0 .6rem}
+.zf .zf-akzent{color:var(--rot)}
+.zf .zf-oben{font-size:.75rem;letter-spacing:.3em;color:var(--gruen);font-weight:700;margin:0 0 .5rem}
+.zf .zf-hand{font-family:Georgia,serif;font-style:italic;color:var(--rot);font-size:1.1rem;margin:.4rem 0 0}
+.zf .zf-box{background:var(--creme);border-radius:16px;padding:1.5rem;margin:0 0 1.5rem}
+.zf .zf-titel{font-size:clamp(2rem,5vw,2.8rem)}
+.zf .zf-knopf{display:inline-block;background:var(--rot);color:#fff !important;text-decoration:none;border:0;border-radius:999px;padding:.8rem 1.6rem;font-weight:700;font-size:1rem;cursor:pointer}
+.zf .zf-knopf:hover{opacity:.9}
+.zf img{display:block;width:100%;height:auto;border-radius:6px}
+.zf .zf-foto{background:#fff;padding:.45rem;border-radius:6px;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.zf .zf-paar{display:grid;grid-template-columns:1fr 2fr;gap:1rem;align-items:center;margin:0 0 1.75rem}
+.zf .zf-paar .zf-foto:first-child{transform:rotate(-3deg)}
+.zf .zf-raster{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1rem}
+.zf .zf-karte{background:#fff;border:1px solid #e6dccb;border-radius:14px;padding:1.2rem;display:flex;flex-direction:column}
+.zf .zf-karte img{aspect-ratio:4/3;object-fit:cover;margin:0 0 .9rem}
+.zf .zf-preis{color:var(--rot);font-weight:800;font-size:1.4rem;margin:.2rem 0 .8rem}
+.zf .zf-karte form{margin-top:auto}
+.zf label{display:block;font-size:.9rem;font-weight:600;margin:.5rem 0 .25rem}
+.zf input[type=text]{width:100%;padding:.6rem .7rem;border:1px solid #cfc5b3;border-radius:8px;font-size:1rem;background:#fff;margin:0 0 .4rem}
+.zf ol.zf-schritte{list-style:none;padding:0;margin:0;counter-reset:s}
+.zf ol.zf-schritte li{counter-increment:s;position:relative;padding:0 0 1rem 3rem;min-height:2.2rem}
+.zf ol.zf-schritte li:before{content:counter(s);position:absolute;left:0;top:0;width:2.2rem;height:2.2rem;border-radius:50%;background:var(--gruen);color:#fff;font-family:Georgia,serif;font-weight:700;display:flex;align-items:center;justify-content:center}
+.zf .zf-zeit{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;text-align:center;margin:1rem 0 0;font-size:.9rem}
+.zf .zf-zeit strong{display:block;color:var(--gruen)}
+.zf .zf-zeit div:last-child strong{color:var(--rot)}
+.zf .zf-klein{font-size:.9rem;opacity:.85}
+@media (max-width:40rem){.zf .zf-paar{grid-template-columns:1fr}.zf .zf-paar .zf-foto:first-child{max-width:70%}.zf .zf-zeit{grid-template-columns:1fr}}
+</style>
+
+<div class="zf">
+
+<div class="zf-box" style="background:var(--sand)">
+<p class="zf-oben">ZWERGENLADEN</p>
+<h2 class="zf-titel">Aus deinem Bild wird ein <span class="zf-akzent">Freund.</span></h2>
+<p>Puppen &amp; Figuren nach Kinderzeichnungen. Was Kinder malen, ist mehr als ein Bild: Es ist ein Wesen aus ihrer eigenen Welt. Im Zwergenladen machen wir daraus eine echte Figur, <strong>so, wie dein Kind es gemalt hat.</strong></p>
+<p>Gutscheine gibt es <strong>bis 22. Dezember</strong> im Laden und hier online. Das perfekte Weihnachtsgeschenk: Nach den Feiertagen wird gemalt, ab Januar entstehen die Figuren.</p>
+<p><a class="zf-knopf" href="#gutschein">Gutschein sichern</a></p>
+</div>
+
+<h2>Gemalt … <span class="zf-akzent">und mit Wolle gefilzt!</span></h2>
+
+<div class="zf-paar">
+<div class="zf-foto"><img src="https://cdn.shopify.com/s/files/1/0917/4194/6229/files/zeichnung-koenigin.jpg?v=1795782241&amp;width=600" alt="Kinderzeichnung einer Königin und eines Königs" loading="lazy" width="600" height="386"></div>
+<div><div class="zf-foto"><img src="https://cdn.shopify.com/s/files/1/0917/4194/6229/files/filzpuppen-koenigin-koenig.jpg?v=1795782241&amp;width=1200" alt="Gefilzte Königin und gefilzter König, nach einer Kinderzeichnung" loading="lazy" width="1200" height="773"></div>
+<p class="zf-hand">… und mit Wolle gefilzt!</p></div>
+</div>
+
+<div class="zf-paar">
+<div class="zf-foto"><img src="https://cdn.shopify.com/s/files/1/0917/4194/6229/files/zeichnung-regenbogenbiber.jpg?v=1795782241&amp;width=600" alt="Kinderzeichnung eines Regenbogentiers" loading="lazy" width="600" height="600"></div>
+<div><div class="zf-foto"><img src="https://cdn.shopify.com/s/files/1/0917/4194/6229/files/filztier-regenbogenbiber.jpg?v=1795782241&amp;width=1200" alt="Gefilzter Regenbogenbiber auf einem Filzbaum, nach einer Kinderzeichnung" loading="lazy" width="1200" height="896"></div>
+<p class="zf-hand">Ein Regenbogentier …</p></div>
+</div>
+<p><strong>Jedes Fabelwesen ist ein Einzelstück.</strong> Unsere Puppenmacherin filzt es von Hand aus Wolle, so, wie dein Kind es gemalt hat. Wir verbessern nichts, wir übersetzen nur in Wolle.</p>
+
+<h2 style="margin-top:2rem">Milan hat einen Dino <span class="zf-akzent">gemalt …</span></h2>
+<div class="zf-paar">
+<div class="zf-foto"><img src="https://cdn.shopify.com/s/files/1/0917/4194/6229/files/zeichnung-dino-milan.jpg?v=1795782242&amp;width=600" alt="Kinderzeichnung eines Dinos mit dem Namen MILAN" loading="lazy" width="600" height="424"></div>
+<div><div class="zf-foto"><img src="https://cdn.shopify.com/s/files/1/0917/4194/6229/files/zauberfigur-dino-milan.jpg?v=1795782241&amp;width=1200" alt="Grüne Zauberfigur Dino mit dem Namen MILAN" loading="lazy" width="1195" height="896"></div>
+<p class="zf-hand">… jetzt steht er im Regal.</p></div>
+</div>
+<p><strong>Die Zauberfigur</strong> entsteht in unserer Werkstatt, mit dem Namen, so wie ihn dein Kind geschrieben hat.</p>
+
+<div class="zf-box" style="margin-top:2rem">
+<h2>So wird dein Bild <span class="zf-akzent">lebendig</span></h2>
+<ol class="zf-schritte">
+<li><strong>Gutschein schenken</strong><br>Bis 22. Dezember im Laden oder hier auf zwergenladen.info.</li>
+<li><strong>Nach Weihnachten malen</strong><br>In Ruhe ein Fabelwesen malen.</li>
+<li><strong>Abgeben</strong><br>Ab 4. Januar im Laden (Schwimmbadstraße 36, Freiburg) oder ein Foto der Zeichnung an <a href="mailto:email@zwergenladen.info?subject=Zeichnung%20f%C3%BCr%20meine%20Figur">email@zwergenladen.info</a> schicken, bitte mit deiner Bestellnummer.</li>
+<li><strong>Staunen</strong><br>Ab Mitte Januar entstehen die Figuren, in der Reihenfolge der Abgabe. Wer früh abgibt, bekommt früh.</li>
+</ol>
+<div class="zf-zeit">
+<div><strong>bis 22. Dez.</strong>Gutschein kaufen</div>
+<div><strong>ab 4. Jan.</strong>Zeichnung abgeben</div>
+<div><strong>ab Mitte Jan.</strong>erste Figuren fertig</div>
+</div>
+</div>
+
+<h2 id="gutschein" style="margin-top:2rem">Gutschein kaufen</h2>
+<p>Wähle die Figur. Die Felder sind freiwillig: Der Name hilft uns, Gutschein und Zeichnung zusammenzubringen.</p>
+
+<div class="zf-raster">
+
+<div class="zf-karte">
+<img src="https://cdn.shopify.com/s/files/1/0917/4194/6229/files/filztier-regenbogenbiber.jpg?v=1795782241&amp;width=700" alt="Gefilzter Regenbogenbiber" loading="lazy" width="700" height="523">
+<h3>Filzpuppe oder Filztier</h3>
+<p class="zf-klein">Von unserer Puppenmacherin von Hand aus Wolle gefilzt, je nach Aufwand.</p>
+<p class="zf-preis">ab 49 €</p>
+<form method="post" action="/cart/add" accept-charset="UTF-8">
+<input type="hidden" name="form_type" value="product">
+<input type="hidden" name="utf8" value="✓">
+<input type="hidden" name="id" value="57810983551349">
+<input type="hidden" name="quantity" value="1">
+<label for="zf-kind-1">Für (Name des Kindes)</label>
+<input id="zf-kind-1" type="text" name="properties[Für]" maxlength="60">
+<label for="zf-kita-1">Stichwort Kindergarten</label>
+<input id="zf-kita-1" type="text" name="properties[Stichwort Kindergarten]" maxlength="60">
+<button type="submit" class="zf-knopf" style="width:100%;margin-top:.6rem">In den Warenkorb</button>
+</form>
+</div>
+
+<div class="zf-karte">
+<img src="https://cdn.shopify.com/s/files/1/0917/4194/6229/files/zauberfigur-dino-milan.jpg?v=1795782241&amp;width=700" alt="Zauberfigur Dino mit Namen" loading="lazy" width="700" height="525">
+<h3>Zauberfigur</h3>
+<p class="zf-klein">Aus unserer Werkstatt, mit Namen, handbemalt.</p>
+<p class="zf-preis">ab 49 €</p>
+<form method="post" action="/cart/add" accept-charset="UTF-8">
+<input type="hidden" name="form_type" value="product">
+<input type="hidden" name="utf8" value="✓">
+<input type="hidden" name="id" value="57810983584117">
+<input type="hidden" name="quantity" value="1">
+<label for="zf-kind-2">Für (Name des Kindes)</label>
+<input id="zf-kind-2" type="text" name="properties[Für]" maxlength="60">
+<label for="zf-kita-2">Stichwort Kindergarten</label>
+<input id="zf-kita-2" type="text" name="properties[Stichwort Kindergarten]" maxlength="60">
+<button type="submit" class="zf-knopf" style="width:100%;margin-top:.6rem">In den Warenkorb</button>
+</form>
+</div>
+
+<div class="zf-karte">
+<img src="https://cdn.shopify.com/s/files/1/0917/4194/6229/files/zauberfigur-dino-milan.jpg?v=1795782241&amp;width=700" alt="Zauberfigur als zweites Exemplar" loading="lazy" width="700" height="525">
+<h3>Noch eine für Oma &amp; Opa</h3>
+<p class="zf-klein">Weiteres Exemplar der Zauberfigur als Andenken, für Familie, Paten &amp; Freunde.</p>
+<p class="zf-preis">ab 39 €</p>
+<form method="post" action="/cart/add" accept-charset="UTF-8">
+<input type="hidden" name="form_type" value="product">
+<input type="hidden" name="utf8" value="✓">
+<input type="hidden" name="id" value="57810983616885">
+<input type="hidden" name="quantity" value="1">
+<label for="zf-kind-3">Für (Name des Kindes)</label>
+<input id="zf-kind-3" type="text" name="properties[Für]" maxlength="60">
+<label for="zf-kita-3">Stichwort Kindergarten</label>
+<input id="zf-kita-3" type="text" name="properties[Stichwort Kindergarten]" maxlength="60">
+<button type="submit" class="zf-knopf" style="width:100%;margin-top:.6rem">In den Warenkorb</button>
+</form>
+</div>
+
+</div>
+
+<div class="zf-box" style="margin-top:1.5rem;background:var(--sand)">
+<p style="margin:0 0 .6rem"><strong>Für Kindergärten:</strong> Mit dem Stichwort deines Kindergartens gehen <strong>10 % deiner Bestellung</strong> an den Förderverein deines Kindergartens. Trag es einfach oben ins Feld ein oder nenne es im Laden.</p>
+<p class="zf-klein" style="margin:0">Filzfiguren sind Handarbeit und nur in begrenzter Zahl möglich. Die Preise sind Ab-Preise; ob eine Figur aufwendiger wird, besprechen wir mit dir bei der Abgabe der Zeichnung. Gutscheine gibt es im Laden und online.</p>
+</div>
+
+<p style="margin-top:1.5rem">Fragen? Komm vorbei: <strong>Zwergenladen, Schwimmbadstraße 36, Freiburg</strong>, oder schreib uns an <a href="mailto:email@zwergenladen.info">email@zwergenladen.info</a>.</p>
+
+</div>
